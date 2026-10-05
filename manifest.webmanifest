@@ -1,0 +1,13 @@
+{
+  "name": "Lugano Parking",
+  "short_name": "Parking",
+  "description": "Free spots in Lugano's garages and where to park on the street.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f3f5f4",
+  "theme_color": "#0f6f78",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png"}
+  ]
+}
