@@ -720,14 +720,14 @@ button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--accent);ou
 h1,h2,h3{margin:0;font-family:var(--font-display);text-wrap:balance}
 .num{font-family:var(--font-display);font-variant-numeric:tabular-nums}
 
-#app{position:relative;height:100%;width:100%;overflow:hidden;--peek:124px}
+#app{position:relative;height:100%;width:100%;overflow:hidden;--peek:124px;--top:82px;--tab:56px;--safe-b:env(safe-area-inset-bottom,0px)}
 #map{position:absolute;inset:0;background:var(--bg);z-index:0}
 #map .leaflet-tile-pane{filter:var(--map-filter)}
 .leaflet-container{font-family:var(--font-body)}
 .leaflet-control-attribution{font-size:10px;background:color-mix(in srgb,var(--surface) 80%,transparent);color:var(--muted);padding:2px 6px}
 .leaflet-control-attribution a{color:var(--muted)}
-.leaflet-bottom.leaflet-right{bottom:calc(var(--peek,124px) + 6px)}
-.leaflet-top.leaflet-left .leaflet-control-zoom{margin-top:calc(env(safe-area-inset-top,0px) + 134px);margin-left:12px;border:0;box-shadow:var(--shadow);border-radius:12px;overflow:hidden}
+.leaflet-bottom.leaflet-right{bottom:calc(var(--peek,124px) + var(--tab) + var(--safe-b) + 6px)}
+.leaflet-top.leaflet-left .leaflet-control-zoom{margin-top:calc(env(safe-area-inset-top,0px) + var(--top));margin-left:12px;border:0;box-shadow:var(--shadow);border-radius:12px;overflow:hidden}
 .leaflet-bar a{background:var(--surface);color:var(--fg);border-bottom-color:var(--line);width:36px;height:36px;line-height:36px}
 .leaflet-bar a:hover{background:var(--surface-2)}
 .leaflet-bar a.leaflet-disabled{color:var(--muted);background:var(--surface-2)}
@@ -823,14 +823,14 @@ h1,h2,h3{margin:0;font-family:var(--font-display);text-wrap:balance}
 .zlabel span{display:inline-block;background:var(--surface);color:var(--fg);font-size:11px;font-weight:600;padding:3px 7px;border-radius:999px;box-shadow:var(--shadow);border-left:4px solid var(--c);white-space:nowrap;transform:translate(-50%,-50%)}
 
 /* Bottom sheet */
-.sheet{position:absolute;left:0;right:0;bottom:0;z-index:6;background:var(--surface);border-radius:22px 22px 0 0;box-shadow:0 -6px 30px rgba(16,32,30,.18);transform:translateY(calc(100% - var(--peek,124px)));transition:transform .32s cubic-bezier(.2,.8,.2,1);height:min(86%,760px);display:flex;flex-direction:column;touch-action:none}
+.sheet{position:absolute;left:0;right:0;bottom:calc(var(--tab) + var(--safe-b));z-index:6;background:var(--surface);border-radius:22px 22px 0 0;box-shadow:0 -6px 30px rgba(16,32,30,.18);transform:translateY(calc(100% - var(--peek,124px)));transition:transform .32s cubic-bezier(.2,.8,.2,1);height:calc(min(86%,760px) - var(--tab));display:flex;flex-direction:column;touch-action:none}
 .sheet.dragging{transition:none}
 .sheet.half{transform:translateY(46%)}
 .sheet.full{transform:translateY(0)}
 .sheet .grip{padding:10px 0 4px;display:grid;place-items:center;flex:none}
 .sheet .grip i{width:40px;height:5px;border-radius:3px;background:var(--line);display:block}
 .sheet .head{padding:4px 18px 10px;flex:none}
-.sheet .body{overflow:auto;flex:1;min-height:0;padding:0 14px calc(24px + env(safe-area-inset-bottom,0px));touch-action:pan-y;overscroll-behavior:contain}
+.sheet .body{overflow:auto;flex:1;min-height:0;padding:0 14px 24px;touch-action:pan-y;overscroll-behavior:contain}
 .sheet:not(.full) .body{touch-action:none}
 .sheet .body::-webkit-scrollbar{width:0}
 .summary{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
@@ -917,21 +917,51 @@ h1,h2,h3{margin:0;font-family:var(--font-display);text-wrap:balance}
 .legend{display:flex;flex-direction:column;gap:6px;font-size:13px}
 .legend div{display:flex;align-items:center;gap:8px}
 .legend i{width:14px;height:14px;border-radius:4px;flex:none;border:2px solid var(--c);background:var(--soft)}
-.toast{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(var(--peek,124px) + 16px);z-index:7;background:var(--fg);color:var(--surface);padding:9px 14px;border-radius:999px;font-size:13px;font-weight:600;opacity:0;transition:opacity .25s;pointer-events:none;white-space:nowrap}
+.toast{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(var(--peek,124px) + var(--tab) + var(--safe-b) + 16px);z-index:7;background:var(--fg);color:var(--surface);padding:9px 14px;border-radius:999px;font-size:13px;font-weight:600;opacity:0;transition:opacity .25s;pointer-events:none;white-space:nowrap}
 .toast.show{opacity:1}
 @media (prefers-reduced-motion:reduce){.sheet{transition:none}.iconbtn.spin svg{animation:none}}
 @media (min-width:720px){
   .top{left:16px;right:auto;width:400px}
-  .sheet{left:16px;right:auto;width:400px;border-radius:22px;bottom:16px;height:min(80%,720px)}
+  .tabbar{left:16px;right:auto;width:400px;bottom:16px;border-radius:16px;box-shadow:var(--shadow);padding-bottom:0;height:var(--tab)}
+  .sheet{left:16px;right:auto;width:400px;border-radius:22px;bottom:calc(16px + var(--tab) + 8px);height:calc(min(80%,720px) - var(--tab) - 24px)}
   .sheet{transform:translateY(calc(100% - var(--peek,124px)))}
   .leaflet-top.leaflet-left .leaflet-control-zoom{margin-left:440px}
-  .toast{left:216px}
+  .leaflet-top.leaflet-left .leaflet-control-locate{margin-left:440px}
+  .leaflet-bottom.leaflet-right{bottom:6px}
+  .toast{left:216px;bottom:calc(var(--peek,124px) + var(--tab) + 40px)}
 }
+
+/* Bottom tab bar */
+.tabbar{position:absolute;left:0;right:0;bottom:0;z-index:8;height:calc(var(--tab) + var(--safe-b));padding-bottom:var(--safe-b);background:var(--surface);display:grid;grid-template-columns:repeat(3,1fr);box-shadow:0 -1px 0 var(--line),0 -8px 24px rgba(16,32,30,.06)}
+.tabbar button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:11px;font-weight:600;color:var(--muted);padding:6px 0}
+.tabbar button svg{width:22px;height:22px}
+.tabbar button[aria-selected="true"]{color:var(--accent)}
+.tabbar button:active{opacity:.7}
+
+/* Parked bar */
+.parked{display:flex;align-items:center;gap:8px;background:var(--surface);border-radius:14px;box-shadow:var(--shadow);padding:8px 8px 8px 12px;font-size:13px;font-weight:600;border-left:4px solid var(--accent)}
+.parked .ico{display:grid;place-items:center;color:var(--accent);flex:none}
+.parked .ico svg{width:18px;height:18px}
+.parked .txt{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.parked.warn{border-left-color:var(--warn)} .parked.warn .ico{color:var(--warn)}
+.parked.bad{border-left-color:var(--bad)} .parked.bad .ico{color:var(--bad)}
+.parked .pbtn{flex:none;display:flex;align-items:center;gap:5px;font-size:12px;font-weight:600;padding:7px 9px;border-radius:9px;background:var(--surface-2);color:var(--fg);text-decoration:none}
+.parked .pbtn svg{width:15px;height:15px}
+.btn.parked-on{background:var(--accent-soft);color:var(--accent)}
+
+/* Typical occupancy chart */
+.typ{background:var(--surface-2);border-radius:16px;padding:12px 14px 10px}
+.typ .bars{display:grid;grid-template-columns:repeat(24,1fr);gap:2px;height:56px;align-items:end}
+.typ .bars i{display:block;height:var(--h);border-radius:3px 3px 1px 1px;background:var(--line);min-height:3px}
+.typ .bars i.ok{background:var(--ok)} .typ .bars i.warn{background:var(--warn)} .typ .bars i.bad{background:var(--bad)}
+.typ .bars i.none{background:var(--line);opacity:.6}
+.typ .bars i.now{outline:2px solid var(--fg);outline-offset:1px}
+.typ .axis{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:4px}
+.typ p{margin:8px 0 0;font-size:13px;color:var(--muted);line-height:1.4}
+.typ p b{color:var(--fg)}
 </style>
 </head>
 <body>
-
-
 <div id="app">
   <div id="map" role="application" aria-label="Map of Lugano parking"></div>
 
@@ -946,20 +976,7 @@ h1,h2,h3{margin:0;font-family:var(--font-display);text-wrap:balance}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
       </button>
     </div>
-    <div class="seg seg3" role="tablist" aria-label="View">
-      <button role="tab" id="tab-garages" aria-selected="true" data-view="garages">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-7h6v7"/></svg>
-        Garages
-      </button>
-      <button role="tab" id="tab-going" aria-selected="false" data-view="going">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4"/><path d="M5 4h12l-2.5 4L17 12H5"/></svg>
-        Going to
-      </button>
-      <button role="tab" id="tab-street" aria-selected="false" data-view="street">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20 8 4h8l4 16"/><path d="M12 6v3M12 12v3M12 18v2"/></svg>
-        Street
-      </button>
-    </div>
+    <div class="parked" id="parked" hidden></div>
   </div>
 
   <div class="sheet" id="sheet">
@@ -974,10 +991,24 @@ h1,h2,h3{margin:0;font-family:var(--font-display);text-wrap:balance}
     </div>
   </div>
   <div class="toast" id="toast"></div>
+
+  <nav class="tabbar" role="tablist" aria-label="View">
+    <button role="tab" id="tab-garages" aria-selected="true" data-view="garages">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-7h6v7"/></svg>
+      <span>Garages</span>
+    </button>
+    <button role="tab" id="tab-going" aria-selected="false" data-view="going">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4"/><path d="M5 4h12l-2.5 4L17 12H5"/></svg>
+      <span>Going to</span>
+    </button>
+    <button role="tab" id="tab-street" aria-selected="false" data-view="street">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20 8 4h8l4 16"/><path d="M12 6v3M12 12v3M12 18v2"/></svg>
+      <span>Street</span>
+    </button>
+  </nav>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
-
 <script>
 (function(){
 'use strict';
@@ -1038,7 +1069,7 @@ const ZONES=[
 ];
 
 /* ---------- Availability ---------- */
-const state={view:"garages",sort:"free",source:"snapshot",ts:new Date(SNAPSHOT_TS),counts:{},selected:null,pos:null,geo:false,dest:null,hours:2,gsort:"best",picking:false};
+const state={view:"garages",sort:"free",source:"snapshot",ts:new Date(SNAPSHOT_TS),counts:{},selected:null,pos:null,geo:false,dest:null,hours:2,gsort:"best",picking:false,parked:null};
 try{ const h=parseFloat(localStorage.getItem("lp.hours")); if(h>0) state.hours=h; }catch(e){}
 GARAGES.forEach(g=>state.counts[g.id]=g.free);
 
@@ -1115,6 +1146,72 @@ function locate(){
   navigator.geolocation.getCurrentPosition(onPosition,geoError,{enableHighAccuracy:true,maximumAge:30000,timeout:12000});
 }
 function pauseWatch(){ if(watchId!=null&&navigator.geolocation){ navigator.geolocation.clearWatch(watchId); watchId=null; } }
+
+/* ---------- Typical occupancy (history collected by the GitHub Action on the "data" branch) ---------- */
+const TYPICAL_URL="https://raw.githubusercontent.com/kf92gsbdmw-collab/lugano-parking/data/typical.json";
+const DAYS=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+let typical=null;
+async function loadTypical(){
+  try{ const c=JSON.parse(localStorage.getItem("lp.typical")||"null"); if(c&&c.data&&c.data.garages){ typical=c.data; if(Date.now()-c.at<3*3600e3) return; } }catch(e){}
+  try{ const r=await fetch(TYPICAL_URL,{cache:"no-store"}); if(!r.ok) return; const d=await r.json(); if(!d||!d.garages) return; typical=d; try{ localStorage.setItem("lp.typical",JSON.stringify({at:Date.now(),data:d})); }catch(e){} renderAll(); }catch(e){}
+}
+const hh=h=>String(h).padStart(2,"0")+":00";
+function typicalFor(g,d){
+  const t=typical&&typical.garages&&typical.garages[g.id]; if(!t) return null;
+  d=d||new Date(); const wd=(d.getDay()+6)%7, h=d.getHours(); const day=t.slots[wd]; const slot=day[h];
+  let freesFrom=null; for(let x=h+1;x<24;x++){ if(day[x]&&day[x][0]>t.cap*0.15){ freesFrom=x; break; } }
+  return {wd,h,slot,day,cap:t.cap,fullFrom:t.fullFrom[wd],freesFrom,dayName:DAYS[wd]};
+}
+// One short sentence for a card: what usually happens next, if the history has something to say.
+function typicalHint(g){
+  const t=typicalFor(g); if(!t) return ""; const f=state.counts[g.id];
+  if(f===0||(f!=null&&f<t.cap*0.1)){ if(t.freesFrom!=null) return `Usually frees up from ${hh(t.freesFrom)}`; return ""; }
+  if(t.fullFrom!=null&&t.h<t.fullFrom) return `Usually full from ${hh(t.fullFrom)}`;
+  return "";
+}
+function typicalSection(g){
+  if(!typical) return "";
+  const t=typicalFor(g); const f=state.counts[g.id];
+  if(!t||!t.day.some(Boolean)) return `<div class="sec">Typical occupancy</div><p class="note" style="margin-top:0">Collecting data${typical.days?` (${typical.days} day${typical.days===1?"":"s"} so far)`:""}. Patterns for ${DAYS[(new Date().getDay()+6)%7]}s appear after a few weeks of readings.</p>`;
+  const bars=t.day.map((s,i)=>{ const occ=s?1-s[0]/t.cap:null; const lvl=occ==null?"none":occ>0.9?"bad":occ>0.75?"warn":"ok"; return `<i class="${lvl}${i===t.h?" now":""}" style="--h:${occ==null?4:Math.max(6,Math.round(occ*100))}%" title="${hh(i)}${s?": about "+s[0]+" free":""}"></i>`; }).join("");
+  const now=t.slot?`Usually about <b>${t.slot[0]} free</b> at this hour${f!=null?` (now ${f})`:""}.`:"No readings for this hour yet.";
+  const extra=t.fullFrom!=null?` Typically full from ${hh(t.fullFrom)}${t.freesFrom!=null&&t.freesFrom>t.fullFrom?` until about ${hh(t.freesFrom)}`:""}.`:" Rarely full on this weekday.";
+  return `<div class="sec">Typical ${t.dayName}</div><div class="typ"><div class="bars">${bars}</div><div class="axis"><span>0</span><span>6</span><span>12</span><span>18</span><span>24</span></div><p>${now}${extra}</p></div>`;
+}
+
+/* ---------- I parked here ---------- */
+let parkedTimer=null, notifTimer=null;
+function loadParked(){ try{ state.parked=JSON.parse(localStorage.getItem("lp.parked")||"null"); }catch(e){ state.parked=null; } }
+function setParked(p){ state.parked=p; try{ p?localStorage.setItem("lp.parked",JSON.stringify(p)):localStorage.removeItem("lp.parked"); }catch(e){} renderParked(); armReminder(); renderAll(); }
+function parkHere(g){ setParked({kind:"garage",id:g.id,name:g.name,lat:g.lat,lng:g.lng,at:new Date().toISOString(),until:null}); toast("Saved · "+g.name); }
+function startDisc(hhmm){
+  const o=discLeaveBy(hhmm); if(!o) return; const [H,M]=o.by.split(" ")[0].split(":").map(Number); const until=new Date(); if(o.by.includes("tomorrow")) until.setDate(until.getDate()+1); until.setHours(H,M,0,0);
+  const [aH,aM]=hhmm.split(":").map(Number); const at=new Date(); at.setHours(aH,aM,0,0);
+  setParked({kind:"blue",id:"blue",name:"Blue zone",lat:state.pos?state.pos[0]:null,lng:state.pos?state.pos[1]:null,at:at.toISOString(),until:until.toISOString()});
+  askNotify(); toast("Disc timer set · leave by "+o.by);
+  if(!state.pos&&navigator.geolocation) navigator.geolocation.getCurrentPosition(pp=>{ if(state.parked&&state.parked.kind==="blue"&&state.parked.lat==null){ state.parked.lat=pp.coords.latitude; state.parked.lng=pp.coords.longitude; setParked(state.parked); } },()=>{},{maximumAge:60000,timeout:10000});
+}
+function renderParked(){
+  const bar=$("#parked"); const p=state.parked; clearInterval(parkedTimer); parkedTimer=null;
+  if(!p){ bar.hidden=true; bar.innerHTML=""; fitTop(); return; }
+  const draw=()=>{
+    const at=new Date(p.at); let cls="",txt="";
+    if(p.until){ const left=Math.round((new Date(p.until)-Date.now())/60000); const t=fmtTime(new Date(p.until));
+      if(left<0){ cls="bad"; txt=`Disc ran out at ${t}`; } else if(left<=10){ cls="warn"; txt=`Disc until ${t} · ${left} min left`; } else txt=`Disc until ${t} · ${left} min left`; }
+    else txt=`${p.name.replace(/^(Autosilo|Parcheggio) /,"")} · parked ${fmtStamp(at)}`;
+    const nav=p.lat!=null?`<a class="pbtn" href="https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}&travelmode=walking" target="_blank" rel="noopener">${svgIcon("walk")} Find car</a>`:"";
+    bar.className="parked "+cls; bar.innerHTML=`<span class="ico">${svgIcon("car")}</span><span class="txt">${txt}</span>${nav}<button class="pbtn" id="parked-clear" aria-label="Clear parking">${svgIcon("x")}</button>`;
+  };
+  bar.hidden=false; draw(); parkedTimer=setInterval(draw,30000); fitTop();
+}
+function askNotify(){ try{ if("Notification" in window&&Notification.permission==="default") Notification.requestPermission().then(armReminder); }catch(e){} }
+function armReminder(){
+  clearTimeout(notifTimer); const p=state.parked; if(!p||!p.until) return;
+  try{ if(!("Notification" in window)||Notification.permission!=="granted") return; }catch(e){ return; }
+  const fire=new Date(p.until).getTime()-10*60000-Date.now(); if(fire<0||fire>12*3600e3) return;
+  notifTimer=setTimeout(async()=>{ const body=`Your parking disc runs out at ${fmtTime(new Date(p.until))}.`; try{ const reg=await navigator.serviceWorker.getRegistration(); if(reg&&reg.showNotification){ reg.showNotification("10 minutes left",{body,icon:"icon-192.png",tag:"disc"}); return; } }catch(e){} try{ new Notification("10 minutes left",{body,icon:"icon-192.png"}); }catch(e){} },fire);
+}
+function fitTop(){ app.style.setProperty("--top",($(".top").offsetHeight+8)+"px"); }
 
 /* ---------- Going to: destination, stay length, ranking ---------- */
 const SPOTS=[
@@ -1212,7 +1309,7 @@ function renderGoing(){
     body.innerHTML=`<div class="list">${rows.map(r=>{ const g=r.g; const isBest=best&&best.g.id===g.id&&state.gsort==="best";
       return `<button class="card gcard ${r.full?"full":""} ${isBest?"best":""}" data-g="${g.id}" style="--c:${r.lv.c}" aria-label="${g.name}, ${r.trip.label} ${r.trip.mode==="bus"?"by bus":"walk"}, ${r.f==null?"no live data":r.f+" free"}, ${fmtChf(r.cost.chf)}">
         <span class="walk" style="--c:${r.full?"var(--bad)":"var(--fg)"}">${svgIcon(r.trip.mode==="bus"?"bus":"walk")}<b>${r.full?"Full":r.trip.min}</b><small>${r.full?"now":"min"}</small></span>
-        <span class="t"><h3>${g.name}${isBest?' <span class="chip ok">Best pick</span>':""}</h3><p>${r.f==null?"No live data":`<b style="color:${r.lv.c}">${r.f} free</b>`} · ${r.trip.sub}${r.full?` · ${r.trip.label} away`:""}</p></span>
+        <span class="t"><h3>${g.name}${isBest?' <span class="chip ok">Best pick</span>':""}</h3><p>${r.f==null?"No live data":`<b style="color:${r.lv.c}">${r.f} free</b>`} · ${r.trip.sub}${r.full?` · ${r.trip.label} away`:""}${(()=>{ const th=typicalHint(g); return th?` · ${th}`:""; })()}</p></span>
         <span class="n"><b class="num">${fmtChf(r.cost.chf)}</b><small>${r.cost.note||(r.cost.chf==null?"":(r.cost.approx?"about, for ":"for ")+DURS.find(x=>x[0]===state.hours)[1].toLowerCase())}</small></span>
       </button>`;}).join("")}</div>
       <p class="note">Walking times are estimates from the distance on the map (about 5 km/h). P+R times include the bus ride to the centre. Prices follow the posted tariffs for a daytime stay and are rounded to the next tariff step.</p>`;
@@ -1250,13 +1347,20 @@ const Mosaic=L.GridLayer.extend({
   createTile:function(coords,done){
     const c=document.createElement("canvas"); c.width=c.height=256; const ctx=c.getContext("2d");
     const m=MOSAICS[coords.z]; ctx.fillStyle="#eef0ef"; ctx.fillRect(0,0,256,256);
-    if(m){ const img=mosaicImg(coords.z); const draw=()=>{ const sx=(coords.x-m.x0)*256, sy=(coords.y-m.y0)*256; if(sx>=0&&sy>=0&&sx<m.nx*256&&sy<m.ny*256) ctx.drawImage(img,sx,sy,256,256,0,0,256,256); setTimeout(()=>done(null,c),0); }; if(img.complete&&img.naturalWidth) draw(); else { img.addEventListener("load",draw,{once:true}); img.addEventListener("error",()=>setTimeout(()=>done(null,c),0),{once:true}); } }
+    if(m){ mosaicImg(coords.z).then(img=>{ const sx=(coords.x-m.x0)*256, sy=(coords.y-m.y0)*256; if(sx>=0&&sy>=0&&sx<m.nx*256&&sy<m.ny*256) ctx.drawImage(img,sx,sy,256,256,0,0,256,256); done(null,c); }).catch(()=>done(null,c)); }
     else setTimeout(()=>done(null,c),0);
     return c;
   }
 });
 const imgCache={};
-function mosaicImg(z){ if(!imgCache[z]){ const i=new Image(); i.decoding="async"; i.src="tiles/z"+z+".jpg"; imgCache[z]=i; } return imgCache[z]; }
+// The mosaic lives in tiles/zN.jpg; if the images were uploaded to the site root instead, zN.jpg is tried next.
+function mosaicImg(z){
+  if(!imgCache[z]) imgCache[z]=new Promise((res,rej)=>{
+    const srcs=["tiles/z"+z+".jpg","z"+z+".jpg"]; let k=0; const i=new Image(); i.decoding="async";
+    i.onload=()=>res(i); i.onerror=()=>{ k++; if(k<srcs.length) i.src=srcs[k]; else rej(new Error("no map image for zoom "+z)); }; i.src=srcs[0];
+  });
+  return imgCache[z];
+}
 new Mosaic({minZoom:14,maxZoom:18,maxNativeZoom:17,minNativeZoom:14,tileSize:256,updateWhenIdle:false,keepBuffer:3}).addTo(map);
 
 // "Where am I" button under the zoom control
@@ -1328,6 +1432,7 @@ function svgIcon(n){
   if(n==="pin") return `<svg viewBox="0 0 24 24" ${S}><path d="M12 21s-6-5.5-6-11a6 6 0 0 1 12 0c0 5.5-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/></svg>`;
   if(n==="share") return `<svg viewBox="0 0 24 24" ${S}><path d="M12 3v12"/><path d="M8 7l4-4 4 4"/><path d="M5 12v7a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-7"/></svg>`;
   if(n==="x") return `<svg viewBox="0 0 24 24" ${S}><path d="M6 6l12 12M18 6L6 18"/></svg>`;
+  if(n==="car") return `<svg viewBox="0 0 24 24" ${S}><path d="M5 17h14"/><path d="M3 13l2-6h14l2 6"/><path d="M3 13h18v5H3z"/><circle cx="7.5" cy="18" r="1.5"/><circle cx="16.5" cy="18" r="1.5"/></svg>`;
   if(n==="walk") return `<svg viewBox="0 0 24 24" ${S}><circle cx="13" cy="4" r="1.6"/><path d="M10 21l2-6 3 3v3"/><path d="M8 13l2-5 3-1 3 3 2 1"/><path d="M12 8l-2 7"/></svg>`;
   if(n==="bus") return `<svg viewBox="0 0 24 24" ${S}><rect x="4" y="3" width="16" height="15" rx="3"/><path d="M4 11h16M8 18v3M16 18v3"/><circle cx="8" cy="15" r=".8"/><circle cx="16" cy="15" r=".8"/></svg>`;
   return "";
@@ -1357,7 +1462,7 @@ function renderGarages(){
   $("#body").innerHTML=`<div class="list">${sortedGarages().map(g=>{ const lv=levelOf(g); const f=state.counts[g.id]; const pct=f==null?0:Math.round(f/g.cap*100); const d=garageDist(g);
     return `<button class="card ${lv.k==="nodata"?"nodata":""}" data-g="${g.id}" style="--c:${lv.c};--pct:${pct}" aria-label="${g.name}, ${f==null?"no live data":f+" free of "+g.cap}${d!=null?", "+fmtDist(d)+" away":""}">
       <span class="ring"><i>${f==null?"—":pct+"%"}</i></span>
-      <span class="t"><h3>${g.name}</h3><p>${d!=null?`<b class="dist">${fmtDist(d)}</b> · `:""}${g.area} · ${lv.t}${g.tags[0]&&d==null?" · "+g.tags[0]:""}</p></span>
+      <span class="t"><h3>${g.name}</h3><p>${d!=null?`<b class="dist">${fmtDist(d)}</b> · `:""}${g.area} · ${lv.t}${(()=>{ const th=typicalHint(g); return th?" · "+th:(g.tags[0]&&d==null?" · "+g.tags[0]:""); })()}</p></span>
       <span class="n">${f==null?`<b>No live data</b><small>${g.cap} spaces</small>`:`<b class="num">${f}</b><small>of ${g.cap} free</small>`}</span>
     </button>`;}).join("")}</div>
     <p class="note">Garage counts come from the Città di Lugano real-time feed. Colours: green means plenty of space, amber means it is filling up, red means full or nearly full.</p>`;
@@ -1404,6 +1509,8 @@ function openGarage(id,fly){
       <div class="box"><div class="k">Status</div><div class="v" style="font-size:20px">${lv.t}</div><div class="k" style="margin-top:6px">${f==null?"Occupancy not published":"Updated "+fmtStamp(state.ts)}</div></div>
     </div>
     <div class="actions"><a class="btn primary" href="${maps}" target="_blank" rel="noopener">${svgIcon("nav")} Navigate</a><a class="btn" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(g.name+", Lugano")}" target="_blank" rel="noopener">Open in Maps</a></div>
+    <div class="actions" style="margin-top:8px">${state.parked&&state.parked.kind==="garage"&&state.parked.id===g.id?`<button class="btn parked-on" data-unpark="1">${svgIcon("car")} Parked here since ${fmtTime(new Date(state.parked.at))} · clear</button>`:`<button class="btn" data-park="${g.id}">${svgIcon("car")} I parked here</button>`}</div>
+    ${typicalSection(g)}
     <div class="sec">${T.label}</div>
     ${T.rows.length?`<div class="tariff">${T.rows.map(([k,v])=>`<div><b>${v}</b><small>${k}</small></div>`).join("")}</div>`:""}
     <p class="note">${T.night?T.night+". ":""}${T.extra}</p>
@@ -1424,18 +1531,18 @@ function openZone(id,areaName){
     </div>
     <p class="note" style="font-size:14px;color:var(--fg)">${z.desc}</p>
     ${z.fee?`<div class="sec">Tariff</div><div class="tariff">${z.fee.map(([k,v])=>`<div><b>${v}</b><small>${k}</small></div>`).join("")}</div>`:""}
-    ${z.type==="blue"?`<div class="sec">Parking disc helper</div><div class="disc"><label for="arr">I arrive at</label><input id="arr" type="time" value="${fmtTime(new Date())}"><div class="out" id="discout"></div></div>`:""}
+    ${z.type==="blue"?`<div class="sec">Parking disc helper</div><div class="disc"><label for="arr">I arrive at</label><input id="arr" type="time" value="${fmtTime(new Date())}"><div class="out" id="discout"></div><button class="btn primary" id="disc-start">${svgIcon("car")} I parked here · start disc timer</button><p class="note" style="margin:0">Shows the time left at the top of the app and sends a reminder 10 minutes before, when the app is allowed to notify you.</p></div>`:""}
     ${z.areas.length?`<div class="sec">Where</div><div class="rows">${z.areas.map(a=>`<div class="row"><span>${z.type==="blue"?"Quartiere":"Area"}</span><b>${a.n}</b></div>`).join("")}</div>`:""}
     <p class="note">Outline on the map is indicative. Follow the signs and markings at the bay.</p>`;
   sheet.classList.add("detail-mode"); if(sheetPos==="peek") setSheet("half");
   $("#back").addEventListener("click",closeDetail);
-  const arr=$("#arr"); if(arr){ const upd=()=>{ const o=discLeaveBy(arr.value); $("#discout").innerHTML=o?`Leave by <b>${o.by}</b><span style="color:var(--muted)">${o.why}</span>`:""; }; arr.addEventListener("input",upd); upd(); }
+  const arr=$("#arr"); if(arr){ const upd=()=>{ const o=discLeaveBy(arr.value); $("#discout").innerHTML=o?`Leave by <b>${o.by}</b><span style="color:var(--muted)">${o.why}</span>`:""; }; arr.addEventListener("input",upd); upd(); $("#disc-start").addEventListener("click",()=>{ startDisc(arr.value); }); }
   const shapes=zoneShapes[id]; if(shapes&&shapes.length){ const b=L.latLngBounds([]); shapes.forEach(s=>b.extend(s.getBounds())); map.flyToBounds(b,{paddingTopLeft:[20,170],paddingBottomRight:[20,Math.round(window.innerHeight*0.5)],duration:.6,maxZoom:16}); }
 }
 function closeDetail(){ sheet.classList.remove("detail-mode"); state.selected=null; refreshMarkers(); fitPeek(); }
 function setView(v){
   state.view=v; closeDetail();
-  document.querySelectorAll(".seg [role=tab]").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.view===v)));
+  document.querySelectorAll("[role=tab]").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.view===v)));
   if(state.picking){ state.picking=false; $("#map").classList.remove("picking"); }
   if(v==="garages"){ map.removeLayer(zoneLayer); map.removeLayer(destLayer); garageLayer.addTo(map); renderGarages(); }
   else if(v==="going"){ map.removeLayer(zoneLayer); garageLayer.addTo(map); destLayer.addTo(map); renderGoing(); if(state.dest) fitDest(); }
@@ -1451,7 +1558,7 @@ function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("sh
 app.addEventListener("scroll",()=>{ app.scrollTop=0; app.scrollLeft=0; });
 window.addEventListener("scroll",()=>{ window.scrollTo(0,0); });
 document.addEventListener("click",e=>{
-  const tab=e.target.closest(".seg [role=tab]"); if(tab){ setView(tab.dataset.view); return; }
+  const tab=e.target.closest("[role=tab]"); if(tab){ setView(tab.dataset.view); return; }
   const s=e.target.closest("[data-sort]"); if(s){ state.sort=s.dataset.sort; renderGarages(); if(state.sort==="near"&&!state.pos) locate(); return; }
   const g=e.target.closest("[data-g]"); if(g){ openGarage(g.dataset.g,true); return; }
   const z=e.target.closest("[data-z]"); if(z){ openZone(z.dataset.z,null); return; }
@@ -1460,6 +1567,8 @@ document.addEventListener("click",e=>{
   const du=e.target.closest("[data-dur]"); if(du){ state.hours=parseFloat(du.dataset.dur); try{ localStorage.setItem("lp.hours",String(state.hours)); }catch(_){} renderGoing(); return; }
   const gs=e.target.closest("[data-gsort]"); if(gs){ state.gsort=gs.dataset.gsort; renderGoing(); return; }
   if(e.target.closest("#clear-dest")){ setDest(null); return; }
+  const pk=e.target.closest("[data-park]"); if(pk){ parkHere(GARAGES.find(x=>x.id===pk.dataset.park)); return; }
+  if(e.target.closest("[data-unpark]")||e.target.closest("#parked-clear")){ setParked(null); return; }
   if(e.target.closest("#share-dest")){ shareDest(); return; }
   if(e.target.closest("#pick")){ state.picking=!state.picking; $("#map").classList.toggle("picking",state.picking); if(state.picking){ setSheet("peek"); toast("Tap the map where you are going"); } renderGoing(); return; }
 });
@@ -1468,6 +1577,7 @@ $("#refresh").addEventListener("click",()=>refresh(true));
 document.addEventListener("visibilitychange",()=>{ if(document.hidden) pauseWatch(); else { refresh(false); if(state.geo&&watchId==null) locate(); } });
 setInterval(()=>{ if(!document.hidden) refresh(false); },3*60*1000);
 setInterval(()=>{ if(state.view==="street"&&!sheet.classList.contains("detail-mode")) renderStreet(); statusLine(); },60*1000);
+window.addEventListener("resize",fitTop);
 
 /* ---------- Theme colour for the browser chrome ---------- */
 function syncThemeColor(){ const m=document.querySelector('meta[name="theme-color"]'); if(m) m.setAttribute("content",getComputedStyle(document.documentElement).getPropertyValue("--surface").trim()||"#0f6f78"); }
@@ -1481,7 +1591,7 @@ if("serviceWorker" in navigator){
 }
 
 /* ---------- Boot ---------- */
-loadCounts(); buildMarkers(); buildZones(); syncThemeColor();
+loadCounts(); buildMarkers(); buildZones(); syncThemeColor(); loadParked(); renderParked(); armReminder(); loadTypical();
 let v="garages"; try{ v=localStorage.getItem("lp.view")||"garages"; }catch(e){}
 try{ const d=JSON.parse(sessionStorage.getItem("lp.dest")||"null"); if(d&&d.lat) state.dest=d; }catch(e){}
 (function fromLink(){ // ?to=lat,lng&n=Name&h=2 opens the app on a shared destination

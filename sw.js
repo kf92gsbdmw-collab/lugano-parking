@@ -1,5 +1,5 @@
 /* Lugano Parking service worker: instant reopen and offline map. Bump VERSION when files change. */
-const VERSION = "lp-2026-10-07b";
+const VERSION = "lp-2026-10-07c";
 const CORE = ["./", "index.html", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png",
   "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"];
 const TILES = ["tiles/z15.jpg", "tiles/z14.jpg", "tiles/z16.jpg", "tiles/z17.jpg"];

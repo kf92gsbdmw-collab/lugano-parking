@@ -5,7 +5,7 @@ Everything in this folder is the app. Put the folder online and it works.
 ## Option A: GitHub Pages (free, 5 minutes)
 1. Go to github.com and sign in (or create a free account).
 2. Click "New repository", name it `lugano-parking`, keep it Public, click "Create repository".
-3. On the empty repository page click "uploading an existing file", drag in ALL the files from this folder (index.html, sw.js, manifest.webmanifest, the three icon PNGs and the whole `tiles` folder), then click "Commit changes".
+3. On the empty repository page click "uploading an existing file", drag in ALL the files from this folder (index.html, sw.js, manifest.webmanifest, the three icon PNGs and the `tiles`, `scripts` and `.github` folders), then click "Commit changes".
 4. Open Settings → Pages. Under "Build and deployment" choose Branch: `main`, folder `/ (root)`, click Save.
 5. After about a minute the page shows your link: `https://YOUR-USERNAME.github.io/lugano-parking/`. Send that to your friends.
 
@@ -20,3 +20,4 @@ On a real website the app reads the Città di Lugano live feed directly, so the 
 - `sw.js`: service worker. Makes the second open instant and keeps the map available offline. Bump `VERSION` inside it whenever you change files.
 - `tiles/z14.jpg` to `z17.jpg`: the offline map, one image per zoom level. Only the zoom level in view is downloaded.
 - `manifest.webmanifest` and the icons: home screen install.
+- `scripts/` and `.github/workflows/log-occupancy.yml`: a GitHub Action that reads the city feed every 10 minutes and keeps the history on a separate `data` branch (so the website is not rebuilt each time). It also writes `typical.json` there, which the app reads to show typical occupancy per weekday and hints like "usually full from 10:00". Nothing to configure: once the workflow file is on `main`, GitHub runs it. First patterns appear after about two weeks of readings. GitHub pauses scheduled workflows after 60 days without any commit to the repo; a push (or pressing "Run workflow" under Actions) wakes it up again.
