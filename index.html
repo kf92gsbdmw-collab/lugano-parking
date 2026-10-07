@@ -966,6 +966,29 @@ h1,h2,h3{margin:0;font-family:var(--font-display);text-wrap:balance}
 .typ .axis{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:4px}
 .typ p{margin:8px 0 0;font-size:13px;color:var(--muted);line-height:1.4}
 .typ p b{color:var(--fg)}
+
+/* About modal */
+.modal{position:absolute;inset:0;z-index:20;background:rgba(10,20,18,.45);display:flex;align-items:flex-end;justify-content:center}
+.modal-card{background:var(--surface);color:var(--fg);width:100%;max-width:520px;max-height:88%;border-radius:22px 22px 0 0;display:flex;flex-direction:column;box-shadow:0 -6px 30px rgba(16,32,30,.25)}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px 6px}
+.modal-head h2{font-size:20px;font-weight:700}
+.modal-body{overflow:auto;padding:0 18px calc(20px + var(--safe-b))}
+.modal-body .sec:first-child{margin-top:6px}
+.modal-body .btn{margin-top:4px}
+body.modal-open .sheet,body.modal-open .tabbar{pointer-events:none}
+@media (min-width:720px){.modal{align-items:center}.modal-card{border-radius:22px;max-height:80%}}
+
+/* Install banner */
+.banner{position:absolute;left:12px;right:12px;bottom:calc(var(--tab) + var(--safe-b) + 12px);z-index:9;display:flex;align-items:center;gap:10px;background:var(--fg);color:var(--surface);border-radius:16px;padding:10px 10px 10px 14px;box-shadow:var(--shadow)}
+.banner .ico{display:grid;place-items:center;flex:none;width:30px;height:30px;border-radius:9px;background:var(--accent);color:var(--accent-ink)}
+.banner .ico svg{width:16px;height:16px}
+.banner .txt{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.25}
+.banner .txt b{font-size:13.5px;font-weight:600}
+.banner .txt small{font-size:12px;opacity:.75}
+.banner .pbtn{flex:none;display:flex;align-items:center;gap:5px;font-size:12.5px;font-weight:600;padding:8px 10px;border-radius:10px;background:rgba(255,255,255,.14);color:inherit}
+.banner .pbtn svg{width:15px;height:15px}
+@media (min-width:720px){.banner{left:16px;right:auto;width:400px;bottom:calc(16px + var(--tab) + 12px)}}
+.scard .t h3{font-size:14.5px}
 </style>
 </head>
 <body>
@@ -981,6 +1004,9 @@ h1,h2,h3{margin:0;font-family:var(--font-display);text-wrap:balance}
       </div>
       <button class="iconbtn" id="refresh" aria-label="Refresh availability" title="Refresh">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
+      </button>
+      <button class="iconbtn" id="about-btn" aria-label="About" title="About">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.5"/></svg>
       </button>
     </div>
     <div class="parked" id="parked" hidden></div>
@@ -998,6 +1024,13 @@ h1,h2,h3{margin:0;font-family:var(--font-display);text-wrap:balance}
     </div>
   </div>
   <div class="toast" id="toast"></div>
+  <div class="banner" id="install-banner" hidden></div>
+  <div class="modal" id="about" hidden role="dialog" aria-modal="true" aria-labelledby="about-title">
+    <div class="modal-card">
+      <div class="modal-head"><h2 id="about-title">Lugano Parking</h2><button class="iconbtn" id="about-close" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+      <div class="modal-body" id="about-body"></div>
+    </div>
+  </div>
 
   <nav class="tabbar" role="tablist" aria-label="View">
     <button role="tab" id="tab-garages" aria-selected="true" data-view="garages">
@@ -1309,9 +1342,218 @@ h1,h2,h3{margin:0;font-family:var(--font-display);text-wrap:balance}
 }));
 </script>
 <script>
+/* ---------- Languages: English keys, Italian and German translations ---------- */
+const I18N={
+it:{
+"Loading availability…":"Caricamento disponibilità…",
+"Garages":"Autosili","Going to":"Vado a","Street":"Strada",
+"Refresh availability":"Aggiorna disponibilità","Refresh":"Aggiorna","About":"Info",
+"No live data":"Nessun dato live","Full":"Pieno","Almost full":"Quasi pieno","Filling up":"Si sta riempiendo","Plenty of space":"Molto posto",
+"Updated from the city feed":"Aggiornato dai dati della Città",
+"City feed not reachable from here · showing {what}":"Dati della Città non raggiungibili · mostro {what}",
+"the last stored update":"l'ultimo aggiornamento salvato","the saved snapshot":"l'istantanea salvata",
+"Location is off for this site · allow it in your browser settings":"Posizione disattivata per questo sito · abilitala nelle impostazioni del browser",
+"Could not get a fix · try again outside":"Posizione non trovata · riprova all'aperto",
+"Location not available right now":"Posizione non disponibile al momento",
+"Location is not supported on this device":"Posizione non supportata su questo dispositivo",
+"You are {d} from Lugano · garages sorted by distance anyway":"Sei a {d} da Lugano · autosili comunque ordinati per distanza",
+"Show my location":"Mostra la mia posizione","My location":"La mia posizione",
+"Monday":"Lunedì","Tuesday":"Martedì","Wednesday":"Mercoledì","Thursday":"Giovedì","Friday":"Venerdì","Saturday":"Sabato","Sunday":"Domenica",
+"Usually frees up from {h}":"Di solito si libera dalle {h}","Usually full from {h}":"Di solito pieno dalle {h}",
+"Typical occupancy":"Occupazione tipica","Collecting data":"Raccolta dati in corso","{n} days so far":"{n} giorni finora",
+"Patterns for this weekday appear after a few weeks of readings.":"Le tendenze per questo giorno compaiono dopo qualche settimana di rilevazioni.",
+"about {n} free":"circa {n} liberi","Usually about <b>{n} free</b> at this hour":"Di solito circa <b>{n} liberi</b> a quest'ora","(now {f})":"(ora {f})",
+"No readings for this hour yet.":"Nessuna rilevazione ancora per quest'ora.",
+"Typically full from {h}":"Tipicamente pieno dalle {h}","until about {h}":"fino alle {h} circa","Rarely full on this weekday.":"Raramente pieno in questo giorno.",
+"Typical {day}":"{day} tipico",
+"Saved":"Salvato","Blue zone":"Zona blu","Disc timer set · leave by {t}":"Timer del disco avviato · partire entro le {t}",
+"Disc ran out at {t}":"Disco scaduto alle {t}","Disc until {t} · {n} min left":"Disco fino alle {t} · {n} min rimasti","{name} · parked {t}":"{name} · parcheggiato {t}",
+"Find car":"Trova l'auto","Clear parking":"Rimuovi parcheggio","Your parking disc runs out at {t}.":"Il tuo disco orario scade alle {t}.","10 minutes left":"Mancano 10 minuti",
+"Shopping street":"Via dello shopping","Old town, cafés":"Centro storico, caffè","Theatre & museum":"Teatro e museo","Railway station":"Stazione ferroviaria","Lakeside park":"Parco sul lago","Beach & pools":"Spiaggia e piscine","Events":"Eventi","Hospital":"Ospedale","University":"Università",
+"Day":"Giornata","{m} min":"{m} min","{d} walk":"{d} a piedi","bus {n} + {m} min walk":"bus {n} + {m} min a piedi","3 or 8":"3 o 8",
+"first 30 min free":"primi 30 min gratis","day ticket incl. TPL bus":"biglietto giornaliero incl. bus TPL","price at the entrance":"prezzo all'entrata","Free":"Gratis",
+"Restaurant, shop or address":"Ristorante, negozio o indirizzo","Search a place":"Cerca un luogo","Pin":"Spillo",
+"No places found in Lugano for “{q}”. Try the pin instead.":"Nessun luogo trovato a Lugano per “{q}”. Prova con lo spillo sulla mappa.",
+"Search is not reachable right now. Pick a spot below or drop a pin on the map.":"La ricerca non è raggiungibile al momento. Scegli un luogo qui sotto o metti uno spillo sulla mappa.",
+"Parking for {name} · Lugano Parking":"Parcheggio per {name} · Lugano Parking","Link copied":"Link copiato",
+"Where are you going?":"Dove vai?","Popular spots":"Luoghi frequenti",
+"Pick where you are headed and how long you stay. The app ranks the garages by walking time, free spots right now and what the stay will cost.":"Scegli dove vai e per quanto resti. L'app ordina gli autosili per tempo a piedi, posti liberi adesso e costo della sosta.",
+"Tap the map to set your destination.":"Tocca la mappa per impostare la destinazione.",
+"Share":"Condividi","Change destination":"Cambia destinazione","Change":"Cambia","How long you stay":"Durata della sosta","Staying":"Resto","Rank by":"Ordina per",
+"Best pick":"Scelta migliore","Quickest":"Più veloce","Cheapest":"Più economico",
+"by bus":"in bus","walk":"a piedi","no live data":"nessun dato live","{n} free":"{n} liberi","now":"ora","min":"min","{t} away":"a {t}",
+"about, for {d}":"circa, per {d}","for {d}":"per {d}",
+"Walking times are estimates from the distance on the map (about 5 km/h). P+R times include the bus ride to the centre. Prices follow the posted tariffs for a daytime stay and are rounded to the next tariff step.":"I tempi a piedi sono stime dalla distanza sulla mappa (circa 5 km/h). Per i P+R è incluso il bus fino in centro. I prezzi seguono le tariffe esposte per una sosta diurna, arrotondate allo scatto successivo.",
+"Or on the street":"Oppure in strada","{z} · {a}":"{z} · {a}","no limit now":"senza limite ora","disc, max 1 h":"disco, max 1 h","max {x}":"max {x}","free from {t}":"gratis dalle {t}","Street parking rules apply; outlines are indicative.":"Valgono le regole della sosta su strada; i contorni sono indicativi.",
+"until {t}":"fino alle {t}","on Monday from {t}":"lunedì dalle {t}","from {t}":"dalle {t}","tomorrow from {t}":"domani dalle {t}",
+"09:00 tomorrow":"09:00 domani",
+"Arriving before 08:00: the disc counts from 08:00, so you may stay until 09:00.":"Arrivando prima delle 08:00 il disco conta dalle 08:00: puoi restare fino alle 09:00.",
+"Arriving after 18:00: free overnight. Set the disc to 08:00 for the next working day.":"Arrivando dopo le 18:00 la notte è gratuita. Imposta il disco sulle 08:00 del giorno feriale successivo.",
+"Set the disc to {t} (the next half-hour mark). One hour from there.":"Imposta il disco sulle {t} (la mezz'ora successiva). Un'ora da lì.",
+"Blue":"Blu","Meters {z}":"Parchimetri {z}",
+"Live":"Live","Stored":"Salvato","Snapshot":"Istantanea","updated":"aggiornato",
+"free spots in {n} garages":"posti liberi in {n} autosili","{n} full":"{n} pieni","1 full":"1 pieno","1 day so far":"1 giorno finora","none full":"nessuno pieno","Sort":"Ordina",
+"Nearest":"Più vicino","Near me":"Vicino a me","Most free":"Più liberi","Closest to centre":"Più vicino al centro","A–Z":"A–Z",
+"{n} spaces":"{n} posti","of {n} free":"su {n} liberi","{n} free of {m}":"{n} liberi su {m}","{d} away":"a {d}",
+"Garage counts come from the Città di Lugano real-time feed. Colours: green means plenty of space, amber means it is filling up, red means full or nearly full.":"I conteggi arrivano dai dati in tempo reale della Città di Lugano. Colori: verde molto posto, arancione si sta riempiendo, rosso pieno o quasi.",
+"Street parking right now":"Sosta su strada adesso","Disc · max 1 h":"Disco · max 1 h","Free, no limit":"Gratis, senza limite","Enforced {t}":"In vigore {t}","Enforced again {t}":"Di nuovo in vigore {t}",
+"Meters":"Parchimetri","Paid":"A pagamento","Paid {t}":"A pagamento {t}","Paid again {t}":"Di nuovo a pagamento {t}",
+"Where you are":"Dove sei","Disc, max 1 h, {t}":"Disco, max 1 h, {t}","{rule}, {t}":"{rule}, {t}","Free right now · enforced again {t}":"Gratis adesso · di nuovo in vigore {t}","Free right now · paid again {t}":"Gratis adesso · di nuovo a pagamento {t}",
+"Disc now":"Disco ora","Free now":"Gratis ora","Paid now":"A pagamento ora","Avoid":"Evitare",
+"No marked zone outline at your position. Check the lines and the sign at the bay.":"Nessuna zona delimitata nella tua posizione. Controlla le righe e il cartello sul posto.",
+"Zones on the map":"Zone sulla mappa","How to read the markings":"Come leggere la segnaletica",
+"Blue lines: parking disc, 1 hour, Mon–Sat 08:00–18:00":"Righe blu: disco orario, 1 ora, lun–sab 08:00–18:00",
+"White lines with a meter: pay, Mon–Sat 07:00–19:00, time limit per zone":"Righe bianche con parchimetro: a pagamento, lun–sab 07:00–19:00, durata massima per zona",
+"Yellow lines: reserved, never park":"Righe gialle: riservato, mai parcheggiare",
+"Zone outlines are indicative and show where each type of bay is typical, not every single space. The sign at the bay always wins. Hours and tariffs follow the city ordinance 2.2.1 (in force since 2023, meter tariffs as last amended).":"I contorni delle zone sono indicativi e mostrano dove è tipico ogni tipo di posto, non ogni singolo stallo. Vale sempre il cartello sul posto. Orari e tariffe seguono l'ordinanza comunale 2.2.1 (in vigore dal 2023, tariffe dei parchimetri come da ultima modifica).",
+"Blue zone (zona blu)":"Zona blu","Parking disc, max 1 hour":"Disco orario, max 1 ora","Mon–Sat 08:00–18:00":"Lun–sab 08:00–18:00","Mon–Sat 07:00–19:00":"Lun–sab 07:00–19:00","Always":"Sempre",
+"Blue-marked bays in residential streets. Set your parking disc to the next half-hour after you arrive; you may stay one hour from that mark. Outside the enforced hours and on Sundays and public holidays parking is free and unlimited. Residents with a permit park without a time limit.":"Posti con righe blu nei quartieri residenziali. Imposta il disco orario sulla mezz'ora successiva all'arrivo; puoi restare un'ora da quel momento. Fuori dagli orari in vigore, la domenica e nei festivi la sosta è libera e senza limiti. I residenti con permesso parcheggiano senza limite di tempo.",
+"Meter zone 1 · centre":"Zona parchimetri 1 · centro","Meters · zone 1":"Parchimetri · zona 1","Paid, max 90 min":"A pagamento, max 90 min",
+"White bays with parking meters in the city centre: lakefront, Piazza Castello, Via Pretorio and Corso Pestalozzi. Pay at the meter, with Parkingpay or TWINT. Free outside the enforced hours and on Sundays.":"Posti bianchi con parchimetro in centro: lungolago, Piazza Castello, Via Pretorio e Corso Pestalozzi. Si paga al parchimetro, con Parkingpay o TWINT. Gratis fuori dagli orari in vigore e la domenica.",
+"Meter zone 2 · inner ring":"Zona parchimetri 2 · anello interno","Meters · zone 2":"Parchimetri · zona 2","Paid, max 2 h":"A pagamento, max 2 h",
+"White metered bays around the station, Via Trevano and the Lido. Pay at the meter, with Parkingpay or TWINT. Free outside the enforced hours and on Sundays.":"Posti bianchi con parchimetro attorno alla stazione, in Via Trevano e al Lido. Si paga al parchimetro, con Parkingpay o TWINT. Gratis fuori dagli orari in vigore e la domenica.",
+"Meter zone 3 · outer":"Zona parchimetri 3 · esterna","Meters · zone 3":"Parchimetri · zona 3","Paid, max 4 h":"A pagamento, max 4 h",
+"Cheap long-stay metered bays in the outer districts such as Cornaredo. Pay at the meter, with Parkingpay or TWINT. Free outside the enforced hours and on Sundays.":"Posti con parchimetro economici per soste lunghe nei quartieri esterni come Cornaredo. Si paga al parchimetro, con Parkingpay o TWINT. Gratis fuori dagli orari in vigore e la domenica.",
+"Yellow bays":"Posti gialli","Permit holders only":"Solo con permesso",
+"Yellow-marked bays are reserved for a specific company, residence or service. Never park there without the matching permit, whatever the time of day.":"I posti con righe gialle sono riservati a un'azienda, un'abitazione o un servizio. Non parcheggiare mai senza il relativo permesso, a qualsiasi ora.",
+"City tariff A":"Tariffa comunale A","Operator tariff":"Tariffa del gestore","Park & Ride":"Park & Ride","free":"gratis","Day ticket":"Giornaliero","+ per hour":"+ per ora","Evening 18–06":"Sera 18–06",
+"Night 19:00–07:00: CHF 1 per hour":"Notte 19:00–07:00: CHF 1 all'ora","Night 23:00–07:00: CHF 1 per hour (day tariff runs until 23:00 here)":"Notte 23:00–07:00: CHF 1 all'ora (qui la tariffa diurna vale fino alle 23:00)",
+"Open 24 h":"Aperto 24 h","Lost ticket CHF 43. Pay at the machine or with Parkingpay / TWINT.":"Biglietto smarrito CHF 43. Si paga alla cassa o con Parkingpay / TWINT.","Lost ticket CHF 43.":"Biglietto smarrito CHF 43.",
+"Privately run garage. Prices are posted at the entrance and differ from the city tariff.":"Autosilo a gestione privata. I prezzi sono esposti all'entrata e differiscono dalla tariffa comunale.",
+"The CHF 5.20 day ticket (Mon–Fri 06:00–16:00) is also a day pass for TPL buses in zone 100. Annual pass CHF 650 (CHF 500 for Lugano residents).":"Il giornaliero da CHF 5.20 (lun–ven 06:00–16:00) vale anche come biglietto giornaliero per i bus TPL nella zona 100. Abbonamento annuale CHF 650 (CHF 500 per i residenti di Lugano).",
+"Shopping":"Shopping","Via Nassa 6 min walk":"Via Nassa a 6 min a piedi","Closest to Via Nassa":"Il più vicino a Via Nassa","Often full":"Spesso pieno","Lakefront":"Lungolago","Lido & Cassarate":"Lido e Cassarate","Open-air":"All'aperto","Near the station":"Vicino alla stazione","Bus 3 and 8 to centre":"Bus 3 e 8 per il centro","Bus 1 every 10 min":"Bus 1 ogni 10 min",
+"Back to list":"Torna alla lista","Free now":"Liberi ora","Status":"Stato","Occupancy not published":"Occupazione non pubblicata","Updated {t}":"Aggiornato {t}",
+"Navigate":"Naviga","Open in Maps":"Apri in Maps","Parked here since {t} · clear":"Parcheggiato qui dalle {t} · rimuovi","I parked here":"Ho parcheggiato qui","Good to know":"Da sapere",
+"To {name}":"Fino a {name}","~{m} min · {sub}":"~{m} min · {sub}","~{m} min walk · {d}":"~{m} min a piedi · {d}","Cost for {d}":"Costo per {d}","See entrance":"Vedi all'entrata","about {c}":"circa {c}",
+"From you":"Da te","Tip":"Consiglio","Area":"Zona","Hours":"Orari","Capacity":"Capacità",
+"Right now":"Adesso","Reserved":"Riservato","Disc, max 1 h":"Disco, max 1 h","Paid, max {x}":"A pagamento, max {x}","Enforced":"In vigore","Sundays and holidays free":"Domenica e festivi gratis",
+"Tariff":"Tariffa","Parking disc helper":"Aiuto disco orario","I arrive at":"Arrivo alle","I parked here · start disc timer":"Ho parcheggiato qui · avvia il timer del disco",
+"Shows the time left at the top of the app and sends a reminder 10 minutes before, when the app is allowed to notify you.":"Mostra il tempo rimasto in alto nell'app e invia un promemoria 10 minuti prima, se l'app può inviare notifiche.",
+"Where":"Dove","Quartiere":"Quartiere","Outline on the map is indicative. Follow the signs and markings at the bay.":"Il contorno sulla mappa è indicativo. Segui i cartelli e la segnaletica sul posto.","Leave by":"Partire entro le",
+"Tap the map where you are going":"Tocca la mappa dove vuoi andare","Pinned spot":"Punto scelto","Shared spot":"Punto condiviso",
+"App updated · reopen to get the new version":"App aggiornata · riapri per la nuova versione",
+"Language":"Lingua","Add to home screen":"Aggiungi alla schermata Home","Install app":"Installa l'app",
+"On iPhone: tap Share, then “Add to Home Screen”. The app then opens full screen like a normal app.":"Su iPhone: tocca Condividi, poi “Aggiungi alla schermata Home”. L'app si apre poi a schermo intero come un'app normale.",
+"On Android: open the browser menu and choose “Install app” or “Add to Home screen”.":"Su Android: apri il menu del browser e scegli “Installa app” o “Aggiungi a schermata Home”.",
+"Feedback":"Feedback","Something wrong or missing? Tell me.":"Qualcosa non va o manca? Scrivimi.","Send feedback":"Invia feedback",
+"Data":"Dati","Garage counts: Città di Lugano real-time feed. Street rules: city ordinance 2.2.1. Map: OpenFreeMap and OpenStreetMap contributors. Place search: Photon.":"Conteggi autosili: dati in tempo reale della Città di Lugano. Regole su strada: ordinanza comunale 2.2.1. Mappa: OpenFreeMap e contributori OpenStreetMap. Ricerca luoghi: Photon.",
+"Free, no ads, no account, no tracking. Built in Lugano by Julian Bigler.":"Gratis, senza pubblicità, senza account, senza tracciamento. Fatta a Lugano da Julian Bigler.",
+"Add Lugano Parking to your home screen":"Aggiungi Lugano Parking alla schermata Home","It opens full screen and works offline.":"Si apre a schermo intero e funziona anche offline.","Show me how":"Come fare","Not now":"Non ora","Close":"Chiudi",
+"Garages & live data":"Autosili e dati live","Where to park for a destination":"Dove parcheggiare per una destinazione","Street parking rules":"Regole della sosta su strada",
+"Version":"Versione"
+},
+de:{
+"Loading availability…":"Belegung wird geladen…",
+"Garages":"Parkhäuser","Going to":"Ziel","Street":"Strasse",
+"Refresh availability":"Belegung aktualisieren","Refresh":"Aktualisieren","About":"Info",
+"No live data":"Keine Live-Daten","Full":"Voll","Almost full":"Fast voll","Filling up":"Füllt sich","Plenty of space":"Viel Platz",
+"Updated from the city feed":"Von den Stadtdaten aktualisiert",
+"City feed not reachable from here · showing {what}":"Stadtdaten nicht erreichbar · zeige {what}",
+"the last stored update":"die letzte gespeicherte Aktualisierung","the saved snapshot":"den gespeicherten Stand",
+"Location is off for this site · allow it in your browser settings":"Standort ist für diese Seite aus · in den Browser-Einstellungen erlauben",
+"Could not get a fix · try again outside":"Kein Standort gefunden · im Freien erneut versuchen",
+"Location not available right now":"Standort gerade nicht verfügbar",
+"Location is not supported on this device":"Standort wird auf diesem Gerät nicht unterstützt",
+"You are {d} from Lugano · garages sorted by distance anyway":"Du bist {d} von Lugano entfernt · Parkhäuser trotzdem nach Distanz sortiert",
+"Show my location":"Meinen Standort zeigen","My location":"Mein Standort",
+"Monday":"Montag","Tuesday":"Dienstag","Wednesday":"Mittwoch","Thursday":"Donnerstag","Friday":"Freitag","Saturday":"Samstag","Sunday":"Sonntag",
+"Usually frees up from {h}":"Meist wieder frei ab {h}","Usually full from {h}":"Meist voll ab {h}",
+"Typical occupancy":"Typische Belegung","Collecting data":"Daten werden gesammelt","{n} days so far":"bisher {n} Tage",
+"Patterns for this weekday appear after a few weeks of readings.":"Muster für diesen Wochentag erscheinen nach einigen Wochen Messungen.",
+"about {n} free":"etwa {n} frei","Usually about <b>{n} free</b> at this hour":"Um diese Zeit meist etwa <b>{n} frei</b>","(now {f})":"(jetzt {f})",
+"No readings for this hour yet.":"Für diese Stunde noch keine Messungen.",
+"Typically full from {h}":"Typischerweise voll ab {h}","until about {h}":"bis etwa {h}","Rarely full on this weekday.":"An diesem Wochentag selten voll.",
+"Typical {day}":"Typischer {day}",
+"Saved":"Gespeichert","Blue zone":"Blaue Zone","Disc timer set · leave by {t}":"Parkscheiben-Timer gesetzt · wegfahren bis {t}",
+"Disc ran out at {t}":"Parkzeit um {t} abgelaufen","Disc until {t} · {n} min left":"Parkscheibe bis {t} · noch {n} min","{name} · parked {t}":"{name} · parkiert {t}",
+"Find car":"Auto finden","Clear parking":"Parkplatz löschen","Your parking disc runs out at {t}.":"Deine Parkscheibe läuft um {t} ab.","10 minutes left":"Noch 10 Minuten",
+"Shopping street":"Einkaufsstrasse","Old town, cafés":"Altstadt, Cafés","Theatre & museum":"Theater und Museum","Railway station":"Bahnhof","Lakeside park":"Park am See","Beach & pools":"Strandbad","Events":"Veranstaltungen","Hospital":"Spital","University":"Universität",
+"Day":"Tag","{m} min":"{m} min","{d} walk":"{d} zu Fuss","bus {n} + {m} min walk":"Bus {n} + {m} min zu Fuss","3 or 8":"3 oder 8",
+"first 30 min free":"erste 30 min gratis","day ticket incl. TPL bus":"Tageskarte inkl. TPL-Bus","price at the entrance":"Preis am Eingang","Free":"Gratis",
+"Restaurant, shop or address":"Restaurant, Laden oder Adresse","Search a place":"Ort suchen","Pin":"Pin",
+"No places found in Lugano for “{q}”. Try the pin instead.":"Keine Orte in Lugano für “{q}” gefunden. Versuch es mit dem Pin auf der Karte.",
+"Search is not reachable right now. Pick a spot below or drop a pin on the map.":"Die Suche ist gerade nicht erreichbar. Wähle unten einen Ort oder setze einen Pin auf der Karte.",
+"Parking for {name} · Lugano Parking":"Parken für {name} · Lugano Parking","Link copied":"Link kopiert",
+"Where are you going?":"Wohin gehst du?","Popular spots":"Beliebte Orte",
+"Pick where you are headed and how long you stay. The app ranks the garages by walking time, free spots right now and what the stay will cost.":"Wähle dein Ziel und wie lange du bleibst. Die App ordnet die Parkhäuser nach Gehzeit, freien Plätzen jetzt und Kosten.",
+"Tap the map to set your destination.":"Tippe auf die Karte, um dein Ziel zu setzen.",
+"Share":"Teilen","Change destination":"Ziel ändern","Change":"Ändern","How long you stay":"Aufenthaltsdauer","Staying":"Dauer","Rank by":"Sortieren nach",
+"Best pick":"Beste Wahl","Quickest":"Schnellste","Cheapest":"Günstigste",
+"by bus":"mit Bus","walk":"zu Fuss","no live data":"keine Live-Daten","{n} free":"{n} frei","now":"jetzt","min":"min","{t} away":"{t} entfernt",
+"about, for {d}":"etwa, für {d}","for {d}":"für {d}",
+"Walking times are estimates from the distance on the map (about 5 km/h). P+R times include the bus ride to the centre. Prices follow the posted tariffs for a daytime stay and are rounded to the next tariff step.":"Gehzeiten sind Schätzungen aus der Distanz auf der Karte (etwa 5 km/h). Bei P+R ist die Busfahrt ins Zentrum eingerechnet. Preise folgen den ausgehängten Tagtarifen, gerundet auf die nächste Tarifstufe.",
+"Or on the street":"Oder auf der Strasse","{z} · {a}":"{z} · {a}","no limit now":"jetzt ohne Limit","disc, max 1 h":"Parkscheibe, max 1 h","max {x}":"max {x}","free from {t}":"gratis ab {t}","Street parking rules apply; outlines are indicative.":"Es gelten die Strassenregeln; die Umrisse sind Richtwerte.",
+"until {t}":"bis {t}","on Monday from {t}":"am Montag ab {t}","from {t}":"ab {t}","tomorrow from {t}":"morgen ab {t}",
+"09:00 tomorrow":"09:00 morgen",
+"Arriving before 08:00: the disc counts from 08:00, so you may stay until 09:00.":"Ankunft vor 08:00: Die Parkscheibe zählt ab 08:00, du darfst bis 09:00 bleiben.",
+"Arriving after 18:00: free overnight. Set the disc to 08:00 for the next working day.":"Ankunft nach 18:00: über Nacht gratis. Stelle die Parkscheibe auf 08:00 des nächsten Werktags.",
+"Set the disc to {t} (the next half-hour mark). One hour from there.":"Stelle die Parkscheibe auf {t} (die nächste halbe Stunde). Eine Stunde ab dann.",
+"Blue":"Blau","Meters {z}":"Parkuhr {z}",
+"Live":"Live","Stored":"Gespeichert","Snapshot":"Stand","updated":"aktualisiert",
+"free spots in {n} garages":"freie Plätze in {n} Parkhäusern","{n} full":"{n} voll","1 full":"1 voll","1 day so far":"bisher 1 Tag","none full":"keines voll","Sort":"Sortieren",
+"Nearest":"Am nächsten","Near me":"In meiner Nähe","Most free":"Meiste freie","Closest to centre":"Nah am Zentrum","A–Z":"A–Z",
+"{n} spaces":"{n} Plätze","of {n} free":"von {n} frei","{n} free of {m}":"{n} von {m} frei","{d} away":"{d} entfernt",
+"Garage counts come from the Città di Lugano real-time feed. Colours: green means plenty of space, amber means it is filling up, red means full or nearly full.":"Die Zahlen stammen aus den Echtzeitdaten der Stadt Lugano. Farben: Grün viel Platz, Orange füllt sich, Rot voll oder fast voll.",
+"Street parking right now":"Parkieren auf der Strasse jetzt","Disc · max 1 h":"Parkscheibe · max 1 h","Free, no limit":"Gratis, ohne Limit","Enforced {t}":"Gilt {t}","Enforced again {t}":"Gilt wieder {t}",
+"Meters":"Parkuhren","Paid":"Gebührenpflichtig","Paid {t}":"Gebührenpflichtig {t}","Paid again {t}":"Wieder gebührenpflichtig {t}",
+"Where you are":"Wo du bist","Disc, max 1 h, {t}":"Parkscheibe, max 1 h, {t}","{rule}, {t}":"{rule}, {t}","Free right now · enforced again {t}":"Jetzt gratis · gilt wieder {t}","Free right now · paid again {t}":"Jetzt gratis · wieder gebührenpflichtig {t}",
+"Disc now":"Jetzt Parkscheibe","Free now":"Jetzt gratis","Paid now":"Jetzt kostenpflichtig","Avoid":"Meiden",
+"No marked zone outline at your position. Check the lines and the sign at the bay.":"An deiner Position ist keine Zone eingezeichnet. Achte auf die Linien und das Schild am Parkfeld.",
+"Zones on the map":"Zonen auf der Karte","How to read the markings":"So liest du die Markierungen",
+"Blue lines: parking disc, 1 hour, Mon–Sat 08:00–18:00":"Blaue Linien: Parkscheibe, 1 Stunde, Mo–Sa 08:00–18:00",
+"White lines with a meter: pay, Mon–Sat 07:00–19:00, time limit per zone":"Weisse Linien mit Parkuhr: gebührenpflichtig, Mo–Sa 07:00–19:00, Höchstdauer je Zone",
+"Yellow lines: reserved, never park":"Gelbe Linien: reserviert, nie parkieren",
+"Zone outlines are indicative and show where each type of bay is typical, not every single space. The sign at the bay always wins. Hours and tariffs follow the city ordinance 2.2.1 (in force since 2023, meter tariffs as last amended).":"Die Zonenumrisse sind Richtwerte und zeigen, wo welche Art Parkfeld typisch ist, nicht jeden einzelnen Platz. Das Schild am Parkfeld gilt immer. Zeiten und Tarife folgen der städtischen Verordnung 2.2.1 (in Kraft seit 2023, Parkuhrtarife gemäss letzter Änderung).",
+"Blue zone (zona blu)":"Blaue Zone (zona blu)","Parking disc, max 1 hour":"Parkscheibe, max 1 Stunde","Mon–Sat 08:00–18:00":"Mo–Sa 08:00–18:00","Mon–Sat 07:00–19:00":"Mo–Sa 07:00–19:00","Always":"Immer",
+"Blue-marked bays in residential streets. Set your parking disc to the next half-hour after you arrive; you may stay one hour from that mark. Outside the enforced hours and on Sundays and public holidays parking is free and unlimited. Residents with a permit park without a time limit.":"Blau markierte Parkfelder in Wohnquartieren. Stelle die Parkscheibe auf die nächste halbe Stunde nach der Ankunft; ab dann darfst du eine Stunde bleiben. Ausserhalb der Zeiten sowie an Sonn- und Feiertagen ist das Parkieren gratis und unbegrenzt. Anwohner mit Bewilligung parkieren ohne Zeitlimit.",
+"Meter zone 1 · centre":"Parkuhr-Zone 1 · Zentrum","Meters · zone 1":"Parkuhr · Zone 1","Paid, max 90 min":"Gebührenpflichtig, max 90 min",
+"White bays with parking meters in the city centre: lakefront, Piazza Castello, Via Pretorio and Corso Pestalozzi. Pay at the meter, with Parkingpay or TWINT. Free outside the enforced hours and on Sundays.":"Weisse Parkfelder mit Parkuhr im Zentrum: Seepromenade, Piazza Castello, Via Pretorio und Corso Pestalozzi. Bezahlen an der Parkuhr, mit Parkingpay oder TWINT. Ausserhalb der Zeiten und sonntags gratis.",
+"Meter zone 2 · inner ring":"Parkuhr-Zone 2 · innerer Ring","Meters · zone 2":"Parkuhr · Zone 2","Paid, max 2 h":"Gebührenpflichtig, max 2 h",
+"White metered bays around the station, Via Trevano and the Lido. Pay at the meter, with Parkingpay or TWINT. Free outside the enforced hours and on Sundays.":"Weisse Parkfelder mit Parkuhr rund um den Bahnhof, an der Via Trevano und beim Lido. Bezahlen an der Parkuhr, mit Parkingpay oder TWINT. Ausserhalb der Zeiten und sonntags gratis.",
+"Meter zone 3 · outer":"Parkuhr-Zone 3 · aussen","Meters · zone 3":"Parkuhr · Zone 3","Paid, max 4 h":"Gebührenpflichtig, max 4 h",
+"Cheap long-stay metered bays in the outer districts such as Cornaredo. Pay at the meter, with Parkingpay or TWINT. Free outside the enforced hours and on Sundays.":"Günstige Langzeit-Parkfelder mit Parkuhr in den Aussenquartieren wie Cornaredo. Bezahlen an der Parkuhr, mit Parkingpay oder TWINT. Ausserhalb der Zeiten und sonntags gratis.",
+"Yellow bays":"Gelbe Parkfelder","Permit holders only":"Nur mit Bewilligung",
+"Yellow-marked bays are reserved for a specific company, residence or service. Never park there without the matching permit, whatever the time of day.":"Gelb markierte Parkfelder sind für eine bestimmte Firma, Liegenschaft oder einen Dienst reserviert. Nie ohne die passende Bewilligung parkieren, zu keiner Tageszeit.",
+"City tariff A":"Stadttarif A","Operator tariff":"Tarif des Betreibers","Park & Ride":"Park & Ride","free":"gratis","Day ticket":"Tageskarte","+ per hour":"+ pro Stunde","Evening 18–06":"Abend 18–06",
+"Night 19:00–07:00: CHF 1 per hour":"Nacht 19:00–07:00: CHF 1 pro Stunde","Night 23:00–07:00: CHF 1 per hour (day tariff runs until 23:00 here)":"Nacht 23:00–07:00: CHF 1 pro Stunde (hier gilt der Tagtarif bis 23:00)",
+"Open 24 h":"24 h geöffnet","Lost ticket CHF 43. Pay at the machine or with Parkingpay / TWINT.":"Verlorenes Ticket CHF 43. Bezahlen am Automaten oder mit Parkingpay / TWINT.","Lost ticket CHF 43.":"Verlorenes Ticket CHF 43.",
+"Privately run garage. Prices are posted at the entrance and differ from the city tariff.":"Privat betriebenes Parkhaus. Die Preise hängen am Eingang aus und weichen vom Stadttarif ab.",
+"The CHF 5.20 day ticket (Mon–Fri 06:00–16:00) is also a day pass for TPL buses in zone 100. Annual pass CHF 650 (CHF 500 for Lugano residents).":"Die Tageskarte für CHF 5.20 (Mo–Fr 06:00–16:00) gilt auch als Tageskarte für die TPL-Busse in Zone 100. Jahresabo CHF 650 (CHF 500 für Einwohner von Lugano).",
+"Shopping":"Einkaufen","Via Nassa 6 min walk":"Via Nassa 6 min zu Fuss","Closest to Via Nassa":"Am nächsten zur Via Nassa","Often full":"Oft voll","Lakefront":"Am See","Lido & Cassarate":"Lido und Cassarate","Open-air":"Im Freien","Near the station":"Nahe Bahnhof","Bus 3 and 8 to centre":"Bus 3 und 8 ins Zentrum","Bus 1 every 10 min":"Bus 1 alle 10 min",
+"Back to list":"Zurück zur Liste","Free now":"Jetzt frei","Status":"Status","Occupancy not published":"Belegung nicht veröffentlicht","Updated {t}":"Aktualisiert {t}",
+"Navigate":"Navigieren","Open in Maps":"In Maps öffnen","Parked here since {t} · clear":"Seit {t} hier parkiert · löschen","I parked here":"Ich habe hier parkiert","Good to know":"Gut zu wissen",
+"To {name}":"Bis {name}","~{m} min · {sub}":"~{m} min · {sub}","~{m} min walk · {d}":"~{m} min zu Fuss · {d}","Cost for {d}":"Kosten für {d}","See entrance":"Siehe Eingang","about {c}":"etwa {c}",
+"From you":"Von dir","Tip":"Tipp","Area":"Gebiet","Hours":"Öffnungszeiten","Capacity":"Kapazität",
+"Right now":"Jetzt","Reserved":"Reserviert","Disc, max 1 h":"Parkscheibe, max 1 h","Paid, max {x}":"Gebührenpflichtig, max {x}","Enforced":"Gültig","Sundays and holidays free":"Sonn- und Feiertage gratis",
+"Tariff":"Tarif","Parking disc helper":"Parkscheiben-Hilfe","I arrive at":"Ich komme an um","I parked here · start disc timer":"Ich habe hier parkiert · Timer starten",
+"Shows the time left at the top of the app and sends a reminder 10 minutes before, when the app is allowed to notify you.":"Zeigt die verbleibende Zeit oben in der App und erinnert 10 Minuten vorher, wenn die App Mitteilungen senden darf.",
+"Where":"Wo","Quartiere":"Quartier","Outline on the map is indicative. Follow the signs and markings at the bay.":"Der Umriss auf der Karte ist ein Richtwert. Beachte die Schilder und Markierungen am Parkfeld.","Leave by":"Wegfahren bis",
+"Tap the map where you are going":"Tippe auf der Karte auf dein Ziel","Pinned spot":"Gesetzter Punkt","Shared spot":"Geteilter Ort",
+"App updated · reopen to get the new version":"App aktualisiert · neu öffnen für die neue Version",
+"Language":"Sprache","Add to home screen":"Zum Home-Bildschirm","Install app":"App installieren",
+"On iPhone: tap Share, then “Add to Home Screen”. The app then opens full screen like a normal app.":"Auf dem iPhone: Teilen antippen, dann «Zum Home-Bildschirm». Die App öffnet sich danach im Vollbild wie eine normale App.",
+"On Android: open the browser menu and choose “Install app” or “Add to Home screen”.":"Auf Android: Browser-Menü öffnen und «App installieren» oder «Zum Startbildschirm hinzufügen» wählen.",
+"Feedback":"Feedback","Something wrong or missing? Tell me.":"Stimmt etwas nicht oder fehlt etwas? Sag es mir.","Send feedback":"Feedback senden",
+"Data":"Daten","Garage counts: Città di Lugano real-time feed. Street rules: city ordinance 2.2.1. Map: OpenFreeMap and OpenStreetMap contributors. Place search: Photon.":"Parkhaus-Zahlen: Echtzeitdaten der Stadt Lugano. Strassenregeln: städtische Verordnung 2.2.1. Karte: OpenFreeMap und OpenStreetMap-Mitwirkende. Ortssuche: Photon.",
+"Free, no ads, no account, no tracking. Built in Lugano by Julian Bigler.":"Gratis, ohne Werbung, ohne Konto, ohne Tracking. In Lugano gebaut von Julian Bigler.",
+"Add Lugano Parking to your home screen":"Lugano Parking zum Home-Bildschirm hinzufügen","It opens full screen and works offline.":"Öffnet sich im Vollbild und funktioniert auch offline.","Show me how":"So geht's","Not now":"Nicht jetzt","Close":"Schliessen",
+"Garages & live data":"Parkhäuser und Live-Daten","Where to park for a destination":"Wo parkieren für ein Ziel","Street parking rules":"Regeln auf der Strasse",
+"Version":"Version"
+}};
+const LANGS=[["en","English"],["it","Italiano"],["de","Deutsch"]];
+function detectLang(){ try{ const s=localStorage.getItem("lp.lang"); if(s&&I18N[s]||s==="en") return s; }catch(e){} const l=(navigator.languages||[navigator.language||"en"]).map(x=>String(x).toLowerCase()); for(const x of l){ if(x.startsWith("it")) return "it"; if(x.startsWith("de")) return "de"; if(x.startsWith("en")) return "en"; } return "en"; }
+let LANG=detectLang();
+const LOCALE={en:"en-GB",it:"it-CH",de:"de-CH"};
+function t(key,vars){ const d=I18N[LANG]; let s=(d&&d[key])||key; if(vars) for(const k in vars) s=s.split("{"+k+"}").join(vars[k]); return s; }
+function setLang(l){ LANG=l; try{ localStorage.setItem("lp.lang",l); }catch(e){} document.documentElement.lang=l; }
+document.documentElement.lang=LANG;
+
 (function(){
 'use strict';
 const $=s=>document.querySelector(s);
+const VERSION="6.0";
+const FEEDBACK_MAIL="juliancedric.bigler@student.unisg.ch";
+const COUNTER_SITE="luganoparking"; // GoatCounter site code (cookieless, privacy-friendly). Create the site at goatcounter.com with this name, or change it.
 
 /* ---------- Data ---------- */
 // Snapshot taken from the Città di Lugano live feed when this page was built; replaced by live or stored data when available.
@@ -1333,7 +1575,7 @@ const TARIFFS={
  PR:{label:"Park & Ride",rows:[["Day ticket","CHF 5.20"],["+ per hour","CHF 1"],["Evening 18–06","CHF 0.50/h"],["Sunday","CHF 0.50/h"]],night:"",hours:"Open 24 h",extra:"The CHF 5.20 day ticket (Mon–Fri 06:00–16:00) is also a day pass for TPL buses in zone 100. Annual pass CHF 650 (CHF 500 for Lugano residents)."},
 };
 const ZONES=[
- {id:"blue",type:"blue",name:"Blue zone (zona blu)",short:"Blue zone",c:"var(--blue)",soft:"var(--blue-soft)",
+ {id:"blue",type:"blue",name:"Blue zone (zona blu)",short:"Blue zone",c:"var(--blue)",soft:"var(--blue-soft)",maxH:1,
   rule:"Parking disc, max 1 hour",when:"Mon–Sat 08:00–18:00",
   desc:"Blue-marked bays in residential streets. Set your parking disc to the next half-hour after you arrive; you may stay one hour from that mark. Outside the enforced hours and on Sundays and public holidays parking is free and unlimited. Residents with a permit park without a time limit.",
   areas:[
@@ -1349,16 +1591,16 @@ const ZONES=[
    {n:"Breganzona",p:[[46.001,8.925],[46.010,8.927],[46.0105,8.935],[46.002,8.935]]},
    {n:"Pazzallo · Pambio-Noranco",p:[[45.987,8.94],[45.995,8.9395],[45.995,8.947],[45.988,8.947]]},
   ]},
- {id:"z1",type:"white",name:"Meter zone 1 · centre",short:"Meters · zone 1",c:"var(--white-zone)",soft:"var(--white-soft)",
-  rule:"Paid, max 90 min",when:"Mon–Sat 07:00–19:00",fee:[["30 min","CHF 1"],["60 min","CHF 2"],["90 min","CHF 3"]],
+ {id:"z1",type:"white",name:"Meter zone 1 · centre",short:"Meters · zone 1",c:"var(--white-zone)",soft:"var(--white-soft)",maxH:1.5,
+  rule:"Paid, max 90 min",when:"Mon–Sat 07:00–19:00",fee:[["30 min","CHF 1"],["60 min","CHF 2"],["90 min","CHF 3"]],feeH:[[0.5,1],[1,2],[1.5,3]],
   desc:"White bays with parking meters in the city centre: lakefront, Piazza Castello, Via Pretorio and Corso Pestalozzi. Pay at the meter, with Parkingpay or TWINT. Free outside the enforced hours and on Sundays.",
   areas:[{n:"Centro",p:[[46.0005,8.9465],[46.0035,8.9455],[46.0075,8.949],[46.008,8.957],[46.0035,8.958],[46.0015,8.953]]}]},
- {id:"z2",type:"white",name:"Meter zone 2 · inner ring",short:"Meters · zone 2",c:"var(--white-zone)",soft:"var(--white-soft)",
-  rule:"Paid, max 2 h",when:"Mon–Sat 07:00–19:00",fee:[["60 min","CHF 2"],["120 min","CHF 3"]],
+ {id:"z2",type:"white",name:"Meter zone 2 · inner ring",short:"Meters · zone 2",c:"var(--white-zone)",soft:"var(--white-soft)",maxH:2,
+  rule:"Paid, max 2 h",when:"Mon–Sat 07:00–19:00",fee:[["60 min","CHF 2"],["120 min","CHF 3"]],feeH:[[1,2],[2,3]],
   desc:"White metered bays around the station, Via Trevano and the Lido. Pay at the meter, with Parkingpay or TWINT. Free outside the enforced hours and on Sundays.",
   areas:[{n:"Stazione",p:[[46.0045,8.9445],[46.0075,8.9445],[46.008,8.948],[46.005,8.9475]]},{n:"Via Trevano",p:[[46.008,8.9535],[46.012,8.955],[46.0115,8.9605],[46.008,8.9595]]},{n:"Lido",p:[[46.002,8.9615],[46.0055,8.9615],[46.0055,8.968],[46.002,8.967]]}]},
- {id:"z3",type:"white",name:"Meter zone 3 · outer",short:"Meters · zone 3",c:"var(--white-zone)",soft:"var(--white-soft)",
-  rule:"Paid, max 4 h",when:"Mon–Sat 07:00–19:00",fee:[["1 h","CHF 0.50"],["2 h","CHF 1"],["3 h","CHF 2"],["4 h","CHF 2"]],
+ {id:"z3",type:"white",name:"Meter zone 3 · outer",short:"Meters · zone 3",c:"var(--white-zone)",soft:"var(--white-soft)",maxH:4,
+  rule:"Paid, max 4 h",when:"Mon–Sat 07:00–19:00",fee:[["1 h","CHF 0.50"],["2 h","CHF 1"],["3 h","CHF 2"],["4 h","CHF 2"]],feeH:[[1,0.5],[2,1],[3,2],[4,2]],
   desc:"Cheap long-stay metered bays in the outer districts such as Cornaredo. Pay at the meter, with Parkingpay or TWINT. Free outside the enforced hours and on Sundays.",
   areas:[{n:"Cornaredo",p:[[46.019,8.958],[46.029,8.961],[46.029,8.968],[46.019,8.966]]}]},
  {id:"yellow",type:"yellow",name:"Yellow bays",short:"Yellow bays",c:"var(--yellow)",soft:"var(--yellow-soft)",
@@ -1374,12 +1616,12 @@ GARAGES.forEach(g=>state.counts[g.id]=g.free);
 
 function levelOf(g){
   const f=state.counts[g.id];
-  if(f==null) return {k:"nodata",c:"var(--muted)",t:"No live data"};
+  if(f==null) return {k:"nodata",c:"var(--muted)",t:t("No live data")};
   const pct=f/g.cap;
-  if(f===0) return {k:"bad",c:"var(--bad)",t:"Full"};
-  if(f<15||pct<0.08) return {k:"bad",c:"var(--bad)",t:"Almost full"};
-  if(pct<0.25) return {k:"warn",c:"var(--warn)",t:"Filling up"};
-  return {k:"ok",c:"var(--ok)",t:"Plenty of space"};
+  if(f===0) return {k:"bad",c:"var(--bad)",t:t("Full")};
+  if(f<15||pct<0.08) return {k:"bad",c:"var(--bad)",t:t("Almost full")};
+  if(pct<0.25) return {k:"warn",c:"var(--warn)",t:t("Filling up")};
+  return {k:"ok",c:"var(--ok)",t:t("Plenty of space")};
 }
 const FEED="https://www.lugano.ch/vivere-lugano/muoversi-lugano/posteggi/content/0.html?ajax=true&ajaxAction=map";
 function parseFeed(html){
@@ -1388,17 +1630,17 @@ function parseFeed(html){
   return out;
 }
 async function fetchLive(){
-  const ctrl=new AbortController(); const t=setTimeout(()=>ctrl.abort(),7000);
+  const ctrl=new AbortController(); const tm=setTimeout(()=>ctrl.abort(),7000);
   try{ const r=await fetch(FEED,{signal:ctrl.signal,cache:"no-store"}); if(!r.ok) throw 0; const c=parseFeed(await r.text()); if(Object.keys(c).length<3) throw 0; return c; }
-  finally{ clearTimeout(t); }
+  finally{ clearTimeout(tm); }
 }
 function applyCounts(c,source,ts){
   Object.assign(state.counts,c); state.source=source; state.ts=ts; renderAll(); if(source==="live") saveCounts();
 }
 async function refresh(manual){
   const b=$("#refresh"); b.classList.add("spin");
-  try{ const c=await fetchLive(); applyCounts(c,"live",new Date()); if(manual) toast("Updated from the city feed"); }
-  catch(e){ if(manual) toast("City feed not reachable from here · showing "+(state.source==="stored"?"the last stored update":"the saved snapshot")); }
+  try{ const c=await fetchLive(); applyCounts(c,"live",new Date()); if(manual) toast(t("Updated from the city feed")); }
+  catch(e){ if(manual) toast(t("City feed not reachable from here · showing {what}",{what:t(state.source==="stored"?"the last stored update":"the saved snapshot")})); }
   finally{ b.classList.remove("spin"); }
 }
 // Remember the last live counts so a reopen with no network still shows something recent.
@@ -1414,11 +1656,12 @@ function fmtDist(km){ return km<0.95?Math.round(km*100)*10+" m":km<10?km.toFixed
 function garageDist(g){ return state.pos?distKm(state.pos,[g.lat,g.lng]):null; }
 function inPoly(pt,poly){ let inside=false; for(let i=0,j=poly.length-1;i<poly.length;j=i++){ const yi=poly[i][0],xi=poly[i][1],yj=poly[j][0],xj=poly[j][1]; if(((yi>pt[0])!==(yj>pt[0]))&&(pt[1]<(xj-xi)*(pt[0]-yi)/(yj-yi)+xi)) inside=!inside; } return inside; }
 function zoneAt(pt){ for(const z of ZONES) for(const a of z.areas) if(inPoly(pt,a.p)) return {z,a}; return null; }
+// Distance from a point to an area: zero inside, else the nearest polygon vertex or edge midpoint.
+function areaDist(pt,poly){ if(inPoly(pt,poly)) return 0; let best=1e9; for(let i=0;i<poly.length;i++){ const a=poly[i], b=poly[(i+1)%poly.length]; for(const q of [a,[(a[0]+b[0])/2,(a[1]+b[1])/2]]) best=Math.min(best,distKm(pt,q)); } return best; }
 let watchId=null, meMarker=null, meCircle=null, locBtn=null;
 function geoError(e){
   state.geo=false; if(locBtn) locBtn.classList.remove("locating");
-  const msg=e&&e.code===1?"Location is off for this site · allow it in your browser settings":e&&e.code===3?"Could not get a fix · try again outside":"Location not available right now";
-  toast(msg);
+  toast(t(e&&e.code===1?"Location is off for this site · allow it in your browser settings":e&&e.code===3?"Could not get a fix · try again outside":"Location not available right now"));
 }
 function onPosition(p){
   const pt=[p.coords.latitude,p.coords.longitude]; const first=!state.pos; const moved=first||distKm(state.pos,pt)>0.03;
@@ -1430,7 +1673,7 @@ function onPosition(p){
   else if(meCircle){ meCircle.remove(); meCircle=null; }
   if(first){
     const far=distKm(pt,LUGANO);
-    if(far>25){ toast("You are "+fmtDist(far)+" from Lugano · garages sorted by distance anyway"); }
+    if(far>25){ toast(t("You are {d} from Lugano · garages sorted by distance anyway",{d:fmtDist(far)})); }
     else if(state.view==="garages"){ const near=sortedGarages("near")[0]; const b=L.latLngBounds([pt,[near.lat,near.lng]]); map.flyToBounds(b,{paddingTopLeft:[40,170],paddingBottomRight:[40,Math.round(window.innerHeight*0.5)],maxZoom:16,duration:.7}); }
     else map.flyTo(pt,15.5,{duration:.7});
     if(state.view==="garages"&&!sheet.classList.contains("detail-mode")){ state.sort="near"; if(sheetPos==="peek") setSheet("half"); }
@@ -1439,7 +1682,7 @@ function onPosition(p){
   if(watchId==null&&navigator.geolocation){ watchId=navigator.geolocation.watchPosition(onPosition,()=>{},{enableHighAccuracy:true,maximumAge:15000,timeout:20000}); }
 }
 function locate(){
-  if(!navigator.geolocation){ toast("Location is not supported on this device"); return; }
+  if(!navigator.geolocation){ toast(t("Location is not supported on this device")); return; }
   if(locBtn) locBtn.classList.add("locating");
   if(state.pos&&meMarker){ map.flyTo(state.pos,Math.max(map.getZoom(),15.5),{duration:.5}); }
   navigator.geolocation.getCurrentPosition(onPosition,geoError,{enableHighAccuracy:true,maximumAge:30000,timeout:12000});
@@ -1448,7 +1691,8 @@ function pauseWatch(){ if(watchId!=null&&navigator.geolocation){ navigator.geolo
 
 /* ---------- Typical occupancy (history collected by the GitHub Action on the "data" branch) ---------- */
 const TYPICAL_URL="https://raw.githubusercontent.com/kf92gsbdmw-collab/lugano-parking/data/typical.json";
-const DAYS=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+const DAY_KEYS=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+const dayName=i=>t(DAY_KEYS[i]);
 let typical=null;
 async function loadTypical(){
   try{ const c=JSON.parse(localStorage.getItem("lp.typical")||"null"); if(c&&c.data&&c.data.garages){ typical=c.data; if(Date.now()-c.at<3*3600e3) return; } }catch(e){}
@@ -1456,38 +1700,38 @@ async function loadTypical(){
 }
 const hh=h=>String(h).padStart(2,"0")+":00";
 function typicalFor(g,d){
-  const t=typical&&typical.garages&&typical.garages[g.id]; if(!t) return null;
-  d=d||new Date(); const wd=(d.getDay()+6)%7, h=d.getHours(); const day=t.slots[wd]; const slot=day[h];
-  let freesFrom=null; for(let x=h+1;x<24;x++){ if(day[x]&&day[x][0]>t.cap*0.15){ freesFrom=x; break; } }
-  return {wd,h,slot,day,cap:t.cap,fullFrom:t.fullFrom[wd],freesFrom,dayName:DAYS[wd]};
+  const ty=typical&&typical.garages&&typical.garages[g.id]; if(!ty) return null;
+  d=d||new Date(); const wd=(d.getDay()+6)%7, h=d.getHours(); const day=ty.slots[wd]; const slot=day[h];
+  let freesFrom=null; for(let x=h+1;x<24;x++){ if(day[x]&&day[x][0]>ty.cap*0.15){ freesFrom=x; break; } }
+  return {wd,h,slot,day,cap:ty.cap,fullFrom:ty.fullFrom[wd],freesFrom,dayName:dayName(wd)};
 }
 // One short sentence for a card: what usually happens next, if the history has something to say.
 function typicalHint(g){
-  const t=typicalFor(g); if(!t) return ""; const f=state.counts[g.id];
-  if(f===0||(f!=null&&f<t.cap*0.1)){ if(t.freesFrom!=null) return `Usually frees up from ${hh(t.freesFrom)}`; return ""; }
-  if(t.fullFrom!=null&&t.h<t.fullFrom) return `Usually full from ${hh(t.fullFrom)}`;
+  const ty=typicalFor(g); if(!ty) return ""; const f=state.counts[g.id];
+  if(f===0||(f!=null&&f<ty.cap*0.1)){ if(ty.freesFrom!=null) return t("Usually frees up from {h}",{h:hh(ty.freesFrom)}); return ""; }
+  if(ty.fullFrom!=null&&ty.h<ty.fullFrom) return t("Usually full from {h}",{h:hh(ty.fullFrom)});
   return "";
 }
 function typicalSection(g){
   if(!typical) return "";
-  const t=typicalFor(g); const f=state.counts[g.id];
-  if(!t||!t.day.some(Boolean)) return `<div class="sec">Typical occupancy</div><p class="note" style="margin-top:0">Collecting data${typical.days?` (${typical.days} day${typical.days===1?"":"s"} so far)`:""}. Patterns for ${DAYS[(new Date().getDay()+6)%7]}s appear after a few weeks of readings.</p>`;
-  const bars=t.day.map((s,i)=>{ const occ=s?1-s[0]/t.cap:null; const lvl=occ==null?"none":occ>0.9?"bad":occ>0.75?"warn":"ok"; return `<i class="${lvl}${i===t.h?" now":""}" style="--h:${occ==null?4:Math.max(6,Math.round(occ*100))}%" title="${hh(i)}${s?": about "+s[0]+" free":""}"></i>`; }).join("");
-  const now=t.slot?`Usually about <b>${t.slot[0]} free</b> at this hour${f!=null?` (now ${f})`:""}.`:"No readings for this hour yet.";
-  const extra=t.fullFrom!=null?` Typically full from ${hh(t.fullFrom)}${t.freesFrom!=null&&t.freesFrom>t.fullFrom?` until about ${hh(t.freesFrom)}`:""}.`:" Rarely full on this weekday.";
-  return `<div class="sec">Typical ${t.dayName}</div><div class="typ"><div class="bars">${bars}</div><div class="axis"><span>0</span><span>6</span><span>12</span><span>18</span><span>24</span></div><p>${now}${extra}</p></div>`;
+  const ty=typicalFor(g); const f=state.counts[g.id];
+  if(!ty||!ty.day.some(Boolean)) return `<div class="sec">${t("Typical occupancy")}</div><p class="note" style="margin-top:0">${t("Collecting data")}${typical.days?` (${typical.days===1?t("1 day so far"):t("{n} days so far",{n:typical.days})})`:""}. ${t("Patterns for this weekday appear after a few weeks of readings.")}</p>`;
+  const bars=ty.day.map((s,i)=>{ const occ=s?1-s[0]/ty.cap:null; const lvl=occ==null?"none":occ>0.9?"bad":occ>0.75?"warn":"ok"; return `<i class="${lvl}${i===ty.h?" now":""}" style="--h:${occ==null?4:Math.max(6,Math.round(occ*100))}%" title="${hh(i)}${s?": "+t("about {n} free",{n:s[0]}):""}"></i>`; }).join("");
+  const now=ty.slot?`${t("Usually about <b>{n} free</b> at this hour",{n:ty.slot[0]})}${f!=null?" "+t("(now {f})",{f}):""}.`:t("No readings for this hour yet.");
+  const extra=ty.fullFrom!=null?` ${t("Typically full from {h}",{h:hh(ty.fullFrom)})}${ty.freesFrom!=null&&ty.freesFrom>ty.fullFrom?" "+t("until about {h}",{h:hh(ty.freesFrom)}):""}.`:" "+t("Rarely full on this weekday.");
+  return `<div class="sec">${t("Typical {day}",{day:ty.dayName})}</div><div class="typ"><div class="bars">${bars}</div><div class="axis"><span>0</span><span>6</span><span>12</span><span>18</span><span>24</span></div><p>${now}${extra}</p></div>`;
 }
 
 /* ---------- I parked here ---------- */
 let parkedTimer=null, notifTimer=null;
 function loadParked(){ try{ state.parked=JSON.parse(localStorage.getItem("lp.parked")||"null"); }catch(e){ state.parked=null; } }
 function setParked(p){ state.parked=p; try{ p?localStorage.setItem("lp.parked",JSON.stringify(p)):localStorage.removeItem("lp.parked"); }catch(e){} renderParked(); armReminder(); renderAll(); }
-function parkHere(g){ setParked({kind:"garage",id:g.id,name:g.name,lat:g.lat,lng:g.lng,at:new Date().toISOString(),until:null}); toast("Saved · "+g.name); }
+function parkHere(g){ setParked({kind:"garage",id:g.id,name:g.name,lat:g.lat,lng:g.lng,at:new Date().toISOString(),until:null}); toast(t("Saved")+" · "+g.name); }
 function startDisc(hhmm){
-  const o=discLeaveBy(hhmm); if(!o) return; const [H,M]=o.by.split(" ")[0].split(":").map(Number); const until=new Date(); if(o.by.includes("tomorrow")) until.setDate(until.getDate()+1); until.setHours(H,M,0,0);
+  const o=discLeaveBy(hhmm); if(!o) return; const [H,M]=o.time.split(":").map(Number); const until=new Date(); if(o.tomorrow) until.setDate(until.getDate()+1); until.setHours(H,M,0,0);
   const [aH,aM]=hhmm.split(":").map(Number); const at=new Date(); at.setHours(aH,aM,0,0);
   setParked({kind:"blue",id:"blue",name:"Blue zone",lat:state.pos?state.pos[0]:null,lng:state.pos?state.pos[1]:null,at:at.toISOString(),until:until.toISOString()});
-  askNotify(); toast("Disc timer set · leave by "+o.by);
+  askNotify(); toast(t("Disc timer set · leave by {t}",{t:o.by}));
   if(!state.pos&&navigator.geolocation) navigator.geolocation.getCurrentPosition(pp=>{ if(state.parked&&state.parked.kind==="blue"&&state.parked.lat==null){ state.parked.lat=pp.coords.latitude; state.parked.lng=pp.coords.longitude; setParked(state.parked); } },()=>{},{maximumAge:60000,timeout:10000});
 }
 function renderParked(){
@@ -1495,11 +1739,11 @@ function renderParked(){
   if(!p){ bar.hidden=true; bar.innerHTML=""; fitTop(); return; }
   const draw=()=>{
     const at=new Date(p.at); let cls="",txt="";
-    if(p.until){ const left=Math.round((new Date(p.until)-Date.now())/60000); const t=fmtTime(new Date(p.until));
-      if(left<0){ cls="bad"; txt=`Disc ran out at ${t}`; } else if(left<=10){ cls="warn"; txt=`Disc until ${t} · ${left} min left`; } else txt=`Disc until ${t} · ${left} min left`; }
-    else txt=`${p.name.replace(/^(Autosilo|Parcheggio) /,"")} · parked ${fmtStamp(at)}`;
-    const nav=p.lat!=null?`<a class="pbtn" href="https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}&travelmode=walking" target="_blank" rel="noopener">${svgIcon("walk")} Find car</a>`:"";
-    bar.className="parked "+cls; bar.innerHTML=`<span class="ico">${svgIcon("car")}</span><span class="txt">${txt}</span>${nav}<button class="pbtn" id="parked-clear" aria-label="Clear parking">${svgIcon("x")}</button>`;
+    if(p.until){ const left=Math.round((new Date(p.until)-Date.now())/60000); const tt=fmtTime(new Date(p.until));
+      if(left<0){ cls="bad"; txt=t("Disc ran out at {t}",{t:tt}); } else { if(left<=10) cls="warn"; txt=t("Disc until {t} · {n} min left",{t:tt,n:left}); } }
+    else txt=t("{name} · parked {t}",{name:p.name.replace(/^(Autosilo|Parcheggio) /,""),t:fmtStamp(at)});
+    const nav=p.lat!=null?`<a class="pbtn" href="https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}&travelmode=walking" target="_blank" rel="noopener">${svgIcon("walk")} ${t("Find car")}</a>`:"";
+    bar.className="parked "+cls; bar.innerHTML=`<span class="ico">${svgIcon("car")}</span><span class="txt">${txt}</span>${nav}<button class="pbtn" id="parked-clear" aria-label="${t("Clear parking")}">${svgIcon("x")}</button>`;
   };
   bar.hidden=false; draw(); parkedTimer=setInterval(draw,30000); fitTop();
 }
@@ -1508,7 +1752,7 @@ function armReminder(){
   clearTimeout(notifTimer); const p=state.parked; if(!p||!p.until) return;
   try{ if(!("Notification" in window)||Notification.permission!=="granted") return; }catch(e){ return; }
   const fire=new Date(p.until).getTime()-10*60000-Date.now(); if(fire<0||fire>12*3600e3) return;
-  notifTimer=setTimeout(async()=>{ const body=`Your parking disc runs out at ${fmtTime(new Date(p.until))}.`; try{ const reg=await navigator.serviceWorker.getRegistration(); if(reg&&reg.showNotification){ reg.showNotification("10 minutes left",{body,icon:"icon-192.png",tag:"disc"}); return; } }catch(e){} try{ new Notification("10 minutes left",{body,icon:"icon-192.png"}); }catch(e){} },fire);
+  notifTimer=setTimeout(async()=>{ const body=t("Your parking disc runs out at {t}.",{t:fmtTime(new Date(p.until))}); const title=t("10 minutes left"); try{ const reg=await navigator.serviceWorker.getRegistration(); if(reg&&reg.showNotification){ reg.showNotification(title,{body,icon:"icon-192.png",tag:"disc"}); return; } }catch(e){} try{ new Notification(title,{body,icon:"icon-192.png"}); }catch(e){} },fire);
 }
 function fitTop(){ app.style.setProperty("--top",($(".top").offsetHeight+8)+"px"); }
 
@@ -1526,22 +1770,22 @@ const SPOTS=[
  {id:"usi",name:"USI campus",sub:"University",lat:46.0115,lng:8.9580},
 ];
 const DURS=[[0.5,"30 min"],[1,"1 h"],[2,"2 h"],[3,"3 h"],[4,"4 h"],[8,"Day"]];
+const durLabel=h=>{ const d=DURS.find(x=>x[0]===h); return d?t(d[1]):h+" h"; };
 const CENTRE_STOP=[46.0050,8.9515]; // TPL hub "Lugano Centro", where the P+R buses arrive
 const WALK_M_PER_MIN=80, ROUTE_FACTOR=1.3;
 // Straight-line distance scaled by a typical street factor. Honest "about" figures, no routing service needed.
 function walkMin(a,b){ return Math.max(1,Math.ceil(distKm(a,b)*1000*ROUTE_FACTOR/WALK_M_PER_MIN)); }
 function tripTo(g,dest){
-  const direct=walkMin([g.lat,g.lng],dest); const walk={min:direct,mode:"walk",label:`${direct} min`,sub:`${fmtDist(distKm([g.lat,g.lng],dest)*ROUTE_FACTOR)} walk`};
-  if(g.tariff==="PR"){ const w=walkMin(CENTRE_STOP,dest); const bus={min:12+w,mode:"bus",label:`${12+w} min`,sub:`bus ${g.id==="resega"?"3 or 8":"1"} + ${w} min walk`}; if(bus.min<direct) return bus; }
+  const direct=walkMin([g.lat,g.lng],dest); const walk={min:direct,mode:"walk",label:t("{m} min",{m:direct}),dist:fmtDist(distKm([g.lat,g.lng],dest)*ROUTE_FACTOR)}; walk.sub=t("{d} walk",{d:walk.dist});
+  if(g.tariff==="PR"){ const w=walkMin(CENTRE_STOP,dest); const bus={min:12+w,mode:"bus",label:t("{m} min",{m:12+w}),sub:t("bus {n} + {m} min walk",{n:g.id==="resega"?t("3 or 8"):"1",m:w})}; if(bus.min<direct) return bus; }
   return walk;
 }
 function costFor(g,h){
-  const T=TARIFFS[g.tariff];
-  if(g.tariff==="A"||g.tariff==="LAC"){ const tbl=[[0.5,0],[1,2],[2,4],[3,6],[4,10],[8,26],[24,43]]; const row=tbl.find(([k])=>h<=k)||tbl[tbl.length-1]; return {chf:row[1],approx:row[0]!==h,note:row[1]===0?"first 30 min free":""}; }
-  if(g.tariff==="PR"){ const hourly=h*1; const day=5.20; return hourly<day?{chf:hourly,approx:false,note:""}:{chf:day,approx:false,note:"day ticket incl. TPL bus"}; }
-  return {chf:null,approx:false,note:"price at the entrance"};
+  if(g.tariff==="A"||g.tariff==="LAC"){ const tbl=[[0.5,0],[1,2],[2,4],[3,6],[4,10],[8,26],[24,43]]; const row=tbl.find(([k])=>h<=k)||tbl[tbl.length-1]; return {chf:row[1],approx:row[0]!==h,note:row[1]===0?t("first 30 min free"):""}; }
+  if(g.tariff==="PR"){ const hourly=h*1; const day=5.20; return hourly<day?{chf:hourly,approx:false,note:""}:{chf:day,approx:false,note:t("day ticket incl. TPL bus")}; }
+  return {chf:null,approx:false,note:t("price at the entrance")};
 }
-function fmtChf(c){ return c==null?"—":c===0?"Free":"CHF "+(Number.isInteger(c)?c:c.toFixed(2)); }
+function fmtChf(c){ return c==null?"—":c===0?t("Free"):"CHF "+(Number.isInteger(c)?c:c.toFixed(2)); }
 function rankedForDest(){
   const d=[state.dest.lat,state.dest.lng]; const h=state.hours;
   const rows=GARAGES.map(g=>{ const lv=levelOf(g); const f=state.counts[g.id]; const trip=tripTo(g,d); const cost=costFor(g,h);
@@ -1552,6 +1796,20 @@ function rankedForDest(){
   else if(state.gsort==="cost") rows.sort((a,b)=>(a.full-b.full)||((a.cost.chf??99)-(b.cost.chf??99))||(a.trip.min-b.trip.min));
   else rows.sort((a,b)=>a.score-b.score);
   return rows;
+}
+// Street options near the destination: blue zone or meter bays that allow the stay, with what they cost right now.
+function streetOptions(dest,h){
+  const r=nowRules(); const out=[];
+  ZONES.forEach(z=>{ if(z.type==="yellow") return;
+    z.areas.forEach(a=>{ const dk=areaDist(dest,a.p); if(dk>0.6) return; const m=Math.max(1,Math.ceil(dk*1000*ROUTE_FACTOR/WALK_M_PER_MIN));
+      let ok=true, chf=0, sub="";
+      if(z.type==="blue"){ if(r.blue){ if(h>1) ok=false; else sub=t("disc, max 1 h"); } else sub=t("Free now")+" · "+t("Enforced again {t}",{t:r.nextBlue}); }
+      else { if(r.meters){ if(h>z.maxH) ok=false; else { const row=z.feeH.find(([k])=>h<=k)||z.feeH[z.feeH.length-1]; chf=row[1]; sub=t("max {x}",{x:z.rule.replace(/^.*max /,"")}); } } else sub=t("Free now")+" · "+t("Paid again {t}",{t:r.nextMet}); }
+      if(!ok) return;
+      out.push({z,a,min:m,chf,sub,dist:dk,score:m+chf+(z.type==="blue"?0:1)});
+    });
+  });
+  out.sort((x,y)=>x.score-y.score); return out.slice(0,2);
 }
 const destLayer=L.layerGroup(); let destMarker=null;
 function setDest(d,fly){
@@ -1573,74 +1831,78 @@ async function searchPlaces(q){
   const seq=++searchSeq; const box=$("#results"); if(!box) return;
   if(q.trim().length<2){ box.innerHTML=""; return; }
   try{
-    const url="https://photon.komoot.io/api/?q="+encodeURIComponent(q)+"&lat=46.0036&lon=8.9513&limit=6&bbox=8.88,45.96,9.03,46.06";
+    const url="https://photon.komoot.io/api/?q="+encodeURIComponent(q)+"&lat=46.0036&lon=8.9513&limit=6&bbox=8.88,45.96,9.03,46.06"+(LANG==="de"?"&lang=de":"");
     const r=await fetch(url); const j=await r.json(); if(seq!==searchSeq) return;
     const seen=new Set(); const items=[];
     for(const f of j.features||[]){ const p=f.properties||{}; const name=p.name||[p.street,p.housenumber].filter(Boolean).join(" "); if(!name) continue; const key=name+"|"+(p.street||""); if(seen.has(key)) continue; seen.add(key);
       const sub=[p.street&&p.name?p.street+(p.housenumber?" "+p.housenumber:""):"",p.city||p.locality||p.district||""].filter(Boolean).join(", ");
       items.push({name,sub,lat:f.geometry.coordinates[1],lng:f.geometry.coordinates[0],kind:p.osm_value||""}); if(items.length>=5) break; }
-    box.innerHTML=items.length?items.map((it,i)=>`<button class="res" data-res="${i}"><span class="t"><b>${esc(it.name)}</b><small>${esc(it.sub||it.kind.replace(/_/g," "))}</small></span></button>`).join(""):`<p class="note" style="margin:6px 2px">No places found in Lugano for “${esc(q)}”. Try the pin instead.</p>`;
+    box.innerHTML=items.length?items.map((it,i)=>`<button class="res" data-res="${i}"><span class="t"><b>${esc(it.name)}</b><small>${esc(it.sub||it.kind.replace(/_/g," "))}</small></span></button>`).join(""):`<p class="note" style="margin:6px 2px">${t("No places found in Lugano for “{q}”. Try the pin instead.",{q:esc(q)})}</p>`;
     box._items=items;
-  }catch(e){ if(seq===searchSeq) box.innerHTML=`<p class="note" style="margin:6px 2px">Search is not reachable right now. Pick a spot below or drop a pin on the map.</p>`; }
+  }catch(e){ if(seq===searchSeq) box.innerHTML=`<p class="note" style="margin:6px 2px">${t("Search is not reachable right now. Pick a spot below or drop a pin on the map.")}</p>`; }
 }
 function shareDest(){
   if(!state.dest) return; const u=new URL(location.href.split("?")[0]); u.searchParams.set("to",state.dest.lat.toFixed(5)+","+state.dest.lng.toFixed(5)); u.searchParams.set("n",state.dest.name); u.searchParams.set("h",String(state.hours));
-  const text=`Parking for ${state.dest.name} · Lugano Parking`;
+  const text=t("Parking for {name} · Lugano Parking",{name:state.dest.name});
   if(navigator.share){ navigator.share({title:text,url:u.toString()}).catch(()=>{}); }
-  else if(navigator.clipboard){ navigator.clipboard.writeText(u.toString()).then(()=>toast("Link copied")).catch(()=>toast(u.toString())); }
+  else if(navigator.clipboard){ navigator.clipboard.writeText(u.toString()).then(()=>toast(t("Link copied"))).catch(()=>toast(u.toString())); }
 }
 function renderGoing(){
   const head=$("#head"), body=$("#body");
   if(!state.dest){
-    head.innerHTML=`<div class="summary"><span class="big" style="font-size:20px">Where are you going?</span></div>
-      <div class="search"><span class="ico">${svgIcon("search")}</span><input id="q" type="search" autocomplete="off" autocorrect="off" spellcheck="false" placeholder="Restaurant, shop or address" aria-label="Search a place"><button id="pick" class="pickbtn ${state.picking?"on":""}" type="button">${svgIcon("pin")} Pin</button></div>
+    head.innerHTML=`<div class="summary"><span class="big" style="font-size:20px">${t("Where are you going?")}</span></div>
+      <div class="search"><span class="ico">${svgIcon("search")}</span><input id="q" type="search" autocomplete="off" autocorrect="off" spellcheck="false" placeholder="${t("Restaurant, shop or address")}" aria-label="${t("Search a place")}"><button id="pick" class="pickbtn ${state.picking?"on":""}" type="button">${svgIcon("pin")} ${t("Pin")}</button></div>
       <div id="results" class="results"></div>`;
-    body.innerHTML=`<div class="sec">Popular spots</div><div class="spots">${SPOTS.map(s=>`<button class="spot" data-spot="${s.id}"><b>${s.name}</b><small>${s.sub}</small></button>`).join("")}</div>
-      <p class="note">Pick where you are headed and how long you stay. The app ranks the garages by walking time, free spots right now and what the stay will cost.${state.picking?" Tap the map to set your destination.":""}</p>`;
+    body.innerHTML=`<div class="sec">${t("Popular spots")}</div><div class="spots">${SPOTS.map(s=>`<button class="spot" data-spot="${s.id}"><b>${s.name}</b><small>${t(s.sub)}</small></button>`).join("")}</div>
+      <p class="note">${t("Pick where you are headed and how long you stay. The app ranks the garages by walking time, free spots right now and what the stay will cost.")}${state.picking?" "+t("Tap the map to set your destination."):""}</p>`;
     const q=$("#q"); q.addEventListener("input",()=>{ clearTimeout(searchTimer); searchTimer=setTimeout(()=>searchPlaces(q.value),280); });
     q.addEventListener("keydown",e=>{ if(e.key==="Enter"){ const it=$("#results")._items; if(it&&it[0]) setDest(it[0]); else { clearTimeout(searchTimer); searchPlaces(q.value); } } });
     q.addEventListener("focus",()=>{ if(sheetPos!=="full") setSheet("full"); });
   } else {
-    const d=state.dest; const rows=rankedForDest(); const best=rows.find(r=>!r.full);
-    head.innerHTML=`<div class="dest"><span class="ico">${svgIcon("flag")}</span><div class="grow"><div class="k">Going to</div><h2>${esc(d.name)}</h2>${d.sub?`<p>${esc(d.sub)}</p>`:""}</div><button class="iconbtn" id="share-dest" aria-label="Share" title="Share">${svgIcon("share")}</button><button class="iconbtn" id="clear-dest" aria-label="Change destination" title="Change">${svgIcon("x")}</button></div>
-      <div class="sortbar durs" role="group" aria-label="How long you stay"><span class="lbl">Staying</span>${DURS.map(([h,l])=>`<button data-dur="${h}" aria-pressed="${state.hours===h}">${l}</button>`).join("")}</div>
-      <div class="sortbar" role="group" aria-label="Rank by">${[["best","Best pick"],["walk","Quickest"],["cost","Cheapest"]].map(([k,l])=>`<button data-gsort="${k}" aria-pressed="${state.gsort===k}">${l}</button>`).join("")}</div>`;
+    const d=state.dest; const rows=rankedForDest(); const best=rows.find(r=>!r.full); const street=streetOptions([d.lat,d.lng],state.hours);
+    head.innerHTML=`<div class="dest"><span class="ico">${svgIcon("flag")}</span><div class="grow"><div class="k">${t("Going to")}</div><h2>${esc(d.name)}</h2>${d.sub?`<p>${esc(t(d.sub))}</p>`:""}</div><button class="iconbtn" id="share-dest" aria-label="${t("Share")}" title="${t("Share")}">${svgIcon("share")}</button><button class="iconbtn" id="clear-dest" aria-label="${t("Change destination")}" title="${t("Change")}">${svgIcon("x")}</button></div>
+      <div class="sortbar durs" role="group" aria-label="${t("How long you stay")}"><span class="lbl">${t("Staying")}</span>${DURS.map(([h,l])=>`<button data-dur="${h}" aria-pressed="${state.hours===h}">${t(l)}</button>`).join("")}</div>
+      <div class="sortbar" role="group" aria-label="${t("Rank by")}">${[["best","Best pick"],["walk","Quickest"],["cost","Cheapest"]].map(([k,l])=>`<button data-gsort="${k}" aria-pressed="${state.gsort===k}">${t(l)}</button>`).join("")}</div>`;
     body.innerHTML=`<div class="list">${rows.map(r=>{ const g=r.g; const isBest=best&&best.g.id===g.id&&state.gsort==="best";
-      return `<button class="card gcard ${r.full?"full":""} ${isBest?"best":""}" data-g="${g.id}" style="--c:${r.lv.c}" aria-label="${g.name}, ${r.trip.label} ${r.trip.mode==="bus"?"by bus":"walk"}, ${r.f==null?"no live data":r.f+" free"}, ${fmtChf(r.cost.chf)}">
-        <span class="walk" style="--c:${r.full?"var(--bad)":"var(--fg)"}">${svgIcon(r.trip.mode==="bus"?"bus":"walk")}<b>${r.full?"Full":r.trip.min}</b><small>${r.full?"now":"min"}</small></span>
-        <span class="t"><h3>${g.name}${isBest?' <span class="chip ok">Best pick</span>':""}</h3><p>${r.f==null?"No live data":`<b style="color:${r.lv.c}">${r.f} free</b>`} · ${r.trip.sub}${r.full?` · ${r.trip.label} away`:""}${(()=>{ const th=typicalHint(g); return th?` · ${th}`:""; })()}</p></span>
-        <span class="n"><b class="num">${fmtChf(r.cost.chf)}</b><small>${r.cost.note||(r.cost.chf==null?"":(r.cost.approx?"about, for ":"for ")+DURS.find(x=>x[0]===state.hours)[1].toLowerCase())}</small></span>
+      return `<button class="card gcard ${r.full?"full":""} ${isBest?"best":""}" data-g="${g.id}" style="--c:${r.lv.c}" aria-label="${g.name}, ${r.trip.label} ${t(r.trip.mode==="bus"?"by bus":"walk")}, ${r.f==null?t("no live data"):t("{n} free",{n:r.f})}, ${fmtChf(r.cost.chf)}">
+        <span class="walk" style="--c:${r.full?"var(--bad)":"var(--fg)"}">${svgIcon(r.trip.mode==="bus"?"bus":"walk")}<b>${r.full?t("Full"):r.trip.min}</b><small>${r.full?t("now"):t("min")}</small></span>
+        <span class="t"><h3>${g.name}${isBest?` <span class="chip ok">${t("Best pick")}</span>`:""}</h3><p>${r.f==null?t("No live data"):`<b style="color:${r.lv.c}">${t("{n} free",{n:r.f})}</b>`} · ${r.trip.sub}${r.full?` · ${t("{t} away",{t:r.trip.label})}`:""}${(()=>{ const th=typicalHint(g); return th?` · ${th}`:""; })()}</p></span>
+        <span class="n"><b class="num">${fmtChf(r.cost.chf)}</b><small>${r.cost.note||(r.cost.chf==null?"":t(r.cost.approx?"about, for {d}":"for {d}",{d:durLabel(state.hours).toLowerCase()}))}</small></span>
       </button>`;}).join("")}</div>
-      <p class="note">Walking times are estimates from the distance on the map (about 5 km/h). P+R times include the bus ride to the centre. Prices follow the posted tariffs for a daytime stay and are rounded to the next tariff step.</p>`;
+      ${street.length?`<div class="sec">${t("Or on the street")}</div><div class="list">${street.map(s=>`<button class="card gcard scard" data-z="${s.z.id}" style="--c:${s.z.c}">
+        <span class="walk" style="--c:var(--fg)">${svgIcon("walk")}<b>${s.min}</b><small>${t("min")}</small></span>
+        <span class="t"><h3>${t(s.z.short)} · ${s.a.n}</h3><p>${s.sub}</p></span>
+        <span class="n"><b class="num">${fmtChf(s.chf)}</b><small>${t("for {d}",{d:durLabel(state.hours).toLowerCase()})}</small></span>
+      </button>`).join("")}</div><p class="note" style="margin-top:6px">${t("Street parking rules apply; outlines are indicative.")}</p>`:""}
+      <p class="note">${t("Walking times are estimates from the distance on the map (about 5 km/h). P+R times include the bus ride to the centre. Prices follow the posted tariffs for a daytime stay and are rounded to the next tariff step.")}</p>`;
   }
   fitPeek();
 }
 
 /* ---------- Time rules ---------- */
-function fmtTime(d){return d.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"});}
-function fmtStamp(d){const now=new Date(); const same=d.toDateString()===now.toDateString(); return (same?"":d.toLocaleDateString("en-GB",{day:"numeric",month:"short"})+" ")+fmtTime(d);}
+function fmtTime(d){return d.toLocaleTimeString(LOCALE[LANG]||"en-GB",{hour:"2-digit",minute:"2-digit"});}
+function fmtStamp(d){const now=new Date(); const same=d.toDateString()===now.toDateString(); return (same?"":d.toLocaleDateString(LOCALE[LANG]||"en-GB",{day:"numeric",month:"short"})+" ")+fmtTime(d);}
 function nowRules(d){
   d=d||new Date(); const day=d.getDay(); const h=d.getHours()+d.getMinutes()/60; const sun=day===0;
   const blue=!sun&&h>=8&&h<18; const meters=!sun&&h>=7&&h<19;
-  const nextBlue=blue?`until 18:00`:(sun?"on Monday from 08:00":(h<8?"from 08:00":"tomorrow from 08:00"));
-  const nextMet=meters?`until 19:00`:(sun?"on Monday from 07:00":(h<7?"from 07:00":"tomorrow from 07:00"));
+  const nextBlue=blue?t("until {t}",{t:"18:00"}):(sun?t("on Monday from {t}",{t:"08:00"}):(h<8?t("from {t}",{t:"08:00"}):t("tomorrow from {t}",{t:"08:00"})));
+  const nextMet=meters?t("until {t}",{t:"19:00"}):(sun?t("on Monday from {t}",{t:"07:00"}):(h<7?t("from {t}",{t:"07:00"}):t("tomorrow from {t}",{t:"07:00"})));
   return {blue,meters,sun,nextBlue,nextMet};
 }
 function discLeaveBy(hhmm){
   const [H,M]=hhmm.split(":").map(Number); if(isNaN(H)) return null;
   const a=H*60+M;
-  if(a<8*60) return {by:"09:00",why:"Arriving before 08:00: the disc counts from 08:00, so you may stay until 09:00."};
-  if(a>=18*60) return {by:"09:00 tomorrow",why:"Arriving after 18:00: free overnight. Set the disc to 08:00 for the next working day."};
-  const mark=Math.ceil(a/30)*30; const by=mark+60; const pad=n=>String(n).padStart(2,"0");
-  return {by:`${pad(Math.floor(by/60))}:${pad(by%60)}`,why:`Set the disc to ${pad(Math.floor(mark/60))}:${pad(mark%60)} (the next half-hour mark). One hour from there.`};
+  if(a<8*60) return {by:"09:00",time:"09:00",tomorrow:false,why:t("Arriving before 08:00: the disc counts from 08:00, so you may stay until 09:00.")};
+  if(a>=18*60) return {by:t("09:00 tomorrow"),time:"09:00",tomorrow:true,why:t("Arriving after 18:00: free overnight. Set the disc to 08:00 for the next working day.")};
+  const mark=Math.ceil(a/30)*30; const by=mark+60; const pad=n=>String(n).padStart(2,"0"); const tm=`${pad(Math.floor(by/60))}:${pad(by%60)}`;
+  return {by:tm,time:tm,tomorrow:false,why:t("Set the disc to {t} (the next half-hour mark). One hour from there.",{t:`${pad(Math.floor(mark/60))}:${pad(mark%60)}`})};
 }
 
 /* ---------- Map ---------- */
 const map=L.map("map",{zoomControl:true,attributionControl:true,minZoom:11,maxZoom:19,zoomSnap:0.5,inertia:true}).setView([46.0055,8.953],15);
 map.attributionControl.setPrefix("");
-map.attributionControl.addAttribution('<a href="https://openfreemap.org" target="_blank" rel="noopener">OpenFreeMap</a> · © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> · Garages: Città di Lugano');
+map.attributionControl.addAttribution('<a href="https://openfreemap.org" target="_blank" rel="noopener">OpenFreeMap</a> · © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> · Città di Lugano');
 // Offline basemap: one pre-rendered mosaic per zoom level (tiles/z*.jpg), sliced into tiles on a canvas.
-// Only the zoom level in view is downloaded; the service worker keeps them for offline use afterwards.
 const MOSAICS={14:{x0:8598,y0:5826,nx:3,ny:4},15:{x0:17196,y0:11653,nx:6,ny:7},16:{x0:34392,y0:23306,nx:12,ny:14},17:{x0:68789,y0:46623,nx:14,ny:11}};
 const Mosaic=L.GridLayer.extend({
   createTile:function(coords,done){
@@ -1688,7 +1950,7 @@ function swapGLStyle(){ if(gl){ try{ gl.getMaplibreMap().setStyle(glStyle()); }c
 const Locate=L.Control.extend({
   onAdd:function(){
     const d=L.DomUtil.create("div","leaflet-bar leaflet-control leaflet-control-locate");
-    locBtn=L.DomUtil.create("button","locate",d); locBtn.type="button"; locBtn.setAttribute("aria-label","Show my location"); locBtn.title="My location";
+    locBtn=L.DomUtil.create("button","locate",d); locBtn.type="button"; locBtn.setAttribute("aria-label",t("Show my location")); locBtn.title=t("My location");
     locBtn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg>';
     L.DomEvent.disableClickPropagation(d); L.DomEvent.on(locBtn,"click",locate);
     return d;
@@ -1716,7 +1978,7 @@ function buildZones(){
     const poly=L.polygon(a.p,{color:col,weight:1.5,dashArray:z.type==="blue"?null:"5 4",fillColor:col,fillOpacity:.16,opacity:.8}).addTo(zoneLayer);
     poly.on("click",()=>openZone(z.id,a.n));
     const ctr=poly.getBounds().getCenter();
-    const lab=L.marker(ctr,{icon:L.divIcon({className:"zlabel",iconSize:[0,0],html:`<span style="--c:${z.c}">${z.type==="blue"?"Blue":"Meters "+z.id.replace("z","Z")} · ${a.n}</span>`}),interactive:false}).addTo(zoneLayer);
+    L.marker(ctr,{icon:L.divIcon({className:"zlabel",iconSize:[0,0],html:`<span style="--c:${z.c}">${z.type==="blue"?t("Blue"):t("Meters {z}",{z:z.id.replace("z","Z")})} · ${a.n}</span>`}),interactive:false}).addTo(zoneLayer);
     (zoneShapes[z.id]=zoneShapes[z.id]||[]).push(poly);
   }));
 }
@@ -1756,14 +2018,17 @@ function svgIcon(n){
   if(n==="car") return `<svg viewBox="0 0 24 24" ${S}><path d="M5 17h14"/><path d="M3 13l2-6h14l2 6"/><path d="M3 13h18v5H3z"/><circle cx="7.5" cy="18" r="1.5"/><circle cx="16.5" cy="18" r="1.5"/></svg>`;
   if(n==="walk") return `<svg viewBox="0 0 24 24" ${S}><circle cx="13" cy="4" r="1.6"/><path d="M10 21l2-6 3 3v3"/><path d="M8 13l2-5 3-1 3 3 2 1"/><path d="M12 8l-2 7"/></svg>`;
   if(n==="bus") return `<svg viewBox="0 0 24 24" ${S}><rect x="4" y="3" width="16" height="15" rx="3"/><path d="M4 11h16M8 18v3M16 18v3"/><circle cx="8" cy="15" r=".8"/><circle cx="16" cy="15" r=".8"/></svg>`;
+  if(n==="info") return `<svg viewBox="0 0 24 24" ${S}><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.5"/></svg>`;
+  if(n==="plus") return `<svg viewBox="0 0 24 24" ${S}><path d="M12 5v14M5 12h14"/></svg>`;
+  if(n==="mail") return `<svg viewBox="0 0 24 24" ${S}><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 8l9 6 9-6"/></svg>`;
   return "";
 }
 function statusLine(){
   const dot=$("#dot"); const s=$("#status");
   const age=(Date.now()-state.ts.getTime())/60000;
   dot.className="dot"+(age>90?" stale":"");
-  const src=state.source==="live"?"Live":state.source==="stored"?"Stored":"Snapshot";
-  s.textContent=`${src} · updated ${fmtStamp(state.ts)}`;
+  const src=t(state.source==="live"?"Live":state.source==="stored"?"Stored":"Snapshot");
+  s.textContent=`${src} · ${t("updated")} ${fmtStamp(state.ts)}`;
 }
 function sortedGarages(sort){
   sort=sort||state.sort; const a=GARAGES.slice();
@@ -1778,65 +2043,71 @@ function renderGarages(){
   const withData=GARAGES.filter(g=>state.counts[g.id]!=null);
   const free=withData.reduce((s,g)=>s+state.counts[g.id],0);
   const full=withData.filter(g=>state.counts[g.id]===0).length;
-  $("#head").innerHTML=`<div class="summary"><span class="big num">${free.toLocaleString("de-CH")}</span><span class="lbl">free spots in ${withData.length} garages</span><span class="chips">${full?`<span class="chip bad">${full} full</span>`:`<span class="chip ok">none full</span>`}</span></div>
-  <div class="sortbar" role="group" aria-label="Sort">${[["near",state.pos?"Nearest":"Near me"],["free","Most free"],["centre","Closest to centre"],["name","A–Z"]].map(([k,l])=>`<button data-sort="${k}" aria-pressed="${state.sort===k}">${k==="near"?svgIcon("loc")+" ":""}${l}</button>`).join("")}</div>`;
+  $("#head").innerHTML=`<div class="summary"><span class="big num">${free.toLocaleString("de-CH")}</span><span class="lbl">${t("free spots in {n} garages",{n:withData.length})}</span><span class="chips">${full?`<span class="chip bad">${full===1?t("1 full"):t("{n} full",{n:full})}</span>`:`<span class="chip ok">${t("none full")}</span>`}</span></div>
+  <div class="sortbar" role="group" aria-label="${t("Sort")}">${[["near",state.pos?"Nearest":"Near me"],["free","Most free"],["centre","Closest to centre"],["name","A–Z"]].map(([k,l])=>`<button data-sort="${k}" aria-pressed="${state.sort===k}">${k==="near"?svgIcon("loc")+" ":""}${t(l)}</button>`).join("")}</div>`;
   $("#body").innerHTML=`<div class="list">${sortedGarages().map(g=>{ const lv=levelOf(g); const f=state.counts[g.id]; const pct=f==null?0:Math.round(f/g.cap*100); const d=garageDist(g);
-    return `<button class="card ${lv.k==="nodata"?"nodata":""}" data-g="${g.id}" style="--c:${lv.c};--pct:${pct}" aria-label="${g.name}, ${f==null?"no live data":f+" free of "+g.cap}${d!=null?", "+fmtDist(d)+" away":""}">
+    return `<button class="card ${lv.k==="nodata"?"nodata":""}" data-g="${g.id}" style="--c:${lv.c};--pct:${pct}" aria-label="${g.name}, ${f==null?t("no live data"):t("{n} free of {m}",{n:f,m:g.cap})}${d!=null?", "+t("{d} away",{d:fmtDist(d)}):""}">
       <span class="ring"><i>${f==null?"—":pct+"%"}</i></span>
-      <span class="t"><h3>${g.name}</h3><p>${d!=null?`<b class="dist">${fmtDist(d)}</b> · `:""}${g.area} · ${lv.t}${(()=>{ const th=typicalHint(g); return th?" · "+th:(g.tags[0]&&d==null?" · "+g.tags[0]:""); })()}</p></span>
-      <span class="n">${f==null?`<b>No live data</b><small>${g.cap} spaces</small>`:`<b class="num">${f}</b><small>of ${g.cap} free</small>`}</span>
+      <span class="t"><h3>${g.name}</h3><p>${d!=null?`<b class="dist">${fmtDist(d)}</b> · `:""}${g.area} · ${lv.t}${(()=>{ const th=typicalHint(g); return th?" · "+th:(g.tags[0]&&d==null?" · "+t(g.tags[0]):""); })()}</p></span>
+      <span class="n">${f==null?`<b>${t("No live data")}</b><small>${t("{n} spaces",{n:g.cap})}</small>`:`<b class="num">${f}</b><small>${t("of {n} free",{n:g.cap})}</small>`}</span>
     </button>`;}).join("")}</div>
-    <p class="note">Garage counts come from the Città di Lugano real-time feed. Colours: green means plenty of space, amber means it is filling up, red means full or nearly full.</p>`;
+    <p class="note">${t("Garage counts come from the Città di Lugano real-time feed. Colours: green means plenty of space, amber means it is filling up, red means full or nearly full.")}</p>`;
   fitPeek();
 }
 function renderStreet(){
   const r=nowRules();
-  $("#head").innerHTML=`<div class="summary"><span class="big" style="font-size:20px">Street parking right now</span></div>
+  $("#head").innerHTML=`<div class="summary"><span class="big" style="font-size:20px">${t("Street parking right now")}</span></div>
   <div class="now">
-    <div class="tile" style="--c:var(--blue);--soft:var(--blue-soft)"><div class="k">${svgIcon("disc")} Blue zone</div><div class="v">${r.blue?"Disc · max 1 h":"Free, no limit"}</div><div class="s">${r.blue?"Enforced "+r.nextBlue:"Enforced again "+r.nextBlue}</div></div>
-    <div class="tile" style="--c:var(--white-zone);--soft:var(--white-soft)"><div class="k">${svgIcon("meter")} Meters</div><div class="v">${r.meters?"Paid":"Free"}</div><div class="s">${r.meters?"Paid "+r.nextMet:"Paid again "+r.nextMet}</div></div>
+    <div class="tile" style="--c:var(--blue);--soft:var(--blue-soft)"><div class="k">${svgIcon("disc")} ${t("Blue zone")}</div><div class="v">${r.blue?t("Disc · max 1 h"):t("Free, no limit")}</div><div class="s">${r.blue?t("Enforced {t}",{t:r.nextBlue}):t("Enforced again {t}",{t:r.nextBlue})}</div></div>
+    <div class="tile" style="--c:var(--white-zone);--soft:var(--white-soft)"><div class="k">${svgIcon("meter")} ${t("Meters")}</div><div class="v">${r.meters?t("Paid"):t("Free")}</div><div class="s">${r.meters?t("Paid {t}",{t:r.nextMet}):t("Paid again {t}",{t:r.nextMet})}</div></div>
   </div>`;
   let here="";
   if(state.pos){
     const hit=distKm(state.pos,LUGANO)<25?zoneAt(state.pos):null;
     if(hit){ const z=hit.z; const active=z.type==="blue"?r.blue:z.type==="white"?r.meters:true;
-      here=`<div class="sec">Where you are</div><div class="list"><button class="card zcard here" data-z="${z.id}" style="--c:${z.c};--soft:${z.soft}"><span class="sw">${svgIcon(z.type==="blue"?"disc":z.type==="white"?"meter":"ban")}</span><span class="t"><h3>${z.short} · ${hit.a.n}</h3><p>${active?(z.type==="blue"?"Disc, max 1 h, "+r.nextBlue:z.rule+", "+r.nextMet):"Free right now · "+(z.type==="blue"?"enforced again "+r.nextBlue:"paid again "+r.nextMet)}</p></span><span class="n"><span class="st">${z.type==="blue"?(r.blue?"Disc now":"Free now"):(r.meters?"Paid now":"Free now")}</span></span></button></div>`; }
-    else here=`<div class="sec">Where you are</div><p class="note here-none">${svgIcon("loc")} No marked zone outline at your position. Check the lines and the sign at the bay.</p>`;
+      here=`<div class="sec">${t("Where you are")}</div><div class="list"><button class="card zcard here" data-z="${z.id}" style="--c:${z.c};--soft:${z.soft}"><span class="sw">${svgIcon(z.type==="blue"?"disc":z.type==="white"?"meter":"ban")}</span><span class="t"><h3>${t(z.short)} · ${hit.a.n}</h3><p>${active?(z.type==="blue"?t("Disc, max 1 h, {t}",{t:r.nextBlue}):t("{rule}, {t}",{rule:t(z.rule),t:r.nextMet})):(z.type==="blue"?t("Free right now · enforced again {t}",{t:r.nextBlue}):t("Free right now · paid again {t}",{t:r.nextMet}))}</p></span><span class="n"><span class="st">${z.type==="blue"?t(r.blue?"Disc now":"Free now"):t(r.meters?"Paid now":"Free now")}</span></span></button></div>`; }
+    else here=`<div class="sec">${t("Where you are")}</div><p class="note here-none">${svgIcon("loc")} ${t("No marked zone outline at your position. Check the lines and the sign at the bay.")}</p>`;
   }
-  $("#body").innerHTML=`${here}<div class="sec">Zones on the map</div><div class="list">${ZONES.map(z=>`<button class="card zcard" data-z="${z.id}" style="--c:${z.c};--soft:${z.soft}">
+  $("#body").innerHTML=`${here}<div class="sec">${t("Zones on the map")}</div><div class="list">${ZONES.map(z=>`<button class="card zcard" data-z="${z.id}" style="--c:${z.c};--soft:${z.soft}">
       <span class="sw">${svgIcon(z.type==="blue"?"disc":z.type==="white"?"meter":"ban")}</span>
-      <span class="t"><h3>${z.name}</h3><p>${z.rule} · ${z.when}</p></span>
-      <span class="n"><span class="st">${z.type==="yellow"?"Avoid":z.type==="blue"?(r.blue?"Disc now":"Free now"):(r.meters?"Paid now":"Free now")}</span></span>
+      <span class="t"><h3>${t(z.name)}</h3><p>${t(z.rule)} · ${t(z.when)}</p></span>
+      <span class="n"><span class="st">${z.type==="yellow"?t("Avoid"):z.type==="blue"?t(r.blue?"Disc now":"Free now"):t(r.meters?"Paid now":"Free now")}</span></span>
     </button>`).join("")}</div>
-    <div class="sec">How to read the markings</div>
+    <div class="sec">${t("How to read the markings")}</div>
     <div class="legend">
-      <div><i style="--c:var(--blue);--soft:var(--blue-soft)"></i>Blue lines: parking disc, 1 hour, Mon–Sat 08:00–18:00</div>
-      <div><i style="--c:var(--white-zone);--soft:var(--white-soft)"></i>White lines with a meter: pay, Mon–Sat 07:00–19:00, time limit per zone</div>
-      <div><i style="--c:var(--yellow);--soft:var(--yellow-soft)"></i>Yellow lines: reserved, never park</div>
+      <div><i style="--c:var(--blue);--soft:var(--blue-soft)"></i>${t("Blue lines: parking disc, 1 hour, Mon–Sat 08:00–18:00")}</div>
+      <div><i style="--c:var(--white-zone);--soft:var(--white-soft)"></i>${t("White lines with a meter: pay, Mon–Sat 07:00–19:00, time limit per zone")}</div>
+      <div><i style="--c:var(--yellow);--soft:var(--yellow-soft)"></i>${t("Yellow lines: reserved, never park")}</div>
     </div>
-    <p class="note">Zone outlines are indicative and show where each type of bay is typical, not every single space. The sign at the bay always wins. Hours and tariffs follow the city ordinance 2.2.1 (in force since 2023, meter tariffs as last amended).</p>`;
+    <p class="note">${t("Zone outlines are indicative and show where each type of bay is typical, not every single space. The sign at the bay always wins. Hours and tariffs follow the city ordinance 2.2.1 (in force since 2023, meter tariffs as last amended).")}</p>`;
   fitPeek();
 }
 function renderAll(){ statusLine(); refreshMarkers(); if(state.view==="garages") renderGarages(); else if(state.view==="going") renderGoing(); else renderStreet(); if(state.selected&&sheet.classList.contains("detail-mode")) { const g=GARAGES.find(x=>x.id===state.selected); if(g) openGarage(g.id,false); } }
+function renderChrome(){
+  document.querySelectorAll("[role=tab]").forEach(b=>{ const l=b.querySelector("span"); if(l) l.textContent=t(b.dataset.view==="garages"?"Garages":b.dataset.view==="going"?"Going to":"Street"); });
+  const rf=$("#refresh"); rf.setAttribute("aria-label",t("Refresh availability")); rf.title=t("Refresh");
+  const ab=$("#about-btn"); ab.setAttribute("aria-label",t("About")); ab.title=t("About");
+  if(locBtn){ locBtn.setAttribute("aria-label",t("Show my location")); locBtn.title=t("My location"); }
+}
 
 function openGarage(id,fly){
   const g=GARAGES.find(x=>x.id===id); if(!g) return; state.selected=id; refreshMarkers();
   const lv=levelOf(g); const f=state.counts[g.id]; const pct=f==null?0:Math.round(f/g.cap*100); const T=TARIFFS[g.tariff];
   const maps=`https://www.google.com/maps/dir/?api=1&destination=${g.lat},${g.lng}&travelmode=driving`;
-  $("#dhead").innerHTML=`<div class="dhead"><button class="back" id="back" aria-label="Back to list">${svgIcon("back")}</button><div><h2>${g.name}</h2><p>${g.addr}</p></div></div>`;
+  $("#dhead").innerHTML=`<div class="dhead"><button class="back" id="back" aria-label="${t("Back to list")}">${svgIcon("back")}</button><div><h2>${g.name}</h2><p>${g.addr}</p></div></div>`;
   $("#dbody").innerHTML=`
     <div class="hero" style="--c:${lv.c};--pct:${pct}">
-      <div class="box"><div class="k">Free now</div><div class="v num" style="color:${lv.c}">${f==null?"—":f}<small> / ${g.cap}</small></div><div class="bar"><i></i></div></div>
-      <div class="box"><div class="k">Status</div><div class="v" style="font-size:20px">${lv.t}</div><div class="k" style="margin-top:6px">${f==null?"Occupancy not published":"Updated "+fmtStamp(state.ts)}</div></div>
+      <div class="box"><div class="k">${t("Free now")}</div><div class="v num" style="color:${lv.c}">${f==null?"—":f}<small> / ${g.cap}</small></div><div class="bar"><i></i></div></div>
+      <div class="box"><div class="k">${t("Status")}</div><div class="v" style="font-size:20px">${lv.t}</div><div class="k" style="margin-top:6px">${f==null?t("Occupancy not published"):t("Updated {t}",{t:fmtStamp(state.ts)})}</div></div>
     </div>
-    <div class="actions"><a class="btn primary" href="${maps}" target="_blank" rel="noopener">${svgIcon("nav")} Navigate</a><a class="btn" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(g.name+", Lugano")}" target="_blank" rel="noopener">Open in Maps</a></div>
-    <div class="actions" style="margin-top:8px">${state.parked&&state.parked.kind==="garage"&&state.parked.id===g.id?`<button class="btn parked-on" data-unpark="1">${svgIcon("car")} Parked here since ${fmtTime(new Date(state.parked.at))} · clear</button>`:`<button class="btn" data-park="${g.id}">${svgIcon("car")} I parked here</button>`}</div>
+    <div class="actions"><a class="btn primary" href="${maps}" target="_blank" rel="noopener">${svgIcon("nav")} ${t("Navigate")}</a><a class="btn" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(g.name+", Lugano")}" target="_blank" rel="noopener">${t("Open in Maps")}</a></div>
+    <div class="actions" style="margin-top:8px">${state.parked&&state.parked.kind==="garage"&&state.parked.id===g.id?`<button class="btn parked-on" data-unpark="1">${svgIcon("car")} ${t("Parked here since {t} · clear",{t:fmtTime(new Date(state.parked.at))})}</button>`:`<button class="btn" data-park="${g.id}">${svgIcon("car")} ${t("I parked here")}</button>`}</div>
     ${typicalSection(g)}
-    <div class="sec">${T.label}</div>
-    ${T.rows.length?`<div class="tariff">${T.rows.map(([k,v])=>`<div><b>${v}</b><small>${k}</small></div>`).join("")}</div>`:""}
-    <p class="note">${T.night?T.night+". ":""}${T.extra}</p>
-    <div class="sec">Good to know</div>
-    <div class="rows">${state.dest?(()=>{ const tr=tripTo(g,[state.dest.lat,state.dest.lng]); const c=costFor(g,state.hours); return `<div class="row"><span>To ${esc(state.dest.name)}</span><b>${tr.mode==="bus"?"~"+tr.min+" min · "+tr.sub:"~"+tr.min+" min walk · "+tr.sub.replace(" walk","")}</b></div><div class="row"><span>Cost for ${DURS.find(x=>x[0]===state.hours)[1].toLowerCase()}</span><b>${c.chf==null?"See entrance":(c.approx?"about ":"")+fmtChf(c.chf)}${c.note?` <small style="color:var(--muted);font-weight:500">· ${c.note}</small>`:""}</b></div>`; })():""}${state.pos?`<div class="row"><span>From you</span><b>${fmtDist(garageDist(g))}</b></div>`:""}${g.tags.map((t,i)=>`<div class="row"><span>${i?"":"Tip"}</span><b>${t}</b></div>`).join("")}<div class="row"><span>Area</span><b>${g.area}</b></div>${T.hours?`<div class="row"><span>Hours</span><b>${T.hours}</b></div>`:""}<div class="row"><span>Capacity</span><b>${g.cap} spaces</b></div></div>`;
+    <div class="sec">${t(T.label)}</div>
+    ${T.rows.length?`<div class="tariff">${T.rows.map(([k,v])=>`<div><b>${t(v)}</b><small>${t(k)}</small></div>`).join("")}</div>`:""}
+    <p class="note">${T.night?t(T.night)+". ":""}${t(T.extra)}</p>
+    <div class="sec">${t("Good to know")}</div>
+    <div class="rows">${state.dest?(()=>{ const tr=tripTo(g,[state.dest.lat,state.dest.lng]); const c=costFor(g,state.hours); return `<div class="row"><span>${t("To {name}",{name:esc(state.dest.name)})}</span><b>${tr.mode==="bus"?t("~{m} min · {sub}",{m:tr.min,sub:tr.sub}):t("~{m} min walk · {d}",{m:tr.min,d:tr.dist})}</b></div><div class="row"><span>${t("Cost for {d}",{d:durLabel(state.hours).toLowerCase()})}</span><b>${c.chf==null?t("See entrance"):(c.approx?t("about {c}",{c:fmtChf(c.chf)}):fmtChf(c.chf))}${c.note?` <small style="color:var(--muted);font-weight:500">· ${c.note}</small>`:""}</b></div>`; })():""}${state.pos?`<div class="row"><span>${t("From you")}</span><b>${fmtDist(garageDist(g))}</b></div>`:""}${g.tags.map((tg,i)=>`<div class="row"><span>${i?"":t("Tip")}</span><b>${t(tg)}</b></div>`).join("")}<div class="row"><span>${t("Area")}</span><b>${g.area}</b></div>${T.hours?`<div class="row"><span>${t("Hours")}</span><b>${t(T.hours)}</b></div>`:""}<div class="row"><span>${t("Capacity")}</span><b>${t("{n} spaces",{n:g.cap})}</b></div></div>`;
   sheet.classList.add("detail-mode"); if(sheetPos==="peek") setSheet("half");
   $("#back").addEventListener("click",closeDetail);
   if(fly) map.flyTo([g.lat+0.0018,g.lng],16.5,{duration:.6});
@@ -1844,20 +2115,20 @@ function openGarage(id,fly){
 function openZone(id,areaName){
   const z=ZONES.find(x=>x.id===id); if(!z) return; const r=nowRules();
   const active=z.type==="blue"?r.blue:z.type==="white"?r.meters:true;
-  $("#dhead").innerHTML=`<div class="dhead"><button class="back" id="back" aria-label="Back to list">${svgIcon("back")}</button><div><h2>${z.name}</h2><p>${areaName?areaName+" · ":""}${z.rule}</p></div></div>`;
+  $("#dhead").innerHTML=`<div class="dhead"><button class="back" id="back" aria-label="${t("Back to list")}">${svgIcon("back")}</button><div><h2>${t(z.name)}</h2><p>${areaName?areaName+" · ":""}${t(z.rule)}</p></div></div>`;
   $("#dbody").innerHTML=`
     <div class="hero" style="--c:${z.c}">
-      <div class="box" style="background:${z.soft}"><div class="k" style="color:${z.c}">Right now</div><div class="v" style="font-size:20px">${z.type==="yellow"?"Reserved":active?(z.type==="blue"?"Disc, max 1 h":"Paid, max "+z.rule.replace("Paid, max ",""))+"":"Free, no limit"}</div></div>
-      <div class="box"><div class="k">Enforced</div><div class="v" style="font-size:18px">${z.when}</div><div class="k" style="margin-top:6px">${z.type==="yellow"?"":"Sundays and holidays free"}</div></div>
+      <div class="box" style="background:${z.soft}"><div class="k" style="color:${z.c}">${t("Right now")}</div><div class="v" style="font-size:20px">${z.type==="yellow"?t("Reserved"):active?(z.type==="blue"?t("Disc, max 1 h"):t("Paid, max {x}",{x:z.rule.replace(/^.*max /,"")})):t("Free, no limit")}</div></div>
+      <div class="box"><div class="k">${t("Enforced")}</div><div class="v" style="font-size:18px">${t(z.when)}</div><div class="k" style="margin-top:6px">${z.type==="yellow"?"":t("Sundays and holidays free")}</div></div>
     </div>
-    <p class="note" style="font-size:14px;color:var(--fg)">${z.desc}</p>
-    ${z.fee?`<div class="sec">Tariff</div><div class="tariff">${z.fee.map(([k,v])=>`<div><b>${v}</b><small>${k}</small></div>`).join("")}</div>`:""}
-    ${z.type==="blue"?`<div class="sec">Parking disc helper</div><div class="disc"><label for="arr">I arrive at</label><input id="arr" type="time" value="${fmtTime(new Date())}"><div class="out" id="discout"></div><button class="btn primary" id="disc-start">${svgIcon("car")} I parked here · start disc timer</button><p class="note" style="margin:0">Shows the time left at the top of the app and sends a reminder 10 minutes before, when the app is allowed to notify you.</p></div>`:""}
-    ${z.areas.length?`<div class="sec">Where</div><div class="rows">${z.areas.map(a=>`<div class="row"><span>${z.type==="blue"?"Quartiere":"Area"}</span><b>${a.n}</b></div>`).join("")}</div>`:""}
-    <p class="note">Outline on the map is indicative. Follow the signs and markings at the bay.</p>`;
+    <p class="note" style="font-size:14px;color:var(--fg)">${t(z.desc)}</p>
+    ${z.fee?`<div class="sec">${t("Tariff")}</div><div class="tariff">${z.fee.map(([k,v])=>`<div><b>${v}</b><small>${k}</small></div>`).join("")}</div>`:""}
+    ${z.type==="blue"?`<div class="sec">${t("Parking disc helper")}</div><div class="disc"><label for="arr">${t("I arrive at")}</label><input id="arr" type="time" value="${fmtTime(new Date())}"><div class="out" id="discout"></div><button class="btn primary" id="disc-start">${svgIcon("car")} ${t("I parked here · start disc timer")}</button><p class="note" style="margin:0">${t("Shows the time left at the top of the app and sends a reminder 10 minutes before, when the app is allowed to notify you.")}</p></div>`:""}
+    ${z.areas.length?`<div class="sec">${t("Where")}</div><div class="rows">${z.areas.map(a=>`<div class="row"><span>${z.type==="blue"?t("Quartiere"):t("Area")}</span><b>${a.n}</b></div>`).join("")}</div>`:""}
+    <p class="note">${t("Outline on the map is indicative. Follow the signs and markings at the bay.")}</p>`;
   sheet.classList.add("detail-mode"); if(sheetPos==="peek") setSheet("half");
   $("#back").addEventListener("click",closeDetail);
-  const arr=$("#arr"); if(arr){ const upd=()=>{ const o=discLeaveBy(arr.value); $("#discout").innerHTML=o?`Leave by <b>${o.by}</b><span style="color:var(--muted)">${o.why}</span>`:""; }; arr.addEventListener("input",upd); upd(); $("#disc-start").addEventListener("click",()=>{ startDisc(arr.value); }); }
+  const arr=$("#arr"); if(arr){ const upd=()=>{ const o=discLeaveBy(arr.value); $("#discout").innerHTML=o?`${t("Leave by")} <b>${o.by}</b><span style="color:var(--muted)">${o.why}</span>`:""; }; arr.addEventListener("input",upd); upd(); $("#disc-start").addEventListener("click",()=>{ startDisc(arr.value); }); }
   const shapes=zoneShapes[id]; if(shapes&&shapes.length){ const b=L.latLngBounds([]); shapes.forEach(s=>b.extend(s.getBounds())); map.flyToBounds(b,{paddingTopLeft:[20,170],paddingBottomRight:[20,Math.round(window.innerHeight*0.5)],duration:.6,maxZoom:16}); }
 }
 function closeDetail(){ sheet.classList.remove("detail-mode"); state.selected=null; refreshMarkers(); fitPeek(); }
@@ -1871,8 +2142,51 @@ function setView(v){
   if(sheetPos==="peek") setSheet("half");
   if(v==="going"&&!state.dest&&sheetPos!=="full") setSheet("full");
   try{ localStorage.setItem("lp.view",v); }catch(e){}
+  countView(v);
 }
-function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove("show"),2200); }
+function toast(msg){ const el=$("#toast"); el.textContent=msg; el.classList.add("show"); clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove("show"),2200); }
+
+/* ---------- About panel, language, install, feedback ---------- */
+let deferredInstall=null;
+window.addEventListener("beforeinstallprompt",e=>{ e.preventDefault(); deferredInstall=e; });
+const isStandalone=()=>window.matchMedia&&window.matchMedia("(display-mode: standalone)").matches||navigator.standalone===true;
+const isIOS=()=>/iPhone|iPad|iPod/.test(navigator.userAgent)&&!window.MSStream;
+function feedbackHref(){ const body=`\n\n---\nLugano Parking v${VERSION} · ${state.view} · ${LANG} · ${navigator.userAgent}`; return `mailto:${FEEDBACK_MAIL}?subject=${encodeURIComponent("Lugano Parking feedback")}&body=${encodeURIComponent(body)}`; }
+function renderAbout(){
+  const el=$("#about-body");
+  const install=isStandalone()?"":deferredInstall?`<button class="btn primary" id="install-btn">${svgIcon("plus")} ${t("Install app")}</button>`:`<p class="note" style="margin:0">${t(isIOS()?"On iPhone: tap Share, then “Add to Home Screen”. The app then opens full screen like a normal app.":"On Android: open the browser menu and choose “Install app” or “Add to Home screen”.")}</p>`;
+  el.innerHTML=`
+    <div class="sec">${t("Language")}</div>
+    <div class="sortbar" style="margin:0 0 4px">${LANGS.map(([k,l])=>`<button data-lang="${k}" aria-pressed="${LANG===k}">${l}</button>`).join("")}</div>
+    ${install?`<div class="sec">${t("Add to home screen")}</div>${install}`:""}
+    <div class="sec">${t("Feedback")}</div>
+    <p class="note" style="margin:0 0 8px">${t("Something wrong or missing? Tell me.")}</p>
+    <a class="btn" href="${feedbackHref()}">${svgIcon("mail")} ${t("Send feedback")}</a>
+    <div class="sec">${t("Data")}</div>
+    <p class="note" style="margin:0">${t("Garage counts: Città di Lugano real-time feed. Street rules: city ordinance 2.2.1. Map: OpenFreeMap and OpenStreetMap contributors. Place search: Photon.")}</p>
+    <p class="note">${t("Free, no ads, no account, no tracking. Built in Lugano by Julian Bigler.")} · ${t("Version")} ${VERSION}</p>`;
+}
+function openAbout(){ renderAbout(); $("#about").hidden=false; document.body.classList.add("modal-open"); }
+function closeAbout(){ $("#about").hidden=true; document.body.classList.remove("modal-open"); }
+function applyLang(l){ setLang(l); renderChrome(); recolorZones(); renderAbout(); renderParked(); renderAll(); }
+// One-time install banner, shown on the second visit when not installed.
+function maybeInstallBanner(){
+  try{
+    if(isStandalone()) return; const n=(parseInt(localStorage.getItem("lp.visits")||"0",10)||0)+1; localStorage.setItem("lp.visits",String(n));
+    if(localStorage.getItem("lp.installhint")||n<2) return;
+    const b=$("#install-banner"); b.innerHTML=`<span class="ico">${svgIcon("plus")}</span><span class="txt"><b>${t("Add Lugano Parking to your home screen")}</b><small>${t("It opens full screen and works offline.")}</small></span><button class="pbtn" id="banner-how">${deferredInstall?t("Install app"):t("Show me how")}</button><button class="pbtn" id="banner-no" aria-label="${t("Not now")}">${svgIcon("x")}</button>`;
+    b.hidden=false;
+  }catch(e){}
+}
+function dismissBanner(){ $("#install-banner").hidden=true; try{ localStorage.setItem("lp.installhint","1"); }catch(e){} }
+// Privacy-friendly visitor counter (GoatCounter, no cookies). Only loads when a site code is set and we're not on localhost.
+function countView(v){ try{ if(window.goatcounter&&window.goatcounter.count) window.goatcounter.count({path:"/"+v,title:"Lugano Parking · "+v}); }catch(e){} }
+function initCounter(){
+  if(!COUNTER_SITE||/localhost|127\.0\.0\.1/.test(location.hostname)) return;
+  window.goatcounter={no_onload:true,no_events:true};
+  const s=document.createElement("script"); s.async=true; s.src="https://gc.zgo.at/count.js"; s.dataset.goatcounter=`https://${COUNTER_SITE}.goatcounter.com/count`;
+  s.onload=()=>countView(state.view); document.head.appendChild(s);
+}
 
 /* ---------- Events ---------- */
 // The app container must never scroll (focus or scrollIntoView can nudge it); the sheet body is the only scroller.
@@ -1887,14 +2201,20 @@ document.addEventListener("click",e=>{
   const rs=e.target.closest("[data-res]"); if(rs){ const it=$("#results")._items; if(it) setDest(it[+rs.dataset.res]); return; }
   const du=e.target.closest("[data-dur]"); if(du){ state.hours=parseFloat(du.dataset.dur); try{ localStorage.setItem("lp.hours",String(state.hours)); }catch(_){} renderGoing(); return; }
   const gs=e.target.closest("[data-gsort]"); if(gs){ state.gsort=gs.dataset.gsort; renderGoing(); return; }
+  const lg=e.target.closest("[data-lang]"); if(lg){ applyLang(lg.dataset.lang); return; }
   if(e.target.closest("#clear-dest")){ setDest(null); return; }
   const pk=e.target.closest("[data-park]"); if(pk){ parkHere(GARAGES.find(x=>x.id===pk.dataset.park)); return; }
   if(e.target.closest("[data-unpark]")||e.target.closest("#parked-clear")){ setParked(null); return; }
   if(e.target.closest("#share-dest")){ shareDest(); return; }
-  if(e.target.closest("#pick")){ state.picking=!state.picking; $("#map").classList.toggle("picking",state.picking); if(state.picking){ setSheet("peek"); toast("Tap the map where you are going"); } renderGoing(); return; }
+  if(e.target.closest("#pick")){ state.picking=!state.picking; $("#map").classList.toggle("picking",state.picking); if(state.picking){ setSheet("peek"); toast(t("Tap the map where you are going")); } renderGoing(); return; }
+  if(e.target.closest("#about-btn")){ openAbout(); return; }
+  if(e.target.closest("#about-close")||e.target.id==="about"){ closeAbout(); return; }
+  if(e.target.closest("#install-btn")||e.target.closest("#banner-how")){ if(deferredInstall){ deferredInstall.prompt(); deferredInstall.userChoice.then(()=>{ deferredInstall=null; renderAbout(); }); dismissBanner(); } else { dismissBanner(); openAbout(); } return; }
+  if(e.target.closest("#banner-no")){ dismissBanner(); return; }
 });
-map.on("click",e=>{ if(state.view==="going"&&state.picking){ setDest({name:"Pinned spot",sub:e.latlng.lat.toFixed(4)+", "+e.latlng.lng.toFixed(4),lat:e.latlng.lat,lng:e.latlng.lng}); if(sheetPos==="peek") setSheet("half"); } });
+map.on("click",e=>{ if(state.view==="going"&&state.picking){ setDest({name:t("Pinned spot"),sub:e.latlng.lat.toFixed(4)+", "+e.latlng.lng.toFixed(4),lat:e.latlng.lat,lng:e.latlng.lng}); if(sheetPos==="peek") setSheet("half"); } });
 $("#refresh").addEventListener("click",()=>refresh(true));
+document.addEventListener("keydown",e=>{ if(e.key==="Escape"&&!$("#about").hidden) closeAbout(); });
 document.addEventListener("visibilitychange",()=>{ if(document.hidden) pauseWatch(); else { refresh(false); if(state.geo&&watchId==null) locate(); } });
 setInterval(()=>{ if(!document.hidden) refresh(false); },3*60*1000);
 setInterval(()=>{ if(state.view==="street"&&!sheet.classList.contains("detail-mode")) renderStreet(); statusLine(); },60*1000);
@@ -1908,22 +2228,22 @@ if(window.matchMedia){ window.matchMedia("(prefers-color-scheme: dark)").addEven
 if("serviceWorker" in navigator){
   window.addEventListener("load",()=>{ navigator.serviceWorker.register("sw.js").catch(()=>{}); });
   let had=!!navigator.serviceWorker.controller;
-  navigator.serviceWorker.addEventListener("controllerchange",()=>{ if(had) toast("App updated · reopen to get the new version"); had=true; });
+  navigator.serviceWorker.addEventListener("controllerchange",()=>{ if(had) toast(t("App updated · reopen to get the new version")); had=true; });
 }
 
 /* ---------- Boot ---------- */
-loadCounts(); buildMarkers(); buildZones(); syncThemeColor(); loadParked(); renderParked(); armReminder(); loadTypical();
+renderChrome(); loadCounts(); buildMarkers(); buildZones(); syncThemeColor(); loadParked(); renderParked(); armReminder(); loadTypical(); initCounter();
 let v="garages"; try{ v=localStorage.getItem("lp.view")||"garages"; }catch(e){}
 try{ const d=JSON.parse(sessionStorage.getItem("lp.dest")||"null"); if(d&&d.lat) state.dest=d; }catch(e){}
 (function fromLink(){ // ?to=lat,lng&n=Name&h=2 opens the app on a shared destination
   const u=new URL(location.href); const to=(u.searchParams.get("to")||"").split(","); if(to.length!==2||isNaN(+to[0])||isNaN(+to[1])) return;
-  state.dest={name:(u.searchParams.get("n")||"Shared spot").slice(0,60),sub:"",lat:+to[0],lng:+to[1]}; const h=parseFloat(u.searchParams.get("h")); if(h>0&&DURS.some(x=>x[0]===h)) state.hours=h; v="going";
+  state.dest={name:(u.searchParams.get("n")||t("Shared spot")).slice(0,60),sub:"",lat:+to[0],lng:+to[1]}; const h=parseFloat(u.searchParams.get("h")); if(h>0&&DURS.some(x=>x[0]===h)) state.hours=h; v="going";
   history.replaceState(null,"",location.pathname);
 })();
 if(state.dest) setDest(state.dest,false);
 if(v==="going"&&!state.dest) v="garages";
-if(v==="street"||v==="going") setView(v); else { renderGarages(); statusLine(); }
-refresh(false);
+if(v==="street"||v==="going") setView(v); else { renderGarages(); statusLine(); countView("garages"); }
+refresh(false); setTimeout(maybeInstallBanner,2500);
 })();
 </script>
 </body>
