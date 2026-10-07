@@ -1,8 +1,8 @@
 /* Lugano Parking service worker: instant reopen and offline map. Bump VERSION when files change. */
-const VERSION = "lp-2026-10-07c";
+const VERSION = "lp-2026-10-07e";
 const CORE = ["./", "index.html", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png",
   "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"];
-const TILES = ["tiles/z15.jpg", "tiles/z14.jpg", "tiles/z16.jpg", "tiles/z17.jpg"];
+const TILES = ["tiles/z15.jpg", "tiles/z14.jpg", "tiles/z16.jpg", "tiles/z17.jpg"]; // or zNN.jpg at the root, cached on first use
 
 self.addEventListener("install", e => {
   e.waitUntil((async () => {
@@ -32,13 +32,26 @@ self.addEventListener("fetch", e => {
   if (!sameOrigin && !isFont && !isLib) return;
 
   // Map tiles, icons, Leaflet: cache first (immutable).
-  if (url.pathname.includes("/tiles/") || isLib || /\.(png|webmanifest)$/.test(url.pathname)) {
+  if (/\/(tiles\/)?z1[4-7]\.jpg$/.test(url.pathname) || isLib || /\.(png|webmanifest)$/.test(url.pathname)) {
     e.respondWith(cacheFirst(req)); return;
   }
-  // The app shell and fonts: serve the cached copy instantly, refresh it in the background.
+  // The app itself: try the network first (so a new upload shows up on the next open), fall back to the cached copy offline.
+  if (sameOrigin && (req.mode === "navigate" || /\/(index\.html)?$/.test(url.pathname))) { e.respondWith(networkFirst(req)); return; }
+  // Fonts: serve the cached copy instantly, refresh it in the background.
   e.respondWith(staleWhileRevalidate(req));
 });
 
+async function networkFirst(req) {
+  const c = await caches.open(VERSION);
+  try {
+    const ctrl = new AbortController(); const t = setTimeout(() => ctrl.abort(), 4000);
+    const res = await fetch(req, { signal: ctrl.signal, cache: "no-store" }); clearTimeout(t);
+    if (res && res.ok) { c.put(req, res.clone()); return res; }
+    throw new Error("bad response");
+  } catch (_) {
+    return (await c.match(req, { ignoreSearch: true })) || (await c.match("./")) || Response.error();
+  }
+}
 async function cacheFirst(req) {
   const c = await caches.open(VERSION);
   const hit = await c.match(req, { ignoreSearch: true }); if (hit) return hit;
