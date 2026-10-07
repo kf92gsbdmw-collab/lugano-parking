@@ -760,7 +760,57 @@ h1,h2,h3{margin:0;font-family:var(--font-display);text-wrap:balance}
 .seg{display:grid;grid-template-columns:1fr 1fr;background:var(--surface);border-radius:14px;box-shadow:var(--shadow);padding:4px;gap:4px}
 .seg button{padding:9px 10px;border-radius:10px;font-weight:600;font-size:14px;color:var(--muted);display:flex;align-items:center;justify-content:center;gap:7px}
 .seg button[aria-selected="true"]{background:var(--accent);color:var(--accent-ink)}
-.seg svg{width:16px;height:16px}
+.seg svg{width:16px;height:16px;flex:none}
+.seg3{grid-template-columns:1fr 1fr 1fr}
+.seg3 button{padding:9px 6px;font-size:13.5px;gap:6px;white-space:nowrap}
+
+/* Going to */
+#map.picking{cursor:crosshair}
+#map.picking .leaflet-interactive{pointer-events:none}
+.dmark{position:relative}
+.dmark .flag{position:absolute;left:0;top:0;width:34px;height:34px;border-radius:50% 50% 50% 4px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;transform:translate(-4px,-34px);box-shadow:var(--shadow);border:2px solid var(--surface)}
+.dmark .flag svg{width:18px;height:18px}
+.dmark .lbl{position:absolute;left:34px;top:-30px;background:var(--surface);color:var(--fg);font-size:12px;font-weight:700;padding:4px 8px;border-radius:999px;box-shadow:var(--shadow);white-space:nowrap;max-width:180px;overflow:hidden;text-overflow:ellipsis}
+.search{display:flex;align-items:center;gap:8px;margin-top:10px;background:var(--surface-2);border-radius:14px;padding:4px 4px 4px 12px}
+.search .ico{color:var(--muted);display:grid;place-items:center;flex:none}
+.search .ico svg{width:18px;height:18px}
+.search input{flex:1;min-width:0;font:inherit;font-size:16px;background:none;border:0;color:var(--fg);padding:9px 0;outline:none}
+.search input::placeholder{color:var(--muted)}
+.search input::-webkit-search-cancel-button{-webkit-appearance:none}
+.pickbtn{flex:none;display:flex;align-items:center;gap:5px;font-size:13px;font-weight:600;padding:8px 11px;border-radius:11px;background:var(--surface);color:var(--fg);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.pickbtn svg{width:15px;height:15px}
+.pickbtn.on{background:var(--accent);color:var(--accent-ink)}
+.results{display:flex;flex-direction:column;gap:4px;margin-top:6px}
+.res{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:var(--surface-2);text-align:left;width:100%}
+.res .t{min-width:0;display:flex;flex-direction:column}
+.res b{font-weight:600;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.res small{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.spots{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.spot{display:flex;flex-direction:column;gap:2px;padding:12px 12px;border-radius:14px;background:var(--surface-2);text-align:left}
+.spot b{font-weight:600;font-size:14px}
+.spot small{font-size:12px;color:var(--muted)}
+.spot:active{transform:scale(.98)}
+.dest{display:flex;align-items:center;gap:10px}
+.dest .ico{width:36px;height:36px;border-radius:10px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;flex:none}
+.dest .ico svg{width:18px;height:18px}
+.dest .grow{flex:1;min-width:0}
+.dest .k{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.dest h2{font-size:18px;font-weight:700;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dest p{margin:1px 0 0;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sortbar.durs{margin-top:12px;margin-bottom:0}
+.sortbar .lbl{flex:none;font-size:12.5px;color:var(--muted);font-weight:600;align-self:center;padding-right:2px}
+.gcard{grid-template-columns:56px 1fr auto}
+.gcard .walk{display:flex;flex-direction:column;align-items:center;justify-content:center;width:56px;height:56px;border-radius:14px;background:var(--surface);color:var(--c)}
+.gcard .walk svg{width:16px;height:16px;margin-bottom:1px}
+.gcard .walk b{font-family:var(--font-display);font-size:18px;line-height:1;font-weight:700}
+.gcard .walk small{font-size:10.5px;color:var(--muted);margin-top:2px}
+.gcard.full .walk b{font-size:13px}
+.gcard.full{opacity:.75}
+.gcard .t h3{white-space:normal;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.gcard .t h3 .chip{font-size:10.5px;padding:2px 7px}
+.card.gcard .n b{font-size:17px;color:var(--fg)}
+.card.gcard.full .n b{color:var(--muted)}
+.gcard.best{outline:2px solid var(--accent);outline-offset:-2px}
 
 /* Markers */
 .gmark{position:relative}
@@ -896,14 +946,18 @@ h1,h2,h3{margin:0;font-family:var(--font-display);text-wrap:balance}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
       </button>
     </div>
-    <div class="seg" role="tablist" aria-label="View">
+    <div class="seg seg3" role="tablist" aria-label="View">
       <button role="tab" id="tab-garages" aria-selected="true" data-view="garages">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-7h6v7"/></svg>
         Garages
       </button>
+      <button role="tab" id="tab-going" aria-selected="false" data-view="going">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4"/><path d="M5 4h12l-2.5 4L17 12H5"/></svg>
+        Going to
+      </button>
       <button role="tab" id="tab-street" aria-selected="false" data-view="street">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20 8 4h8l4 16"/><path d="M12 6v3M12 12v3M12 18v2"/></svg>
-        Street parking
+        Street
       </button>
     </div>
   </div>
@@ -984,7 +1038,8 @@ const ZONES=[
 ];
 
 /* ---------- Availability ---------- */
-const state={view:"garages",sort:"free",source:"snapshot",ts:new Date(SNAPSHOT_TS),counts:{},selected:null,pos:null,geo:false};
+const state={view:"garages",sort:"free",source:"snapshot",ts:new Date(SNAPSHOT_TS),counts:{},selected:null,pos:null,geo:false,dest:null,hours:2,gsort:"best",picking:false};
+try{ const h=parseFloat(localStorage.getItem("lp.hours")); if(h>0) state.hours=h; }catch(e){}
 GARAGES.forEach(g=>state.counts[g.id]=g.free);
 
 function levelOf(g){
@@ -1060,6 +1115,110 @@ function locate(){
   navigator.geolocation.getCurrentPosition(onPosition,geoError,{enableHighAccuracy:true,maximumAge:30000,timeout:12000});
 }
 function pauseWatch(){ if(watchId!=null&&navigator.geolocation){ navigator.geolocation.clearWatch(watchId); watchId=null; } }
+
+/* ---------- Going to: destination, stay length, ranking ---------- */
+const SPOTS=[
+ {id:"nassa",name:"Via Nassa",sub:"Shopping street",lat:46.0018,lng:8.9496},
+ {id:"riforma",name:"Piazza della Riforma",sub:"Old town, cafés",lat:46.0040,lng:8.9512},
+ {id:"lac",name:"LAC",sub:"Theatre & museum",lat:45.9993,lng:8.9497},
+ {id:"stazione",name:"Stazione FFS",sub:"Railway station",lat:46.0055,lng:8.9470},
+ {id:"ciani",name:"Parco Ciani",sub:"Lakeside park",lat:46.0040,lng:8.9580},
+ {id:"lido",name:"Lido di Lugano",sub:"Beach & pools",lat:46.0043,lng:8.9643},
+ {id:"congressi",name:"Palazzo dei Congressi",sub:"Events",lat:46.0052,lng:8.9570},
+ {id:"stadio",name:"Stadio Cornaredo",sub:"FC Lugano",lat:46.0225,lng:8.9615},
+ {id:"ospedale",name:"Ospedale Civico",sub:"Hospital",lat:46.0132,lng:8.9476},
+ {id:"usi",name:"USI campus",sub:"University",lat:46.0115,lng:8.9580},
+];
+const DURS=[[0.5,"30 min"],[1,"1 h"],[2,"2 h"],[3,"3 h"],[4,"4 h"],[8,"Day"]];
+const CENTRE_STOP=[46.0050,8.9515]; // TPL hub "Lugano Centro", where the P+R buses arrive
+const WALK_M_PER_MIN=80, ROUTE_FACTOR=1.3;
+// Straight-line distance scaled by a typical street factor. Honest "about" figures, no routing service needed.
+function walkMin(a,b){ return Math.max(1,Math.ceil(distKm(a,b)*1000*ROUTE_FACTOR/WALK_M_PER_MIN)); }
+function tripTo(g,dest){
+  const direct=walkMin([g.lat,g.lng],dest); const walk={min:direct,mode:"walk",label:`${direct} min`,sub:`${fmtDist(distKm([g.lat,g.lng],dest)*ROUTE_FACTOR)} walk`};
+  if(g.tariff==="PR"){ const w=walkMin(CENTRE_STOP,dest); const bus={min:12+w,mode:"bus",label:`${12+w} min`,sub:`bus ${g.id==="resega"?"3 or 8":"1"} + ${w} min walk`}; if(bus.min<direct) return bus; }
+  return walk;
+}
+function costFor(g,h){
+  const T=TARIFFS[g.tariff];
+  if(g.tariff==="A"||g.tariff==="LAC"){ const tbl=[[0.5,0],[1,2],[2,4],[3,6],[4,10],[8,26],[24,43]]; const row=tbl.find(([k])=>h<=k)||tbl[tbl.length-1]; return {chf:row[1],approx:row[0]!==h,note:row[1]===0?"first 30 min free":""}; }
+  if(g.tariff==="PR"){ const hourly=h*1; const day=5.20; return hourly<day?{chf:hourly,approx:false,note:""}:{chf:day,approx:false,note:"day ticket incl. TPL bus"}; }
+  return {chf:null,approx:false,note:"price at the entrance"};
+}
+function fmtChf(c){ return c==null?"—":c===0?"Free":"CHF "+(Number.isInteger(c)?c:c.toFixed(2)); }
+function rankedForDest(){
+  const d=[state.dest.lat,state.dest.lng]; const h=state.hours;
+  const rows=GARAGES.map(g=>{ const lv=levelOf(g); const f=state.counts[g.id]; const trip=tripTo(g,d); const cost=costFor(g,h);
+    const full=f===0; const pen=full?1e6:lv.k==="bad"?15:lv.k==="warn"?5:lv.k==="nodata"?3:0;
+    const costGuess=cost.chf==null?costFor({tariff:"A"},h).chf:cost.chf; // unknown operator price: assume the city tariff
+    return {g,lv,f,trip,cost,full,score:trip.min+pen+costGuess}; });
+  if(state.gsort==="walk") rows.sort((a,b)=>(a.full-b.full)||(a.trip.min-b.trip.min));
+  else if(state.gsort==="cost") rows.sort((a,b)=>(a.full-b.full)||((a.cost.chf??99)-(b.cost.chf??99))||(a.trip.min-b.trip.min));
+  else rows.sort((a,b)=>a.score-b.score);
+  return rows;
+}
+const destLayer=L.layerGroup(); let destMarker=null;
+function setDest(d,fly){
+  state.dest=d?{name:d.name,sub:d.sub||"",lat:+d.lat,lng:+d.lng}:null; state.picking=false; $("#map").classList.remove("picking");
+  destLayer.clearLayers(); destMarker=null;
+  if(state.dest){
+    destMarker=L.marker([state.dest.lat,state.dest.lng],{icon:L.divIcon({className:"dmark",iconSize:[0,0],html:`<span class="flag">${svgIcon("flag")}</span><span class="lbl">${esc(state.dest.name)}</span>`}),interactive:false,zIndexOffset:500,keyboard:false}).addTo(destLayer);
+    try{ sessionStorage.setItem("lp.dest",JSON.stringify(state.dest)); }catch(e){}
+  } else { try{ sessionStorage.removeItem("lp.dest"); }catch(e){} }
+  if(state.view==="going"){ renderGoing(); if(state.dest&&fly!==false){ if(sheetPos==="full") setSheet("half"); fitDest(); } else if(!state.dest&&!state.picking&&sheetPos!=="full") setSheet("full"); }
+}
+function fitDest(){
+  const top=rankedForDest().filter(r=>!r.full).slice(0,3); const b=L.latLngBounds([[state.dest.lat,state.dest.lng]]); top.forEach(r=>b.extend([r.g.lat,r.g.lng]));
+  map.flyToBounds(b,{paddingTopLeft:[40,240],paddingBottomRight:[40,Math.round(window.innerHeight*0.48)],maxZoom:16,duration:.6});
+}
+function esc(s){ return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+let searchTimer=null, searchSeq=0;
+async function searchPlaces(q){
+  const seq=++searchSeq; const box=$("#results"); if(!box) return;
+  if(q.trim().length<2){ box.innerHTML=""; return; }
+  try{
+    const url="https://photon.komoot.io/api/?q="+encodeURIComponent(q)+"&lat=46.0036&lon=8.9513&limit=6&bbox=8.88,45.96,9.03,46.06";
+    const r=await fetch(url); const j=await r.json(); if(seq!==searchSeq) return;
+    const seen=new Set(); const items=[];
+    for(const f of j.features||[]){ const p=f.properties||{}; const name=p.name||[p.street,p.housenumber].filter(Boolean).join(" "); if(!name) continue; const key=name+"|"+(p.street||""); if(seen.has(key)) continue; seen.add(key);
+      const sub=[p.street&&p.name?p.street+(p.housenumber?" "+p.housenumber:""):"",p.city||p.locality||p.district||""].filter(Boolean).join(", ");
+      items.push({name,sub,lat:f.geometry.coordinates[1],lng:f.geometry.coordinates[0],kind:p.osm_value||""}); if(items.length>=5) break; }
+    box.innerHTML=items.length?items.map((it,i)=>`<button class="res" data-res="${i}"><span class="t"><b>${esc(it.name)}</b><small>${esc(it.sub||it.kind.replace(/_/g," "))}</small></span></button>`).join(""):`<p class="note" style="margin:6px 2px">No places found in Lugano for “${esc(q)}”. Try the pin instead.</p>`;
+    box._items=items;
+  }catch(e){ if(seq===searchSeq) box.innerHTML=`<p class="note" style="margin:6px 2px">Search is not reachable right now. Pick a spot below or drop a pin on the map.</p>`; }
+}
+function shareDest(){
+  if(!state.dest) return; const u=new URL(location.href.split("?")[0]); u.searchParams.set("to",state.dest.lat.toFixed(5)+","+state.dest.lng.toFixed(5)); u.searchParams.set("n",state.dest.name); u.searchParams.set("h",String(state.hours));
+  const text=`Parking for ${state.dest.name} · Lugano Parking`;
+  if(navigator.share){ navigator.share({title:text,url:u.toString()}).catch(()=>{}); }
+  else if(navigator.clipboard){ navigator.clipboard.writeText(u.toString()).then(()=>toast("Link copied")).catch(()=>toast(u.toString())); }
+}
+function renderGoing(){
+  const head=$("#head"), body=$("#body");
+  if(!state.dest){
+    head.innerHTML=`<div class="summary"><span class="big" style="font-size:20px">Where are you going?</span></div>
+      <div class="search"><span class="ico">${svgIcon("search")}</span><input id="q" type="search" autocomplete="off" autocorrect="off" spellcheck="false" placeholder="Restaurant, shop or address" aria-label="Search a place"><button id="pick" class="pickbtn ${state.picking?"on":""}" type="button">${svgIcon("pin")} Pin</button></div>
+      <div id="results" class="results"></div>`;
+    body.innerHTML=`<div class="sec">Popular spots</div><div class="spots">${SPOTS.map(s=>`<button class="spot" data-spot="${s.id}"><b>${s.name}</b><small>${s.sub}</small></button>`).join("")}</div>
+      <p class="note">Pick where you are headed and how long you stay. The app ranks the garages by walking time, free spots right now and what the stay will cost.${state.picking?" Tap the map to set your destination.":""}</p>`;
+    const q=$("#q"); q.addEventListener("input",()=>{ clearTimeout(searchTimer); searchTimer=setTimeout(()=>searchPlaces(q.value),280); });
+    q.addEventListener("keydown",e=>{ if(e.key==="Enter"){ const it=$("#results")._items; if(it&&it[0]) setDest(it[0]); else { clearTimeout(searchTimer); searchPlaces(q.value); } } });
+    q.addEventListener("focus",()=>{ if(sheetPos!=="full") setSheet("full"); });
+  } else {
+    const d=state.dest; const rows=rankedForDest(); const best=rows.find(r=>!r.full);
+    head.innerHTML=`<div class="dest"><span class="ico">${svgIcon("flag")}</span><div class="grow"><div class="k">Going to</div><h2>${esc(d.name)}</h2>${d.sub?`<p>${esc(d.sub)}</p>`:""}</div><button class="iconbtn" id="share-dest" aria-label="Share" title="Share">${svgIcon("share")}</button><button class="iconbtn" id="clear-dest" aria-label="Change destination" title="Change">${svgIcon("x")}</button></div>
+      <div class="sortbar durs" role="group" aria-label="How long you stay"><span class="lbl">Staying</span>${DURS.map(([h,l])=>`<button data-dur="${h}" aria-pressed="${state.hours===h}">${l}</button>`).join("")}</div>
+      <div class="sortbar" role="group" aria-label="Rank by">${[["best","Best pick"],["walk","Quickest"],["cost","Cheapest"]].map(([k,l])=>`<button data-gsort="${k}" aria-pressed="${state.gsort===k}">${l}</button>`).join("")}</div>`;
+    body.innerHTML=`<div class="list">${rows.map(r=>{ const g=r.g; const isBest=best&&best.g.id===g.id&&state.gsort==="best";
+      return `<button class="card gcard ${r.full?"full":""} ${isBest?"best":""}" data-g="${g.id}" style="--c:${r.lv.c}" aria-label="${g.name}, ${r.trip.label} ${r.trip.mode==="bus"?"by bus":"walk"}, ${r.f==null?"no live data":r.f+" free"}, ${fmtChf(r.cost.chf)}">
+        <span class="walk" style="--c:${r.full?"var(--bad)":"var(--fg)"}">${svgIcon(r.trip.mode==="bus"?"bus":"walk")}<b>${r.full?"Full":r.trip.min}</b><small>${r.full?"now":"min"}</small></span>
+        <span class="t"><h3>${g.name}${isBest?' <span class="chip ok">Best pick</span>':""}</h3><p>${r.f==null?"No live data":`<b style="color:${r.lv.c}">${r.f} free</b>`} · ${r.trip.sub}${r.full?` · ${r.trip.label} away`:""}</p></span>
+        <span class="n"><b class="num">${fmtChf(r.cost.chf)}</b><small>${r.cost.note||(r.cost.chf==null?"":(r.cost.approx?"about, for ":"for ")+DURS.find(x=>x[0]===state.hours)[1].toLowerCase())}</small></span>
+      </button>`;}).join("")}</div>
+      <p class="note">Walking times are estimates from the distance on the map (about 5 km/h). P+R times include the bus ride to the centre. Prices follow the posted tariffs for a daytime stay and are rounded to the next tariff step.</p>`;
+  }
+  fitPeek();
+}
 
 /* ---------- Time rules ---------- */
 function fmtTime(d){return d.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"});}
@@ -1164,6 +1323,13 @@ function svgIcon(n){
   if(n==="meter") return `<svg viewBox="0 0 24 24" ${S}><rect x="7" y="3" width="10" height="12" rx="3"/><path d="M12 15v6M10 21h4M10 9h4"/></svg>`;
   if(n==="ban") return `<svg viewBox="0 0 24 24" ${S}><circle cx="12" cy="12" r="9"/><path d="M5.5 5.5l13 13"/></svg>`;
   if(n==="loc") return `<svg viewBox="0 0 24 24" ${S}><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg>`;
+  if(n==="flag") return `<svg viewBox="0 0 24 24" ${S}><path d="M5 21V4"/><path d="M5 4h12l-2.5 4L17 12H5"/></svg>`;
+  if(n==="search") return `<svg viewBox="0 0 24 24" ${S}><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>`;
+  if(n==="pin") return `<svg viewBox="0 0 24 24" ${S}><path d="M12 21s-6-5.5-6-11a6 6 0 0 1 12 0c0 5.5-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/></svg>`;
+  if(n==="share") return `<svg viewBox="0 0 24 24" ${S}><path d="M12 3v12"/><path d="M8 7l4-4 4 4"/><path d="M5 12v7a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-7"/></svg>`;
+  if(n==="x") return `<svg viewBox="0 0 24 24" ${S}><path d="M6 6l12 12M18 6L6 18"/></svg>`;
+  if(n==="walk") return `<svg viewBox="0 0 24 24" ${S}><circle cx="13" cy="4" r="1.6"/><path d="M10 21l2-6 3 3v3"/><path d="M8 13l2-5 3-1 3 3 2 1"/><path d="M12 8l-2 7"/></svg>`;
+  if(n==="bus") return `<svg viewBox="0 0 24 24" ${S}><rect x="4" y="3" width="16" height="15" rx="3"/><path d="M4 11h16M8 18v3M16 18v3"/><circle cx="8" cy="15" r=".8"/><circle cx="16" cy="15" r=".8"/></svg>`;
   return "";
 }
 function statusLine(){
@@ -1225,7 +1391,7 @@ function renderStreet(){
     <p class="note">Zone outlines are indicative and show where each type of bay is typical, not every single space. The sign at the bay always wins. Hours and tariffs follow the city ordinance 2.2.1 (in force since 2023, meter tariffs as last amended).</p>`;
   fitPeek();
 }
-function renderAll(){ statusLine(); refreshMarkers(); if(state.view==="garages") renderGarages(); else renderStreet(); if(state.selected&&sheet.classList.contains("detail-mode")) { const g=GARAGES.find(x=>x.id===state.selected); if(g) openGarage(g.id,false); } }
+function renderAll(){ statusLine(); refreshMarkers(); if(state.view==="garages") renderGarages(); else if(state.view==="going") renderGoing(); else renderStreet(); if(state.selected&&sheet.classList.contains("detail-mode")) { const g=GARAGES.find(x=>x.id===state.selected); if(g) openGarage(g.id,false); } }
 
 function openGarage(id,fly){
   const g=GARAGES.find(x=>x.id===id); if(!g) return; state.selected=id; refreshMarkers();
@@ -1242,7 +1408,7 @@ function openGarage(id,fly){
     ${T.rows.length?`<div class="tariff">${T.rows.map(([k,v])=>`<div><b>${v}</b><small>${k}</small></div>`).join("")}</div>`:""}
     <p class="note">${T.night?T.night+". ":""}${T.extra}</p>
     <div class="sec">Good to know</div>
-    <div class="rows">${state.pos?`<div class="row"><span>From you</span><b>${fmtDist(garageDist(g))}</b></div>`:""}${g.tags.map((t,i)=>`<div class="row"><span>${i?"":"Tip"}</span><b>${t}</b></div>`).join("")}<div class="row"><span>Area</span><b>${g.area}</b></div>${T.hours?`<div class="row"><span>Hours</span><b>${T.hours}</b></div>`:""}<div class="row"><span>Capacity</span><b>${g.cap} spaces</b></div></div>`;
+    <div class="rows">${state.dest?(()=>{ const tr=tripTo(g,[state.dest.lat,state.dest.lng]); const c=costFor(g,state.hours); return `<div class="row"><span>To ${esc(state.dest.name)}</span><b>${tr.mode==="bus"?"~"+tr.min+" min · "+tr.sub:"~"+tr.min+" min walk · "+tr.sub.replace(" walk","")}</b></div><div class="row"><span>Cost for ${DURS.find(x=>x[0]===state.hours)[1].toLowerCase()}</span><b>${c.chf==null?"See entrance":(c.approx?"about ":"")+fmtChf(c.chf)}${c.note?` <small style="color:var(--muted);font-weight:500">· ${c.note}</small>`:""}</b></div>`; })():""}${state.pos?`<div class="row"><span>From you</span><b>${fmtDist(garageDist(g))}</b></div>`:""}${g.tags.map((t,i)=>`<div class="row"><span>${i?"":"Tip"}</span><b>${t}</b></div>`).join("")}<div class="row"><span>Area</span><b>${g.area}</b></div>${T.hours?`<div class="row"><span>Hours</span><b>${T.hours}</b></div>`:""}<div class="row"><span>Capacity</span><b>${g.cap} spaces</b></div></div>`;
   sheet.classList.add("detail-mode"); if(sheetPos==="peek") setSheet("half");
   $("#back").addEventListener("click",closeDetail);
   if(fly) map.flyTo([g.lat+0.0018,g.lng],16.5,{duration:.6});
@@ -1270,9 +1436,12 @@ function closeDetail(){ sheet.classList.remove("detail-mode"); state.selected=nu
 function setView(v){
   state.view=v; closeDetail();
   document.querySelectorAll(".seg [role=tab]").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.view===v)));
-  if(v==="garages"){ map.removeLayer(zoneLayer); garageLayer.addTo(map); renderGarages(); }
-  else { garageLayer.remove(); zoneLayer.addTo(map); renderStreet(); map.flyTo([46.008,8.955],14.5,{duration:.5}); }
+  if(state.picking){ state.picking=false; $("#map").classList.remove("picking"); }
+  if(v==="garages"){ map.removeLayer(zoneLayer); map.removeLayer(destLayer); garageLayer.addTo(map); renderGarages(); }
+  else if(v==="going"){ map.removeLayer(zoneLayer); garageLayer.addTo(map); destLayer.addTo(map); renderGoing(); if(state.dest) fitDest(); }
+  else { garageLayer.remove(); map.removeLayer(destLayer); zoneLayer.addTo(map); renderStreet(); map.flyTo([46.008,8.955],14.5,{duration:.5}); }
   if(sheetPos==="peek") setSheet("half");
+  if(v==="going"&&!state.dest&&sheetPos!=="full") setSheet("full");
   try{ localStorage.setItem("lp.view",v); }catch(e){}
 }
 function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove("show"),2200); }
@@ -1286,7 +1455,15 @@ document.addEventListener("click",e=>{
   const s=e.target.closest("[data-sort]"); if(s){ state.sort=s.dataset.sort; renderGarages(); if(state.sort==="near"&&!state.pos) locate(); return; }
   const g=e.target.closest("[data-g]"); if(g){ openGarage(g.dataset.g,true); return; }
   const z=e.target.closest("[data-z]"); if(z){ openZone(z.dataset.z,null); return; }
+  const sp=e.target.closest("[data-spot]"); if(sp){ setDest(SPOTS.find(x=>x.id===sp.dataset.spot)); return; }
+  const rs=e.target.closest("[data-res]"); if(rs){ const it=$("#results")._items; if(it) setDest(it[+rs.dataset.res]); return; }
+  const du=e.target.closest("[data-dur]"); if(du){ state.hours=parseFloat(du.dataset.dur); try{ localStorage.setItem("lp.hours",String(state.hours)); }catch(_){} renderGoing(); return; }
+  const gs=e.target.closest("[data-gsort]"); if(gs){ state.gsort=gs.dataset.gsort; renderGoing(); return; }
+  if(e.target.closest("#clear-dest")){ setDest(null); return; }
+  if(e.target.closest("#share-dest")){ shareDest(); return; }
+  if(e.target.closest("#pick")){ state.picking=!state.picking; $("#map").classList.toggle("picking",state.picking); if(state.picking){ setSheet("peek"); toast("Tap the map where you are going"); } renderGoing(); return; }
 });
+map.on("click",e=>{ if(state.view==="going"&&state.picking){ setDest({name:"Pinned spot",sub:e.latlng.lat.toFixed(4)+", "+e.latlng.lng.toFixed(4),lat:e.latlng.lat,lng:e.latlng.lng}); if(sheetPos==="peek") setSheet("half"); } });
 $("#refresh").addEventListener("click",()=>refresh(true));
 document.addEventListener("visibilitychange",()=>{ if(document.hidden) pauseWatch(); else { refresh(false); if(state.geo&&watchId==null) locate(); } });
 setInterval(()=>{ if(!document.hidden) refresh(false); },3*60*1000);
@@ -1306,7 +1483,15 @@ if("serviceWorker" in navigator){
 /* ---------- Boot ---------- */
 loadCounts(); buildMarkers(); buildZones(); syncThemeColor();
 let v="garages"; try{ v=localStorage.getItem("lp.view")||"garages"; }catch(e){}
-if(v==="street") setView("street"); else { renderGarages(); statusLine(); }
+try{ const d=JSON.parse(sessionStorage.getItem("lp.dest")||"null"); if(d&&d.lat) state.dest=d; }catch(e){}
+(function fromLink(){ // ?to=lat,lng&n=Name&h=2 opens the app on a shared destination
+  const u=new URL(location.href); const to=(u.searchParams.get("to")||"").split(","); if(to.length!==2||isNaN(+to[0])||isNaN(+to[1])) return;
+  state.dest={name:(u.searchParams.get("n")||"Shared spot").slice(0,60),sub:"",lat:+to[0],lng:+to[1]}; const h=parseFloat(u.searchParams.get("h")); if(h>0&&DURS.some(x=>x[0]===h)) state.hours=h; v="going";
+  history.replaceState(null,"",location.pathname);
+})();
+if(state.dest) setDest(state.dest,false);
+if(v==="going"&&!state.dest) v="garages";
+if(v==="street"||v==="going") setView(v); else { renderGarages(); statusLine(); }
 refresh(false);
 })();
 </script>
