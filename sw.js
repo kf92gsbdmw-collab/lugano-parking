@@ -1,5 +1,5 @@
 /* Lugano Parking service worker: instant reopen and offline map. Bump VERSION when files change. */
-const VERSION = "lp-2026-10-08b";
+const VERSION = "lp-2026-10-08c";
 const MAPCACHE = "lp-map-v1"; // vector tiles, fonts and sprites from OpenFreeMap, kept across app versions
 const MAPCACHE_MAX = 800;
 const CORE = ["./", "index.html", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png", "logo.svg",
@@ -45,6 +45,8 @@ self.addEventListener("fetch", e => {
   }
   // The app itself: try the network first (so a new upload shows up on the next open), fall back to the cached copy offline.
   if (sameOrigin && (req.mode === "navigate" || /\/(index\.html)?$/.test(url.pathname))) { e.respondWith(networkFirst(req)); return; }
+  // events.json is edited on GitHub: always try the network first so new events show up right away.
+  if (sameOrigin && url.pathname.endsWith("events.json")) { e.respondWith(networkFirst(req)); return; }
   // Fonts: serve the cached copy instantly, refresh it in the background.
   e.respondWith(staleWhileRevalidate(req));
 });

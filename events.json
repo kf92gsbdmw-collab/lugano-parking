@@ -1,0 +1,231 @@
+{
+ "note": "Edit this file on GitHub to add events. at = start time with offset, v = venue (cornaredo or lac), k = hockey / football / show, dur = minutes. Optional: sponsor {name,url}.",
+ "events": [
+  {
+   "at": "2026-10-09T19:45+02:00",
+   "v": "cornaredo",
+   "k": "hockey",
+   "t": "HC Lugano vs ZSC Lions",
+   "dur": 150
+  },
+  {
+   "at": "2026-10-10T20:30+02:00",
+   "v": "cornaredo",
+   "k": "football",
+   "t": "FC Lugano vs FC Luzern",
+   "sub": "Super League",
+   "dur": 120
+  },
+  {
+   "at": "2026-10-15T18:45+02:00",
+   "v": "cornaredo",
+   "k": "football",
+   "t": "FC Lugano vs Crvena Zvezda",
+   "sub": "Conference League",
+   "dur": 120
+  },
+  {
+   "at": "2026-10-16T19:45+02:00",
+   "v": "cornaredo",
+   "k": "hockey",
+   "t": "HC Lugano vs HC Davos",
+   "dur": 150
+  },
+  {
+   "at": "2026-10-23T19:45+02:00",
+   "v": "cornaredo",
+   "k": "hockey",
+   "t": "HC Lugano vs EHC Kloten",
+   "dur": 150
+  },
+  {
+   "at": "2026-10-29T20:00+01:00",
+   "v": "cornaredo",
+   "k": "hockey",
+   "t": "HC Lugano vs Lausanne HC",
+   "dur": 150
+  },
+  {
+   "at": "2026-11-01T16:30+01:00",
+   "v": "cornaredo",
+   "k": "football",
+   "t": "FC Lugano vs FC Basel",
+   "sub": "Super League",
+   "dur": 120
+  },
+  {
+   "at": "2026-11-05T21:00+01:00",
+   "v": "cornaredo",
+   "k": "football",
+   "t": "FC Lugano vs Kauno Žalgiris",
+   "sub": "Conference League",
+   "dur": 120
+  },
+  {
+   "at": "2026-11-11T19:45+01:00",
+   "v": "cornaredo",
+   "k": "hockey",
+   "t": "HC Lugano vs SC Bern",
+   "dur": 150
+  },
+  {
+   "at": "2026-11-13T19:45+01:00",
+   "v": "cornaredo",
+   "k": "hockey",
+   "t": "HC Lugano vs SCL Tigers",
+   "dur": 150
+  },
+  {
+   "at": "2026-11-20T19:45+01:00",
+   "v": "cornaredo",
+   "k": "hockey",
+   "t": "HC Lugano vs HC Ajoie",
+   "dur": 150
+  },
+  {
+   "at": "2026-11-21T18:00+01:00",
+   "v": "cornaredo",
+   "k": "football",
+   "t": "FC Lugano vs Grasshopper Club",
+   "sub": "Super League",
+   "dur": 120
+  },
+  {
+   "at": "2026-11-24T19:45+01:00",
+   "v": "cornaredo",
+   "k": "hockey",
+   "t": "HC Lugano vs EHC Biel",
+   "dur": 150
+  },
+  {
+   "at": "2026-11-27T19:45+01:00",
+   "v": "cornaredo",
+   "k": "hockey",
+   "t": "HC Lugano vs HC Fribourg-Gottéron",
+   "dur": 150
+  },
+  {
+   "at": "2026-12-06T15:45+01:00",
+   "v": "cornaredo",
+   "k": "hockey",
+   "t": "HC Lugano vs EHC Kloten",
+   "dur": 150
+  },
+  {
+   "at": "2026-12-13T16:30+01:00",
+   "v": "cornaredo",
+   "k": "football",
+   "t": "FC Lugano vs FC Thun",
+   "sub": "Super League",
+   "dur": 120
+  },
+  {
+   "at": "2026-12-17T21:00+01:00",
+   "v": "cornaredo",
+   "k": "football",
+   "t": "FC Lugano vs Sint-Truiden",
+   "sub": "Conference League",
+   "dur": 120
+  },
+  {
+   "at": "2026-12-18T19:45+01:00",
+   "v": "cornaredo",
+   "k": "hockey",
+   "t": "HC Lugano vs EV Zug",
+   "dur": 150
+  },
+  {
+   "at": "2026-12-22T19:45+01:00",
+   "v": "cornaredo",
+   "k": "hockey",
+   "t": "HC Lugano vs HC Ambrì-Piotta",
+   "dur": 150
+  },
+  {
+   "at": "2027-01-03T15:45+01:00",
+   "v": "cornaredo",
+   "k": "hockey",
+   "t": "HC Lugano vs HC Ajoie",
+   "dur": 150
+  },
+  {
+   "at": "2027-01-09T19:45+01:00",
+   "v": "cornaredo",
+   "k": "hockey",
+   "t": "HC Lugano vs EHC Biel",
+   "dur": 150
+  },
+  {
+   "at": "2027-01-16T19:45+01:00",
+   "v": "cornaredo",
+   "k": "hockey",
+   "t": "HC Lugano vs HC Fribourg-Gottéron",
+   "dur": 150
+  },
+  {
+   "at": "2027-01-22T19:45+01:00",
+   "v": "cornaredo",
+   "k": "hockey",
+   "t": "HC Lugano vs Genève-Servette",
+   "dur": 150
+  },
+  {
+   "at": "2027-01-24T16:30+01:00",
+   "v": "cornaredo",
+   "k": "football",
+   "t": "FC Lugano vs FC Sion",
+   "sub": "Super League",
+   "dur": 120
+  },
+  {
+   "at": "2027-01-29T19:45+01:00",
+   "v": "cornaredo",
+   "k": "hockey",
+   "t": "HC Lugano vs SC Bern",
+   "dur": 150
+  },
+  {
+   "at": "2027-01-30T18:00+01:00",
+   "v": "cornaredo",
+   "k": "football",
+   "t": "FC Lugano vs FC Lausanne-Sport",
+   "sub": "Super League",
+   "dur": 120
+  },
+  {
+   "at": "2027-02-02T19:45+01:00",
+   "v": "cornaredo",
+   "k": "hockey",
+   "t": "HC Lugano vs Lausanne HC",
+   "dur": 150
+  },
+  {
+   "at": "2027-02-06T19:45+01:00",
+   "v": "cornaredo",
+   "k": "hockey",
+   "t": "HC Lugano vs SCL Tigers",
+   "dur": 150
+  },
+  {
+   "at": "2027-02-16T19:45+01:00",
+   "v": "cornaredo",
+   "k": "hockey",
+   "t": "HC Lugano vs Rapperswil-Jona Lakers",
+   "dur": 150
+  },
+  {
+   "at": "2027-02-20T19:45+01:00",
+   "v": "cornaredo",
+   "k": "hockey",
+   "t": "HC Lugano vs ZSC Lions",
+   "dur": 150
+  },
+  {
+   "at": "2027-02-27T19:45+01:00",
+   "v": "cornaredo",
+   "k": "hockey",
+   "t": "HC Lugano vs HC Davos",
+   "dur": 150
+  }
+ ]
+}

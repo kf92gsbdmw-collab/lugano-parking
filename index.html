@@ -958,6 +958,36 @@ h1,h2,h3{margin:0;font-family:var(--font-display);text-wrap:balance}
 .sec-ico{display:flex;align-items:center;gap:6px}
 .sec-ico svg{width:14px;height:14px}
 
+/* Events, favourites, vehicle height */
+.event{background:var(--surface-2);border-radius:16px;padding:12px 14px;margin:2px 0 10px;border-left:4px solid var(--warn)}
+.event .eh{display:flex;gap:10px;align-items:center}
+.event .ei{font-size:22px;line-height:1}
+.event .eh b{display:block;font-size:15px}
+.event .eh small{display:block;color:var(--muted);font-size:12px}
+.event p{margin:8px 0 6px;font-size:13px}
+.ealt{display:flex;gap:6px;flex-wrap:wrap}
+.ealt button{background:var(--surface);border-radius:12px;padding:7px 10px;text-align:left;border-left:3px solid var(--c)}
+.ealt b{display:block;font-size:13px}
+.ealt small{display:block;font-size:11.5px;color:var(--muted)}
+.event .etip{color:var(--muted);font-size:12px;margin-bottom:0}
+.esp{display:inline-block;margin-top:8px;font-size:11.5px;font-weight:600;color:var(--muted);text-decoration:none;letter-spacing:.02em}
+.evline{display:block;width:100%;margin-top:8px;padding:7px 10px;border-radius:12px;background:var(--warn-soft);color:var(--warn);font-size:12.5px;font-weight:500;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vsel{flex:none;display:inline-flex;align-items:center;gap:2px;padding:0 2px 0 9px;border-radius:999px;background:var(--surface-2);color:var(--muted);font-size:13px;font-weight:600;position:relative}
+.vsel.on{background:var(--fg);color:var(--surface)}
+.vsel svg{width:15px;height:15px;flex:none}
+.vsel select{font:inherit;color:inherit;background:transparent;border:0;padding:6px 8px 6px 4px;appearance:none;-webkit-appearance:none;cursor:pointer;max-width:150px}
+.vsel select option{color:#111;background:#fff}
+.card.toolow{opacity:.55}
+.gmark.toolow .pill{opacity:.5;filter:grayscale(1)}
+.star{color:#d99a00}
+.dhead > div{flex:1;min-width:0}
+.dhead .fav{width:36px;height:36px;border-radius:10px;background:var(--surface-2);display:grid;place-items:center;flex:none;color:var(--muted)}
+.dhead .fav[aria-pressed="true"]{color:#d99a00}
+.dhead .fav[aria-pressed="true"] svg{fill:currentColor}
+.dhead .fav svg{width:20px;height:20px}
+.warnstrip svg{width:18px;height:18px;flex:none}
+.warnstrip{display:flex;gap:10px;align-items:flex-start;margin-top:8px;padding:10px 12px;border-radius:14px;background:var(--bad-soft);color:var(--bad);font-size:13px;font-weight:600}
+
 /* Bottom tab bar */
 .tabbar{position:absolute;left:0;right:0;bottom:0;z-index:8;height:calc(var(--tab) + var(--safe-b));padding-bottom:var(--safe-b);background:var(--surface);display:grid;grid-template-columns:repeat(3,1fr);box-shadow:0 -1px 0 var(--line),0 -8px 24px rgba(16,32,30,.06)}
 .tabbar button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:11px;font-weight:600;color:var(--muted);padding:6px 0}
@@ -1442,6 +1472,7 @@ it:{
 "Privately run garage. Prices are posted at the entrance and differ from the city tariff.":"Autosilo a gestione privata. I prezzi sono esposti all'entrata e differiscono dalla tariffa comunale.",
 "The CHF 5.20 day ticket (Mon–Fri 06:00–16:00) is also a day pass for TPL buses in zone 100. Annual pass CHF 650 (CHF 500 for Lugano residents).":"Il giornaliero da CHF 5.20 (lun–ven 06:00–16:00) vale anche come biglietto giornaliero per i bus TPL nella zona 100. Abbonamento annuale CHF 650 (CHF 500 per i residenti di Lugano).",
 "Busy":"Molto occupato","Full in ~{m} min":"Pieno tra ~{m} min","Filling fast":"Si riempie in fretta","Filling":"Si sta riempiendo","Emptying fast":"Si svuota in fretta","Emptying":"Si sta svuotando","The trend appears after a few minutes of readings.":"La tendenza appare dopo qualche minuto di letture.","Steady over the last {m} min":"Stabile negli ultimi {m} min","{n} fewer free spots than {m} min ago":"{n} posti liberi in meno di {m} min fa","{n} more free spots than {m} min ago":"{n} posti liberi in più di {m} min fa","full in about {m} min at this pace":"a questo ritmo pieno tra circa {m} min","Available":"Libero","In use":"In uso","Out of service":"Fuori servizio","Status unknown":"Stato sconosciuto","Fast":"Rapida","Power not listed":"Potenza non indicata","Charging nearby":"Ricarica nelle vicinanze","No public charger within 800 m is listed in the federal register.":"Nel registro federale non c'è nessuna colonnina pubblica entro 800 m.","Nearest: {name}, {d}.":"La più vicina: {name}, {d}.","Customers only":"Solo clienti","charge points free of {m}":"punti di ricarica liberi su {m}","Loading charger status…":"Carico lo stato delle colonnine…","sites":"luoghi","1 point":"1 punto","{n} points":"{n} punti","Public chargers from the federal register ich-tanke-strom.ch, with live status. Not every operator reports to it, so chargers inside some garages may be missing.":"Colonnine pubbliche dal registro federale ich-tanke-strom.ch, con stato in tempo reale. Non tutti i gestori vi partecipano, quindi le colonnine in alcuni autosili possono mancare.","Power":"Potenza","Live status":"Stato in tempo reale","Charge points":"Punti di ricarica","Operator":"Gestore","Access":"Accesso","Customers or members only":"Solo clienti o abbonati","Public":"Pubblico","Prices depend on the operator and on your charging card or app.":"I prezzi dipendono dal gestore e dalla tua carta o app di ricarica.","Garages nearby":"Autosili nelle vicinanze","Charging":"Ricarica","EV charging: ich-tanke-strom.ch, Swiss Federal Office of Energy.":"Ricarica: ich-tanke-strom.ch, Ufficio federale dell'energia.",
+"Any vehicle":"Qualsiasi veicolo","Up to 1.90 m":"Fino a 1.90 m","Up to 2.00 m":"Fino a 2.00 m","Up to 2.10 m":"Fino a 2.10 m","Taller than 2.10 m":"Più alto di 2.10 m","Vehicle height":"Altezza del veicolo","No limit (open-air)":"Nessun limite (all'aperto)","Not listed":"Non indicata","{h} m":"{h} m","Too low · max {h} m":"Troppo basso · max {h} m","Height not listed":"Altezza non indicata","Max height":"Altezza massima","Your vehicle will not fit: the entrance is {h} m high.":"Il tuo veicolo non passa: l'entrata è alta {h} m.","{n} garages are too low for this vehicle":"{n} autosili sono troppo bassi per questo veicolo","All garages with a listed height fit":"Tutti gli autosili con altezza indicata vanno bene","Pinned to the top of the list":"Fissato in cima alla lista","Removed from favourites":"Rimosso dai preferiti","Favourite":"Preferito","Add to favourites":"Aggiungi ai preferiti","Remove from favourites":"Rimuovi dai preferiti","{name}: {n} free right now":"{name}: {n} posti liberi adesso","on now":"in corso","today {t}":"oggi {t}","{names} fills up early":"{names} si riempie presto","Expect {names} to fill up before the start. Better:":"{names} sarà pieno prima dell'inizio. Meglio:","Your match ticket is valid on public transport in Ticino all day.":"Il biglietto della partita vale tutto il giorno sui mezzi pubblici in Ticino.","Bus lines 3, 4, 6, 7 and 19 run to the stadium area.":"Le linee bus 3, 4, 6, 7 e 19 portano alla zona dello stadio.","Presented by {name}":"Offerto da {name}","Event: fills up early":"Evento: si riempie presto","{event} {when}: this car park fills up before the start.":"{event} {when}: questo parcheggio si riempie prima dell'inizio.",
 "Near LAC":"Vicino al LAC","15 min free":"15 min gratis","Best for short stops":"Ideale per soste brevi","Hospital":"Ospedale","SBB P+Rail":"P+Rail FFS","South of the station":"A sud della stazione","Capacity not published":"Capienza non pubblicata","SBB P+Rail day ticket":"giornaliero P+Rail FFS",
 "Night 19:00–07:00: CHF 0.50 per hour":"Notte 19:00–07:00: CHF 0.50 all'ora","Night 20:00–07:00: CHF 1 per hour":"Notte 20:00–07:00: CHF 1 all'ora","Monthly pass CHF 350. No live occupancy published.":"Abbonamento mensile CHF 350. Occupazione non pubblicata.",
 "Privately run. Cheap for quick stops, expensive for long stays: check the sign at the entrance for longer stays.":"Gestione privata. Conveniente per soste brevi, caro per soste lunghe: per soste più lunghe vedi i prezzi all'entrata.",
@@ -1546,6 +1577,7 @@ de:{
 "Privately run garage. Prices are posted at the entrance and differ from the city tariff.":"Privat betriebenes Parkhaus. Die Preise hängen am Eingang aus und weichen vom Stadttarif ab.",
 "The CHF 5.20 day ticket (Mon–Fri 06:00–16:00) is also a day pass for TPL buses in zone 100. Annual pass CHF 650 (CHF 500 for Lugano residents).":"Die Tageskarte für CHF 5.20 (Mo–Fr 06:00–16:00) gilt auch als Tageskarte für die TPL-Busse in Zone 100. Jahresabo CHF 650 (CHF 500 für Einwohner von Lugano).",
 "Busy":"Stark belegt","Full in ~{m} min":"Voll in ~{m} min","Filling fast":"Füllt sich schnell","Filling":"Füllt sich","Emptying fast":"Leert sich schnell","Emptying":"Leert sich","The trend appears after a few minutes of readings.":"Der Trend erscheint nach ein paar Minuten Messwerten.","Steady over the last {m} min":"Stabil in den letzten {m} min","{n} fewer free spots than {m} min ago":"{n} freie Plätze weniger als vor {m} min","{n} more free spots than {m} min ago":"{n} freie Plätze mehr als vor {m} min","full in about {m} min at this pace":"bei diesem Tempo in etwa {m} min voll","Available":"Frei","In use":"Belegt","Out of service":"Ausser Betrieb","Status unknown":"Status unbekannt","Fast":"Schnell","Power not listed":"Leistung nicht angegeben","Charging nearby":"Laden in der Nähe","No public charger within 800 m is listed in the federal register.":"Im Bundesregister ist keine öffentliche Ladestation im Umkreis von 800 m eingetragen.","Nearest: {name}, {d}.":"Nächste: {name}, {d}.","Customers only":"Nur für Kunden","charge points free of {m}":"Ladepunkte frei von {m}","Loading charger status…":"Lade Status der Ladestationen…","sites":"Standorte","1 point":"1 Ladepunkt","{n} points":"{n} Ladepunkte","Public chargers from the federal register ich-tanke-strom.ch, with live status. Not every operator reports to it, so chargers inside some garages may be missing.":"Öffentliche Ladestationen aus dem Bundesregister ich-tanke-strom.ch, mit Live-Status. Nicht alle Betreiber melden dorthin, Ladestationen in manchen Parkhäusern können also fehlen.","Power":"Leistung","Live status":"Live-Status","Charge points":"Ladepunkte","Operator":"Betreiber","Access":"Zugang","Customers or members only":"Nur für Kunden oder Mitglieder","Public":"Öffentlich","Prices depend on the operator and on your charging card or app.":"Die Preise hängen vom Betreiber und von deiner Ladekarte oder App ab.","Garages nearby":"Parkhäuser in der Nähe","Charging":"Laden","EV charging: ich-tanke-strom.ch, Swiss Federal Office of Energy.":"E-Laden: ich-tanke-strom.ch, Bundesamt für Energie.",
+"Any vehicle":"Jedes Fahrzeug","Up to 1.90 m":"Bis 1.90 m","Up to 2.00 m":"Bis 2.00 m","Up to 2.10 m":"Bis 2.10 m","Taller than 2.10 m":"Höher als 2.10 m","Vehicle height":"Fahrzeughöhe","No limit (open-air)":"Keine Begrenzung (im Freien)","Not listed":"Nicht angegeben","{h} m":"{h} m","Too low · max {h} m":"Zu niedrig · max {h} m","Height not listed":"Höhe nicht angegeben","Max height":"Max. Höhe","Your vehicle will not fit: the entrance is {h} m high.":"Dein Fahrzeug passt nicht: die Einfahrt ist {h} m hoch.","{n} garages are too low for this vehicle":"{n} Parkhäuser sind zu niedrig für dieses Fahrzeug","All garages with a listed height fit":"Alle Parkhäuser mit angegebener Höhe passen","Pinned to the top of the list":"Oben in der Liste angeheftet","Removed from favourites":"Aus den Favoriten entfernt","Favourite":"Favorit","Add to favourites":"Zu Favoriten hinzufügen","Remove from favourites":"Aus Favoriten entfernen","{name}: {n} free right now":"{name}: jetzt {n} frei","on now":"läuft gerade","today {t}":"heute {t}","{names} fills up early":"{names} ist früh voll","Expect {names} to fill up before the start. Better:":"{names} ist vor Beginn voll. Besser:","Your match ticket is valid on public transport in Ticino all day.":"Dein Matchticket gilt den ganzen Tag im öffentlichen Verkehr im Tessin.","Bus lines 3, 4, 6, 7 and 19 run to the stadium area.":"Die Buslinien 3, 4, 6, 7 und 19 fahren zum Stadion.","Presented by {name}":"Präsentiert von {name}","Event: fills up early":"Event: früh voll","{event} {when}: this car park fills up before the start.":"{event} {when}: dieser Parkplatz ist vor Beginn voll.",
 "Near LAC":"Nahe LAC","15 min free":"15 min gratis","Best for short stops":"Ideal für kurze Stopps","Hospital":"Spital","SBB P+Rail":"SBB P+Rail","South of the station":"Südlich vom Bahnhof","Capacity not published":"Kapazität nicht veröffentlicht","SBB P+Rail day ticket":"SBB P+Rail Tageskarte",
 "Night 19:00–07:00: CHF 0.50 per hour":"Nacht 19:00–07:00: CHF 0.50 pro Stunde","Night 20:00–07:00: CHF 1 per hour":"Nacht 20:00–07:00: CHF 1 pro Stunde","Monthly pass CHF 350. No live occupancy published.":"Monatsabo CHF 350. Keine Live-Belegung veröffentlicht.",
 "Privately run. Cheap for quick stops, expensive for long stays: check the sign at the entrance for longer stays.":"Privat betrieben. Günstig für kurze Stopps, teuer für lange Aufenthalte: für längere Aufenthalte die Preise am Eingang beachten.",
@@ -1944,6 +1976,112 @@ function openCharger(id,fly){
   loadEvStatus();
 }
 
+/* ---------- Height limits ---------- */
+// Entry heights from parking.ch (October 2026). Piazza Castello is listed there twice (2.20 m and 1.90 m): the app uses the lower one.
+const HEIGHT={balestra:2.0,motta:1.9,castello:1.9,lac:2.1,bettydo:2.1,sangiuseppe:2.05,centralpark:2.1,campomarzio:"open"};
+GARAGES.forEach(g=>{ g.h=HEIGHT[g.id]??null; });
+const VEH_OPTS=[[0,"Any vehicle"],[1.9,"Up to 1.90 m"],[2.0,"Up to 2.00 m"],[2.1,"Up to 2.10 m"],[2.2,"Taller than 2.10 m"]];
+state.veh=0; try{ const v=parseFloat(localStorage.getItem("lp.veh")); if(v>0) state.veh=v; }catch(e){}
+const fmtH=h=>h==="open"?t("No limit (open-air)"):h==null?t("Not listed"):t("{h} m",{h:h.toFixed(2)});
+function fitsVeh(g){ const v=state.veh; if(!v||g.h==="open") return true; if(g.h==null) return null; return g.h>=v-0.001; }
+function vehSelect(){ return `<label class="vsel${state.veh?" on":""}" title="${t("Vehicle height")}">${svgIcon("van")}<select data-veh aria-label="${t("Vehicle height")}">${VEH_OPTS.map(([v,l])=>`<option value="${v}"${state.veh===v?" selected":""}>${t(l)}</option>`).join("")}</select></label>`; }
+function heightInline(g){ const f=fitsVeh(g); if(f===false) return `<b class="tr" style="color:var(--bad)">${t("Too low · max {h} m",{h:g.h.toFixed(2)})}</b>`; if(f===null) return `<b class="tr" style="color:var(--warn)">${t("Height not listed")}</b>`; return ""; }
+
+/* ---------- Favourites ---------- */
+let favs=[]; try{ const f=JSON.parse(localStorage.getItem("lp.fav")||"[]"); if(Array.isArray(f)) favs=f; }catch(e){}
+const isFav=id=>favs.includes(id);
+function toggleFav(id){
+  favs=isFav(id)?favs.filter(x=>x!==id):favs.concat(id); try{ localStorage.setItem("lp.fav",JSON.stringify(favs)); }catch(e){}
+  toast(t(isFav(id)?"Pinned to the top of the list":"Removed from favourites")); renderAll();
+}
+// Favourites first, garages the vehicle does not fit into last; otherwise keep the chosen order.
+function pinSort(a){ const low=g=>fitsVeh(g)===false?1:0; return a.map((g,i)=>({g,i})).sort((x,y)=>(isFav(y.g.id)-isFav(x.g.id))||(low(x.g)-low(y.g))||(x.i-y.i)).map(x=>x.g); }
+const favMark=g=>isFav(g.id)?`<span class="star" aria-label="${t("Favourite")}">★</span> `:"";
+
+/* ---------- Shareable garage links: luganoparking.ch/#lac ---------- */
+const garageUrl=g=>location.origin+location.pathname+"#"+g.id;
+function shareGarage(id){
+  const g=GARAGES.find(x=>x.id===id); if(!g) return; const url=garageUrl(g); const f=state.counts[g.id];
+  const text=f!=null?t("{name}: {n} free right now",{name:g.name,n:f}):g.name;
+  if(navigator.share){ navigator.share({title:g.name+" · Lugano Parking",text,url}).catch(()=>{}); }
+  else if(navigator.clipboard){ navigator.clipboard.writeText(url).then(()=>toast(t("Link copied"))).catch(()=>toast(url)); }
+  else toast(url);
+}
+function openFromHash(){
+  const id=decodeURIComponent((location.hash||"").slice(1)).toLowerCase().trim(); if(!id) return false;
+  const g=GARAGES.find(x=>x.id===id); if(!g) return false;
+  if(state.view!=="garages") setView("garages"); openGarage(g.id,true); return true;
+}
+window.addEventListener("hashchange",openFromHash);
+
+/* ---------- Event mode: game nights and big shows ---------- */
+// Built-in list; events.json next to index.html replaces it when present, so new events can be added on GitHub without touching the app.
+const EVENTS_SNAPSHOT=[
+ {"at":"2026-10-09T19:45+02:00","v":"cornaredo","k":"hockey","t":"HC Lugano vs ZSC Lions","dur":150},
+ {"at":"2026-10-10T20:30+02:00","v":"cornaredo","k":"football","t":"FC Lugano vs FC Luzern","sub":"Super League","dur":120},
+ {"at":"2026-10-15T18:45+02:00","v":"cornaredo","k":"football","t":"FC Lugano vs Crvena Zvezda","sub":"Conference League","dur":120},
+ {"at":"2026-10-16T19:45+02:00","v":"cornaredo","k":"hockey","t":"HC Lugano vs HC Davos","dur":150},
+ {"at":"2026-10-23T19:45+02:00","v":"cornaredo","k":"hockey","t":"HC Lugano vs EHC Kloten","dur":150},
+ {"at":"2026-10-29T20:00+01:00","v":"cornaredo","k":"hockey","t":"HC Lugano vs Lausanne HC","dur":150},
+ {"at":"2026-11-01T16:30+01:00","v":"cornaredo","k":"football","t":"FC Lugano vs FC Basel","sub":"Super League","dur":120},
+ {"at":"2026-11-05T21:00+01:00","v":"cornaredo","k":"football","t":"FC Lugano vs Kauno Žalgiris","sub":"Conference League","dur":120},
+ {"at":"2026-11-11T19:45+01:00","v":"cornaredo","k":"hockey","t":"HC Lugano vs SC Bern","dur":150},
+ {"at":"2026-11-13T19:45+01:00","v":"cornaredo","k":"hockey","t":"HC Lugano vs SCL Tigers","dur":150},
+ {"at":"2026-11-20T19:45+01:00","v":"cornaredo","k":"hockey","t":"HC Lugano vs HC Ajoie","dur":150},
+ {"at":"2026-11-21T18:00+01:00","v":"cornaredo","k":"football","t":"FC Lugano vs Grasshopper Club","sub":"Super League","dur":120},
+ {"at":"2026-11-24T19:45+01:00","v":"cornaredo","k":"hockey","t":"HC Lugano vs EHC Biel","dur":150},
+ {"at":"2026-11-27T19:45+01:00","v":"cornaredo","k":"hockey","t":"HC Lugano vs HC Fribourg-Gottéron","dur":150},
+ {"at":"2026-12-06T15:45+01:00","v":"cornaredo","k":"hockey","t":"HC Lugano vs EHC Kloten","dur":150},
+ {"at":"2026-12-13T16:30+01:00","v":"cornaredo","k":"football","t":"FC Lugano vs FC Thun","sub":"Super League","dur":120},
+ {"at":"2026-12-17T21:00+01:00","v":"cornaredo","k":"football","t":"FC Lugano vs Sint-Truiden","sub":"Conference League","dur":120},
+ {"at":"2026-12-18T19:45+01:00","v":"cornaredo","k":"hockey","t":"HC Lugano vs EV Zug","dur":150},
+ {"at":"2026-12-22T19:45+01:00","v":"cornaredo","k":"hockey","t":"HC Lugano vs HC Ambrì-Piotta","dur":150},
+ {"at":"2027-01-03T15:45+01:00","v":"cornaredo","k":"hockey","t":"HC Lugano vs HC Ajoie","dur":150},
+ {"at":"2027-01-09T19:45+01:00","v":"cornaredo","k":"hockey","t":"HC Lugano vs EHC Biel","dur":150},
+ {"at":"2027-01-16T19:45+01:00","v":"cornaredo","k":"hockey","t":"HC Lugano vs HC Fribourg-Gottéron","dur":150},
+ {"at":"2027-01-22T19:45+01:00","v":"cornaredo","k":"hockey","t":"HC Lugano vs Genève-Servette","dur":150},
+ {"at":"2027-01-24T16:30+01:00","v":"cornaredo","k":"football","t":"FC Lugano vs FC Sion","sub":"Super League","dur":120},
+ {"at":"2027-01-29T19:45+01:00","v":"cornaredo","k":"hockey","t":"HC Lugano vs SC Bern","dur":150},
+ {"at":"2027-01-30T18:00+01:00","v":"cornaredo","k":"football","t":"FC Lugano vs FC Lausanne-Sport","sub":"Super League","dur":120},
+ {"at":"2027-02-02T19:45+01:00","v":"cornaredo","k":"hockey","t":"HC Lugano vs Lausanne HC","dur":150},
+ {"at":"2027-02-06T19:45+01:00","v":"cornaredo","k":"hockey","t":"HC Lugano vs SCL Tigers","dur":150},
+ {"at":"2027-02-16T19:45+01:00","v":"cornaredo","k":"hockey","t":"HC Lugano vs Rapperswil-Jona Lakers","dur":150},
+ {"at":"2027-02-20T19:45+01:00","v":"cornaredo","k":"hockey","t":"HC Lugano vs ZSC Lions","dur":150},
+ {"at":"2027-02-27T19:45+01:00","v":"cornaredo","k":"hockey","t":"HC Lugano vs HC Davos","dur":150}
+];
+let events=EVENTS_SNAPSHOT;
+const EVENT_SPONSOR=null; // e.g. {name:"Your Brand",url:"https://example.ch"}: shown on every event banner; an event's own "sponsor" wins.
+const VENUES={
+  cornaredo:{full:"Cornèr Arena · AIL Arena, Cornaredo",avoid:["resega"],use:["balestra","campomarzio"],tip:"Bus lines 3, 4, 6, 7 and 19 run to the stadium area."},
+  lac:{full:"LAC Lugano Arte e Cultura",avoid:["lac","motta"],use:["centralpark","castello","balestra"],tip:""}
+};
+async function loadEvents(){ try{ const r=await fetch("events.json",{cache:"no-store"}); if(!r.ok) return; const d=await r.json(); if(d&&Array.isArray(d.events)){ events=d.events; renderAll(); } }catch(e){} }
+function activeEvent(){
+  const now=Date.now();
+  return events.filter(e=>VENUES[e.v]&&e.at).map(e=>({e,s:Date.parse(e.at)})).filter(x=>now>=x.s-4*3600e3&&now<=x.s+((x.e.dur||150)+30)*60e3).sort((a,b)=>a.s-b.s).map(x=>x.e)[0]||null;
+}
+function eventAvoids(g){ const e=activeEvent(); return !!(e&&VENUES[e.v].avoid.includes(g.id)); }
+const evIcon=k=>k==="hockey"?"🏒":k==="football"?"⚽":"🎭";
+function eventWhen(e){ const s=new Date(e.at); return Date.now()>=s.getTime()?t("on now"):t("today {t}",{t:fmtTime(s)}); }
+function eventLine(){
+  const e=activeEvent(); if(!e) return ""; const V=VENUES[e.v];
+  const names=V.avoid.map(id=>(GARAGES.find(g=>g.id===id)||{}).name).filter(Boolean).join(", ");
+  return `<button class="evline" data-evopen>${evIcon(e.k)} <b>${esc(e.t)}</b> · ${eventWhen(e)} · ${t("{names} fills up early",{names:names})}</button>`;
+}
+function eventBanner(){
+  const e=activeEvent(); if(!e) return ""; const V=VENUES[e.v];
+  const avoid=V.avoid.map(id=>GARAGES.find(g=>g.id===id)).filter(Boolean), use=V.use.map(id=>GARAGES.find(g=>g.id===id)).filter(Boolean);
+  const sp=e.sponsor||EVENT_SPONSOR;
+  const tips=[e.k==="football"?t("Your match ticket is valid on public transport in Ticino all day."):"",V.tip?t(V.tip):""].filter(Boolean).join(" ");
+  return `<div class="event" id="event">
+    <div class="eh"><span class="ei">${evIcon(e.k)}</span><div><b>${esc(e.t)}</b><small>${esc(V.full)} · ${eventWhen(e)}${e.sub?" · "+esc(e.sub):""}</small></div></div>
+    <p>${t("Expect {names} to fill up before the start. Better:",{names:avoid.map(g=>g.name).join(", ")})}</p>
+    <div class="ealt">${use.map(g=>{ const f=state.counts[g.id]; return `<button data-g="${g.id}" style="--c:${levelOf(g).c}"><b>${g.name.replace(/^(Autosilo|Parcheggio) /,"")}</b><small>${f==null?t("No live data"):t("{n} free",{n:f})}</small></button>`; }).join("")}</div>
+    ${tips?`<p class="etip">${tips}</p>`:""}
+    ${sp?`<a class="esp" href="${esc(sp.url||"#")}" target="_blank" rel="noopener sponsored">${t("Presented by {name}",{name:esc(sp.name)})}</a>`:""}
+  </div>`;
+}
+
 /* ---------- I parked here ---------- */
 let parkedTimer=null, notifTimer=null;
 function loadParked(){ try{ state.parked=JSON.parse(localStorage.getItem("lp.parked")||"null"); }catch(e){ state.parked=null; } }
@@ -2014,11 +2152,12 @@ function fmtChf(c){ return c==null?"—":c===0?t("Free"):"CHF "+(Number.isIntege
 function rankedForDest(){
   const d=[state.dest.lat,state.dest.lng]; const h=state.hours;
   const rows=GARAGES.map(g=>{ const lv=levelOf(g); const f=state.counts[g.id]; const trip=tripTo(g,d); const cost=costFor(g,h);
-    const full=f===0; let pen=full?1e6:lv.k==="bad"?15:lv.k==="warn"?5:lv.k==="nodata"?3:0; const tr=trendOf(g); if(!full&&tr&&tr.k==="filling"&&tr.fullIn!=null&&tr.fullIn<=30) pen+=8;
+    const full=f===0; let pen=full?1e6:lv.k==="bad"?15:lv.k==="warn"?5:lv.k==="nodata"?3:0; const tr=trendOf(g); if(!full&&tr&&tr.k==="filling"&&tr.fullIn!=null&&tr.fullIn<=30) pen+=8; if(eventAvoids(g)) pen+=20; if(fitsVeh(g)===false) pen+=1e5;
     const costGuess=cost.chf==null?costFor({tariff:"A"},h).chf:cost.chf; // unknown operator price: assume the city tariff
     return {g,lv,f,trip,cost,full,score:trip.min+pen+costGuess}; });
-  if(state.gsort==="walk") rows.sort((a,b)=>(a.full-b.full)||(a.trip.min-b.trip.min));
-  else if(state.gsort==="cost") rows.sort((a,b)=>(a.full-b.full)||((a.cost.chf??99)-(b.cost.chf??99))||(a.trip.min-b.trip.min));
+  const low=r=>fitsVeh(r.g)===false?1:0;
+  if(state.gsort==="walk") rows.sort((a,b)=>(low(a)-low(b))||(a.full-b.full)||(a.trip.min-b.trip.min));
+  else if(state.gsort==="cost") rows.sort((a,b)=>(low(a)-low(b))||(a.full-b.full)||((a.cost.chf??99)-(b.cost.chf??99))||(a.trip.min-b.trip.min));
   else rows.sort((a,b)=>a.score-b.score);
   return rows;
 }
@@ -2087,11 +2226,11 @@ function renderGoing(){
     const d=state.dest; const rows=rankedForDest(); const best=rows.find(r=>!r.full); const street=streetOptions([d.lat,d.lng],state.hours);
     head.innerHTML=`<div class="dest"><span class="ico">${svgIcon("flag")}</span><div class="grow"><div class="k">${t("Going to")}</div><h2>${esc(d.name)}</h2>${d.sub?`<p>${esc(t(d.sub))}</p>`:""}</div><button class="iconbtn" id="share-dest" aria-label="${t("Share")}" title="${t("Share")}">${svgIcon("share")}</button><button class="iconbtn" id="clear-dest" aria-label="${t("Change destination")}" title="${t("Change")}">${svgIcon("x")}</button></div>
       <div class="sortbar durs" role="group" aria-label="${t("How long you stay")}"><span class="lbl">${t("Staying")}</span>${DURS.map(([h,l])=>`<button data-dur="${h}" aria-pressed="${state.hours===h}">${t(l)}</button>`).join("")}</div>
-      <div class="sortbar" role="group" aria-label="${t("Rank by")}">${[["best","Best pick"],["walk","Quickest"],["cost","Cheapest"]].map(([k,l])=>`<button data-gsort="${k}" aria-pressed="${state.gsort===k}">${t(l)}</button>`).join("")}</div>`;
-    body.innerHTML=`<div class="list">${rows.map(r=>{ const g=r.g; const isBest=best&&best.g.id===g.id&&state.gsort==="best";
-      return `<button class="card gcard ${r.full?"full":""} ${isBest?"best":""}" data-g="${g.id}" style="--c:${r.lv.c}" aria-label="${g.name}, ${r.trip.label} ${t(r.trip.mode==="bus"?"by bus":"walk")}, ${r.f==null?t("no live data"):t("{n} free",{n:r.f})}, ${fmtChf(r.cost.chf)}">
+      <div class="sortbar" role="group" aria-label="${t("Rank by")}">${[["best","Best pick"],["walk","Quickest"],["cost","Cheapest"]].map(([k,l])=>`<button data-gsort="${k}" aria-pressed="${state.gsort===k}">${t(l)}</button>`).join("")}${vehSelect()}</div>`;
+    body.innerHTML=`${eventBanner()}<div class="list">${rows.map(r=>{ const g=r.g; const isBest=best&&best.g.id===g.id&&state.gsort==="best";
+      return `<button class="card gcard ${r.full?"full":""} ${isBest?"best":""} ${fitsVeh(g)===false?"toolow":""}" data-g="${g.id}" style="--c:${r.lv.c}" aria-label="${g.name}, ${r.trip.label} ${t(r.trip.mode==="bus"?"by bus":"walk")}, ${r.f==null?t("no live data"):t("{n} free",{n:r.f})}, ${fmtChf(r.cost.chf)}">
         <span class="walk" style="--c:${r.full?"var(--bad)":"var(--fg)"}">${svgIcon(r.trip.mode==="bus"?"bus":"walk")}<b>${r.full?t("Full"):r.trip.min}</b><small>${r.full?t("now"):t("min")}</small></span>
-        <span class="t"><h3>${g.name}${isBest?` <span class="chip ok">${t("Best pick")}</span>`:""}</h3><p>${r.f==null?t("No live data"):`<b style="color:${r.lv.c}">${t("{n} free",{n:r.f})}</b>${(()=>{ const ti=trendInline(g); return ti?" · "+ti:""; })()}`} · ${r.trip.sub}${r.full?` · ${t("{t} away",{t:r.trip.label})}`:""}${(()=>{ const th=typicalHint(g); return th?` · ${th}`:""; })()}</p></span>
+        <span class="t"><h3>${favMark(g)}${g.name}${isBest?` <span class="chip ok">${t("Best pick")}</span>`:""}</h3><p>${r.f==null?t("No live data"):`<b style="color:${r.lv.c}">${t("{n} free",{n:r.f})}</b>${(()=>{ const ti=trendInline(g); return ti?" · "+ti:""; })()}`}${(()=>{ const fv=fitsVeh(g); if(fv===false) return " · "+heightInline(g); if(eventAvoids(g)) return ` · <b class="tr" style="color:var(--bad)">${t("Event: fills up early")}</b>`; return fv===null?" · "+heightInline(g):""; })()} · ${r.trip.sub}${r.full?` · ${t("{t} away",{t:r.trip.label})}`:""}${(()=>{ const th=typicalHint(g); return th?` · ${th}`:""; })()}</p></span>
         <span class="n"><b class="num">${fmtChf(r.cost.chf)}</b><small>${r.cost.note||(r.cost.chf==null?"":t(r.cost.approx?"about, for {d}":"for {d}",{d:durLabel(state.hours).toLowerCase()}))}</small></span>
       </button>`;}).join("")}</div>
       ${street.length?`<div class="sec">${t("Or on the street")}</div><div class="list">${street.map(s=>`<button class="card gcard scard" data-z="${s.z.id}" style="--c:${s.z.c}">
@@ -2188,7 +2327,7 @@ const zoneLayer=L.layerGroup();
 const markers={};
 function garageIcon(g){
   const lv=levelOf(g); const f=state.counts[g.id];
-  return L.divIcon({className:"gmark"+(lv.k==="nodata"?" nodata":"")+(state.selected===g.id?" active":""),iconSize:[0,0],iconAnchor:[0,0],
+  return L.divIcon({className:"gmark"+(lv.k==="nodata"?" nodata":"")+(state.selected===g.id?" active":"")+(fitsVeh(g)===false?" toolow":""),iconSize:[0,0],iconAnchor:[0,0],
     html:`<div class="pill" style="--c:${lv.c}"><span class="p">P</span>${f==null?(g.tariff==="PR"?"P+R":g.tariff==="RAIL"?"P+Rail":"–"):f}${(()=>{ const tr=trendOf(g); return tr&&tr.k!=="steady"?`<span class="ar" style="--ac:${trendColor(tr)}">${tr.k==="filling"?"↓":"↑"}</span>`:""; })()}</div>`});
 }
 function buildMarkers(){
@@ -2246,6 +2385,8 @@ function svgIcon(n){
   if(n==="info") return `<svg viewBox="0 0 24 24" ${S}><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.5"/></svg>`;
   if(n==="plus") return `<svg viewBox="0 0 24 24" ${S}><path d="M12 5v14M5 12h14"/></svg>`;
   if(n==="bolt") return `<svg viewBox="0 0 24 24" ${S}><path d="M13 2L4.5 13.5H11L10 22l8.5-11.5H12L13 2z"/></svg>`;
+  if(n==="star") return `<svg viewBox="0 0 24 24" ${S}><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg>`;
+  if(n==="van") return `<svg viewBox="0 0 24 24" ${S}><path d="M3 17V8a2 2 0 0 1 2-2h9l4 4h1a2 2 0 0 1 2 2v5"/><path d="M3 17h18"/><circle cx="7.5" cy="17.5" r="1.8"/><circle cx="16.5" cy="17.5" r="1.8"/><path d="M12 3v3M10 4l2-1.5L14 4"/></svg>`;
   if(n==="mail") return `<svg viewBox="0 0 24 24" ${S}><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 8l9 6 9-6"/></svg>`;
   return "";
 }
@@ -2263,20 +2404,20 @@ function sortedGarages(sort){
   else if(sort==="near") a.sort((x,y)=>garageDist(x)-garageDist(y));
   else if(sort==="centre"){ const d=g=>distKm(LUGANO,[g.lat,g.lng]); a.sort((x,y)=>d(x)-d(y)); }
   else a.sort((x,y)=>x.name.localeCompare(y.name));
-  return a;
+  return pinSort(a);
 }
 function renderGarages(){
-  const sortbar=`<div class="sortbar" role="group" aria-label="${t("Sort")}"><button data-ev aria-pressed="${!!state.ev}">${svgIcon("bolt")} ${t("Charging")}</button>${[["near",state.pos?"Nearest":"Near me"],["free",state.ev?"Most free":"Most free"],["centre","Closest to centre"],["name","A–Z"]].map(([k,l])=>`<button data-sort="${k}" aria-pressed="${state.sort===k}">${k==="near"?svgIcon("loc")+" ":""}${t(l)}</button>`).join("")}</div>`;
+  const sortbar=`<div class="sortbar" role="group" aria-label="${t("Sort")}"><button data-ev aria-pressed="${!!state.ev}">${svgIcon("bolt")} ${t("Charging")}</button>${state.ev?"":vehSelect()}${[["near",state.pos?"Nearest":"Near me"],["free",state.ev?"Most free":"Most free"],["centre","Closest to centre"],["name","A–Z"]].map(([k,l])=>`<button data-sort="${k}" aria-pressed="${state.sort===k}">${k==="near"?svgIcon("loc")+" ":""}${t(l)}</button>`).join("")}</div>`;
   if(state.ev){ renderChargers(sortbar); return; }
   const withData=GARAGES.filter(g=>state.counts[g.id]!=null);
   const free=withData.reduce((s,g)=>s+state.counts[g.id],0);
   const full=withData.filter(g=>state.counts[g.id]===0).length;
   $("#head").innerHTML=`<div class="summary"><span class="big num">${free.toLocaleString("de-CH")}</span><span class="lbl">${t("free spots in {n} garages",{n:withData.length})}</span><span class="chips">${full?`<span class="chip bad">${full===1?t("1 full"):t("{n} full",{n:full})}</span>`:`<span class="chip ok">${t("none full")}</span>`}</span></div>
-  ${sortbar}`;
-  $("#body").innerHTML=`<div class="list">${sortedGarages().map(g=>{ const lv=levelOf(g); const f=state.counts[g.id]; const pct=f==null?0:Math.round(f/g.cap*100); const d=garageDist(g);
-    return `<button class="card ${lv.k==="nodata"?"nodata":""}" data-g="${g.id}" style="--c:${lv.c};--pct:${pct}" aria-label="${g.name}, ${f==null?t("no live data"):t("{n} free of {m}",{n:f,m:g.cap})}${d!=null?", "+t("{d} away",{d:fmtDist(d)}):""}">
+  ${eventLine()}${sortbar}`;
+  $("#body").innerHTML=`${eventBanner()}<div class="list">${sortedGarages().map(g=>{ const lv=levelOf(g); const f=state.counts[g.id]; const pct=f==null?0:Math.round(f/g.cap*100); const d=garageDist(g);
+    return `<button class="card ${lv.k==="nodata"?"nodata":""} ${fitsVeh(g)===false?"toolow":""}" data-g="${g.id}" style="--c:${lv.c};--pct:${pct}" aria-label="${g.name}, ${f==null?t("no live data"):t("{n} free of {m}",{n:f,m:g.cap})}${d!=null?", "+t("{d} away",{d:fmtDist(d)}):""}">
       <span class="ring"><i>${f==null?"—":pct+"%"}</i></span>
-      <span class="t"><h3>${g.name}</h3><p>${d!=null?`<b class="dist">${fmtDist(d)}</b> · `:""}${g.area}${lv.k==="nodata"?"":" · "+(trendInline(g)||lv.t)}${(()=>{ const th=typicalHint(g); return th?" · "+th:(g.tags[0]&&d==null?" · "+t(g.tags[0]):""); })()}</p></span>
+      <span class="t"><h3>${favMark(g)}${g.name}</h3><p>${d!=null?`<b class="dist">${fmtDist(d)}</b> · `:""}${g.area}${(()=>{ const fv=fitsVeh(g); if(fv===false) return " · "+heightInline(g); if(eventAvoids(g)) return ` · <b class="tr" style="color:var(--bad)">${t("Event: fills up early")}</b>`; if(fv===null) return " · "+heightInline(g); return lv.k==="nodata"?"":" · "+(trendInline(g)||lv.t); })()}${(()=>{ const th=typicalHint(g); return th?" · "+th:(g.tags[0]&&d==null?" · "+t(g.tags[0]):""); })()}</p></span>
       <span class="n">${f==null?`<b>${t("No live data")}</b><small>${g.cap?t("{n} spaces",{n:g.cap}):""}</small>`:`<b class="num">${f}</b><small>${t("of {n} free",{n:g.cap})}</small>`}</span>
     </button>`;}).join("")}</div>
     <p class="note">${t("Garage counts come from the Città di Lugano real-time feed. Colours: green means plenty of space, amber means it is filling up, red means full or nearly full.")} ${t("Garages marked “No live data” do not publish their occupancy, so check the sign at the entrance.")}</p>`;
@@ -2322,25 +2463,27 @@ function openGarage(id,fly){
   const g=GARAGES.find(x=>x.id===id); if(!g) return; state.selected=id; refreshMarkers();
   const lv=levelOf(g); const f=state.counts[g.id]; const pct=f==null?0:Math.round(f/g.cap*100); const T=TARIFFS[g.tariff];
   const maps=`https://www.google.com/maps/dir/?api=1&destination=${g.lat},${g.lng}&travelmode=driving`;
-  $("#dhead").innerHTML=`<div class="dhead"><button class="back" id="back" aria-label="${t("Back to list")}">${svgIcon("back")}</button><div><h2>${g.name}</h2><p>${g.addr}</p></div></div>`;
+  $("#dhead").innerHTML=`<div class="dhead"><button class="back" id="back" aria-label="${t("Back to list")}">${svgIcon("back")}</button><div><h2>${g.name}</h2><p>${g.addr}</p></div><button class="fav" data-fav="${g.id}" aria-pressed="${isFav(g.id)}" aria-label="${t(isFav(g.id)?"Remove from favourites":"Add to favourites")}">${svgIcon("star")}</button></div>`;
   $("#dbody").innerHTML=`
     <div class="hero" style="--c:${lv.c};--pct:${pct}">
       <div class="box"><div class="k">${t("Free now")}</div><div class="v num" style="color:${lv.c}">${f==null?"—":f}${g.cap?`<small> / ${g.cap}</small>`:""}</div><div class="bar"><i></i></div></div>
       <div class="box"><div class="k">${t("Status")}</div><div class="v" style="font-size:20px">${lv.t}</div><div class="k" style="margin-top:6px">${f==null?t("Occupancy not published"):t("Updated {t}",{t:fmtStamp(state.ts)})}</div></div>
     </div>
     ${trendStrip(g)}
+    ${fitsVeh(g)===false?`<div class="warnstrip">${svgIcon("van")}<span>${t("Your vehicle will not fit: the entrance is {h} m high.",{h:g.h.toFixed(2)})}</span></div>`:""}
+    ${eventAvoids(g)?`<div class="warnstrip"><span>${evIcon(activeEvent().k)}</span><span>${t("{event} {when}: this car park fills up before the start.",{event:esc(activeEvent().t),when:eventWhen(activeEvent())})}</span></div>`:""}
     <div class="actions"><a class="btn primary" href="${maps}" target="_blank" rel="noopener">${svgIcon("nav")} ${t("Navigate")}</a><a class="btn" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(g.name+", Lugano")}" target="_blank" rel="noopener">${t("Open in Maps")}</a></div>
-    <div class="actions" style="margin-top:8px">${state.parked&&state.parked.kind==="garage"&&state.parked.id===g.id?`<button class="btn parked-on" data-unpark="1">${svgIcon("car")} ${t("Parked here since {t} · clear",{t:fmtTime(new Date(state.parked.at))})}</button>`:`<button class="btn" data-park="${g.id}">${svgIcon("car")} ${t("I parked here")}</button>`}</div>
+    <div class="actions" style="margin-top:8px">${state.parked&&state.parked.kind==="garage"&&state.parked.id===g.id?`<button class="btn parked-on" data-unpark="1">${svgIcon("car")} ${t("Parked here since {t} · clear",{t:fmtTime(new Date(state.parked.at))})}</button>`:`<button class="btn" data-park="${g.id}">${svgIcon("car")} ${t("I parked here")}</button>`}<button class="btn" data-share-g="${g.id}" style="flex:0 0 auto">${svgIcon("share")} ${t("Share")}</button></div>
     ${typicalSection(g)}
     ${chargingSection(g)}
     <div class="sec">${t(T.label)}</div>
     ${T.rows.length?`<div class="tariff">${T.rows.map(([k,v])=>`<div><b>${t(v)}</b><small>${t(k)}</small></div>`).join("")}</div>`:""}
     <p class="note">${T.night?t(T.night)+". ":""}${t(T.extra)}</p>
     <div class="sec">${t("Good to know")}</div>
-    <div class="rows">${state.dest?(()=>{ const tr=tripTo(g,[state.dest.lat,state.dest.lng]); const c=costFor(g,state.hours); return `<div class="row"><span>${t("To {name}",{name:esc(state.dest.name)})}</span><b>${tr.mode==="bus"?t("~{m} min · {sub}",{m:tr.min,sub:tr.sub}):t("~{m} min walk · {d}",{m:tr.min,d:tr.dist})}</b></div><div class="row"><span>${t("Cost for {d}",{d:durLabel(state.hours).toLowerCase()})}</span><b>${c.chf==null?t("See entrance"):(c.approx?t("about {c}",{c:fmtChf(c.chf)}):fmtChf(c.chf))}${c.note?` <small style="color:var(--muted);font-weight:500">· ${c.note}</small>`:""}</b></div>`; })():""}${state.pos?`<div class="row"><span>${t("From you")}</span><b>${fmtDist(garageDist(g))}</b></div>`:""}${g.tags.map((tg,i)=>`<div class="row"><span>${i?"":t("Tip")}</span><b>${t(tg)}</b></div>`).join("")}<div class="row"><span>${t("Area")}</span><b>${g.area}</b></div>${T.hours?`<div class="row"><span>${t("Hours")}</span><b>${t(T.hours)}</b></div>`:""}<div class="row"><span>${t("Capacity")}</span><b>${(g.cap?t("{n} spaces",{n:g.cap}):t("Capacity not published"))}</b></div></div>`;
+    <div class="rows">${state.dest?(()=>{ const tr=tripTo(g,[state.dest.lat,state.dest.lng]); const c=costFor(g,state.hours); return `<div class="row"><span>${t("To {name}",{name:esc(state.dest.name)})}</span><b>${tr.mode==="bus"?t("~{m} min · {sub}",{m:tr.min,sub:tr.sub}):t("~{m} min walk · {d}",{m:tr.min,d:tr.dist})}</b></div><div class="row"><span>${t("Cost for {d}",{d:durLabel(state.hours).toLowerCase()})}</span><b>${c.chf==null?t("See entrance"):(c.approx?t("about {c}",{c:fmtChf(c.chf)}):fmtChf(c.chf))}${c.note?` <small style="color:var(--muted);font-weight:500">· ${c.note}</small>`:""}</b></div>`; })():""}${state.pos?`<div class="row"><span>${t("From you")}</span><b>${fmtDist(garageDist(g))}</b></div>`:""}${g.tags.map((tg,i)=>`<div class="row"><span>${i?"":t("Tip")}</span><b>${t(tg)}</b></div>`).join("")}<div class="row"><span>${t("Area")}</span><b>${g.area}</b></div>${T.hours?`<div class="row"><span>${t("Hours")}</span><b>${t(T.hours)}</b></div>`:""}<div class="row"><span>${t("Max height")}</span><b>${fmtH(g.h)}</b></div><div class="row"><span>${t("Capacity")}</span><b>${(g.cap?t("{n} spaces",{n:g.cap}):t("Capacity not published"))}</b></div></div>`;
   sheet.classList.add("detail-mode"); if(sheetPos==="peek") setSheet("half");
   $("#back").addEventListener("click",closeDetail);
-  if(fly) map.flyTo([g.lat+0.0018,g.lng],16.5,{duration:.6});
+  if(fly){ map.flyTo([g.lat+0.0018,g.lng],16.5,{duration:.6}); try{ history.replaceState(null,"","#"+g.id); }catch(e){} }
   state.selCharger=null; refreshChargerMarkers(); loadEvStatus();
 }
 function openZone(id,areaName){
@@ -2362,7 +2505,7 @@ function openZone(id,areaName){
   const arr=$("#arr"); if(arr){ const upd=()=>{ const o=discLeaveBy(arr.value); $("#discout").innerHTML=o?`${t("Leave by")} <b>${o.by}</b><span style="color:var(--muted)">${o.why}</span>`:""; }; arr.addEventListener("input",upd); upd(); $("#disc-start").addEventListener("click",()=>{ startDisc(arr.value); }); }
   const shapes=zoneShapes[id]; if(shapes&&shapes.length){ const b=L.latLngBounds([]); shapes.forEach(s=>b.extend(s.getBounds())); map.flyToBounds(b,{paddingTopLeft:[20,170],paddingBottomRight:[20,Math.round(window.innerHeight*0.5)],duration:.6,maxZoom:16}); }
 }
-function closeDetail(){ sheet.classList.remove("detail-mode"); state.selected=null; const hadC=state.selCharger; state.selCharger=null; refreshMarkers(); if(hadC) refreshChargerMarkers(); fitPeek(); }
+function closeDetail(){ if(location.hash){ try{ history.replaceState(null,"",location.pathname+location.search); }catch(e){} } sheet.classList.remove("detail-mode"); state.selected=null; const hadC=state.selCharger; state.selCharger=null; refreshMarkers(); if(hadC) refreshChargerMarkers(); fitPeek(); }
 function setView(v){
   state.view=v; closeDetail();
   document.querySelectorAll("[role=tab]").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.view===v)));
@@ -2433,6 +2576,10 @@ window.addEventListener("scroll",()=>{ window.scrollTo(0,0); });
 document.addEventListener("click",e=>{
   const tab=e.target.closest("[role=tab]"); if(tab){ setView(tab.dataset.view); return; }
   const ev=e.target.closest("[data-ev]"); if(ev){ toggleEv(); return; }
+  const fv=e.target.closest("[data-fav]"); if(fv){ toggleFav(fv.dataset.fav); return; }
+  const sg=e.target.closest("[data-share-g]"); if(sg){ shareGarage(sg.dataset.shareG); return; }
+  if(e.target.closest("[data-evopen]")){ setSheet("half"); const b=$("#body"); if(b) b.scrollTop=0; return; }
+  if(e.target.closest(".vsel")) return;
   const ch=e.target.closest("[data-c]"); if(ch){ openCharger(ch.dataset.c,true); return; }
   const s=e.target.closest("[data-sort]"); if(s){ state.sort=s.dataset.sort; renderGarages(); if(state.sort==="near"&&!state.pos) locate(); return; }
   const g=e.target.closest("[data-g]"); if(g){ openGarage(g.dataset.g,true); return; }
@@ -2454,6 +2601,12 @@ document.addEventListener("click",e=>{
 });
 map.on("click",e=>{ if(state.view==="going"&&state.picking){ setDest({name:t("Pinned spot"),sub:e.latlng.lat.toFixed(4)+", "+e.latlng.lng.toFixed(4),lat:e.latlng.lat,lng:e.latlng.lng}); if(sheetPos==="peek") setSheet("half"); } });
 $("#refresh").addEventListener("click",()=>refresh(true));
+document.addEventListener("change",e=>{
+  const vs=e.target.closest("[data-veh]"); if(!vs) return;
+  state.veh=parseFloat(vs.value)||0; try{ localStorage.setItem("lp.veh",String(state.veh)); }catch(_){}
+  if(state.veh){ const n=GARAGES.filter(g=>fitsVeh(g)===false).length; toast(n?t("{n} garages are too low for this vehicle",{n}):t("All garages with a listed height fit")); }
+  renderAll();
+});
 document.addEventListener("keydown",e=>{ if(e.key==="Escape"&&!$("#about").hidden) closeAbout(); });
 document.addEventListener("visibilitychange",()=>{ if(document.hidden) pauseWatch(); else { refresh(false); if(state.geo&&watchId==null) locate(); } });
 setInterval(()=>{ if(!document.hidden) refresh(false); },3*60*1000);
@@ -2473,7 +2626,7 @@ if("serviceWorker" in navigator){
 
 /* ---------- Boot ---------- */
 try{ state.ev=localStorage.getItem("lp.ev")==="1"; }catch(e){}
-loadHist(); renderChrome(); loadCounts(); buildMarkers(); buildChargerMarkers(); buildZones(); syncThemeColor(); loadParked(); renderParked(); armReminder(); loadTypical(); initCounter(); loadRecentLog(); loadChargerList(); if(state.ev) loadEvStatus();
+loadHist(); renderChrome(); loadCounts(); buildMarkers(); buildChargerMarkers(); buildZones(); syncThemeColor(); loadParked(); renderParked(); armReminder(); loadTypical(); initCounter(); loadRecentLog(); loadChargerList(); if(state.ev) loadEvStatus(); loadEvents();
 let v="garages"; try{ v=localStorage.getItem("lp.view")||"garages"; }catch(e){}
 try{ const d=JSON.parse(sessionStorage.getItem("lp.dest")||"null"); if(d&&d.lat) state.dest=d; }catch(e){}
 (function fromLink(){ // ?to=lat,lng&n=Name&h=2 opens the app on a shared destination
@@ -2483,7 +2636,9 @@ try{ const d=JSON.parse(sessionStorage.getItem("lp.dest")||"null"); if(d&&d.lat)
 })();
 if(state.dest) setDest(state.dest,false);
 if(v==="going"&&!state.dest) v="garages";
+if(location.hash&&GARAGES.some(g=>"#"+g.id===location.hash.toLowerCase())) v="garages";
 if(v==="street"||v==="going") setView(v); else { renderGarages(); statusLine(); countView("garages"); }
+openFromHash();
 refresh(false); setTimeout(maybeInstallBanner,2500);
 })();
 </script>

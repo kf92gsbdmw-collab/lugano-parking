@@ -26,3 +26,12 @@ On a real website the app reads the Città di Lugano live feed directly, so the 
 ## Visitor counter and feedback
 The app has a privacy-friendly, cookieless counter (GoatCounter) so you can report usage. It only works once you create the free site: go to goatcounter.com, sign up, choose the site code `luganoparking` (or change `COUNTER_SITE` at the top of the script in index.html to whatever you picked). Nothing is counted on localhost. Page views per tab (garages, going, street) show up in the GoatCounter dashboard.
 The Info panel (i button in the header) has the language switch, install instructions, a feedback button that opens an email to the address in `FEEDBACK_MAIL`, and the data credits.
+
+## Events (game nights, big shows)
+`events.json` lists HC Lugano and FC Lugano home games. On the day of an event the app shows a banner from 4 hours before the start until shortly after the end, warns that the car parks at the venue fill up early and suggests alternatives with live free spots. To add an event, edit `events.json` on GitHub: `at` is the start time with its offset (for example `2026-11-28T20:00+01:00`), `v` is the venue (`cornaredo` or `lac`), `k` is `hockey`, `football` or `show`, `dur` is the length in minutes. An event can carry `"sponsor": {"name": "...", "url": "..."}`, shown as "Presented by" on its banner; `EVENT_SPONSOR` in index.html sets one for all events.
+
+## Links to a garage
+`luganoparking.ch/#lac` opens the app on that garage (ids: balestra, motta, castello, lac, campomarzio, bettydo, resega, centralpark, sangiuseppe, ospedale, prailsud, fornaci). The Share button in a garage's details creates this link.
+
+## History logger and charging data
+`.github/workflows/log-occupancy.yml` runs `log_feed.py`, `aggregate.py` and (nightly) `chargers.py`, and stores the results on the `data` branch.
