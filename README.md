@@ -35,3 +35,11 @@ The Info panel (i button in the header) has the language switch, install instruc
 
 ## History logger and charging data
 `.github/workflows/log-occupancy.yml` runs `log_feed.py`, `aggregate.py` and (nightly) `chargers.py`, and stores the results on the `data` branch.
+
+## Space reports ("I parked here, there was space")
+For the garages without a live count (Central Park, San Giuseppe, Ospedale Civico, P+Rail Lugano Sud, P+R Fornaci), drivers who tap "I parked here" also tell others that there was space; the app then shows "Space reported 12 min ago" for 90 minutes. The feature is off until you connect a free Supabase database:
+1. Create a free account at supabase.com and a new project (region: Zurich or Frankfurt).
+2. In the project open **SQL Editor**, paste the contents of `supabase-reports.sql` and press **Run**.
+3. Open **Project Settings > API** (or **Connect**) and copy the **Project URL** and the **anon / publishable key**.
+4. In `index.html` search for `const REPORTS=` and fill in both values, e.g. `const REPORTS={url:"https://abcd.supabase.co",key:"eyJ..."};`, then commit.
+The anon key is meant to be public; the database rules in the SQL file only allow adding reports and reading those of the last 3 hours. Only the garage and the time are stored.
