@@ -834,6 +834,8 @@ h1,h2,h3{margin:0;font-family:var(--font-display);text-wrap:balance}
 .sheet.dragging{transition:none}
 .sheet.half{transform:translateY(46%)}
 .sheet.full{transform:translateY(0)}
+.sheet{overflow:hidden}
+.sheet .listview,.sheet.detail-mode .detail{display:flex;flex-direction:column;flex:1;min-height:0}
 .sheet .grip{padding:10px 0 4px;display:grid;place-items:center;flex:none}
 .sheet .grip i{width:40px;height:5px;border-radius:3px;background:var(--line);display:block}
 .sheet .head{padding:4px 18px 10px;flex:none}
@@ -890,7 +892,7 @@ h1,h2,h3{margin:0;font-family:var(--font-display);text-wrap:balance}
 /* Detail panel (inside sheet) */
 .detail{display:none}
 .sheet.detail-mode .listview{display:none}
-.sheet.detail-mode .detail{display:block}
+.sheet.detail-mode .detail{display:flex}
 .dhead{display:flex;align-items:flex-start;gap:10px}
 .dhead .back{width:36px;height:36px;border-radius:10px;background:var(--surface-2);display:grid;place-items:center;flex:none}
 .dhead .back svg{width:18px;height:18px}
@@ -1421,6 +1423,11 @@ it:{
 "Open 24 h":"Aperto 24 h","Lost ticket CHF 43. Pay at the machine or with Parkingpay / TWINT.":"Biglietto smarrito CHF 43. Si paga alla cassa o con Parkingpay / TWINT.","Lost ticket CHF 43.":"Biglietto smarrito CHF 43.",
 "Privately run garage. Prices are posted at the entrance and differ from the city tariff.":"Autosilo a gestione privata. I prezzi sono esposti all'entrata e differiscono dalla tariffa comunale.",
 "The CHF 5.20 day ticket (Mon–Fri 06:00–16:00) is also a day pass for TPL buses in zone 100. Annual pass CHF 650 (CHF 500 for Lugano residents).":"Il giornaliero da CHF 5.20 (lun–ven 06:00–16:00) vale anche come biglietto giornaliero per i bus TPL nella zona 100. Abbonamento annuale CHF 650 (CHF 500 per i residenti di Lugano).",
+"Near LAC":"Vicino al LAC","15 min free":"15 min gratis","Best for short stops":"Ideale per soste brevi","Hospital":"Ospedale","SBB P+Rail":"P+Rail FFS","South of the station":"A sud della stazione","Capacity not published":"Capienza non pubblicata","SBB P+Rail day ticket":"giornaliero P+Rail FFS",
+"Night 19:00–07:00: CHF 0.50 per hour":"Notte 19:00–07:00: CHF 0.50 all'ora","Night 20:00–07:00: CHF 1 per hour":"Notte 20:00–07:00: CHF 1 all'ora","Monthly pass CHF 350. No live occupancy published.":"Abbonamento mensile CHF 350. Occupazione non pubblicata.",
+"Privately run. Cheap for quick stops, expensive for long stays: check the sign at the entrance for longer stays.":"Gestione privata. Conveniente per soste brevi, caro per soste lunghe: per soste più lunghe vedi i prezzi all'entrata.",
+"Day tickets only in the SBB P+Rail app. Meant for people taking the train.":"Giornalieri solo nell'app P+Rail FFS. Pensato per chi prende il treno.",
+"Garages marked “No live data” do not publish their occupancy, so check the sign at the entrance.":"Gli autosili con “Nessun dato live” non pubblicano l'occupazione: controlla il pannello all'entrata.",
 "Shopping":"Shopping","Via Nassa 6 min walk":"Via Nassa a 6 min a piedi","Closest to Via Nassa":"Il più vicino a Via Nassa","Often full":"Spesso pieno","Lakefront":"Lungolago","Lido & Cassarate":"Lido e Cassarate","Open-air":"All'aperto","Near the station":"Vicino alla stazione","Bus 3 and 8 to centre":"Bus 3 e 8 per il centro","Bus 1 every 10 min":"Bus 1 ogni 10 min",
 "Back to list":"Torna alla lista","Free now":"Liberi ora","Status":"Stato","Occupancy not published":"Occupazione non pubblicata","Updated {t}":"Aggiornato {t}",
 "Navigate":"Naviga","Open in Maps":"Apri in Maps","Parked here since {t} · clear":"Parcheggiato qui dalle {t} · rimuovi","I parked here":"Ho parcheggiato qui","Good to know":"Da sapere",
@@ -1519,6 +1526,11 @@ de:{
 "Open 24 h":"24 h geöffnet","Lost ticket CHF 43. Pay at the machine or with Parkingpay / TWINT.":"Verlorenes Ticket CHF 43. Bezahlen am Automaten oder mit Parkingpay / TWINT.","Lost ticket CHF 43.":"Verlorenes Ticket CHF 43.",
 "Privately run garage. Prices are posted at the entrance and differ from the city tariff.":"Privat betriebenes Parkhaus. Die Preise hängen am Eingang aus und weichen vom Stadttarif ab.",
 "The CHF 5.20 day ticket (Mon–Fri 06:00–16:00) is also a day pass for TPL buses in zone 100. Annual pass CHF 650 (CHF 500 for Lugano residents).":"Die Tageskarte für CHF 5.20 (Mo–Fr 06:00–16:00) gilt auch als Tageskarte für die TPL-Busse in Zone 100. Jahresabo CHF 650 (CHF 500 für Einwohner von Lugano).",
+"Near LAC":"Nahe LAC","15 min free":"15 min gratis","Best for short stops":"Ideal für kurze Stopps","Hospital":"Spital","SBB P+Rail":"SBB P+Rail","South of the station":"Südlich vom Bahnhof","Capacity not published":"Kapazität nicht veröffentlicht","SBB P+Rail day ticket":"SBB P+Rail Tageskarte",
+"Night 19:00–07:00: CHF 0.50 per hour":"Nacht 19:00–07:00: CHF 0.50 pro Stunde","Night 20:00–07:00: CHF 1 per hour":"Nacht 20:00–07:00: CHF 1 pro Stunde","Monthly pass CHF 350. No live occupancy published.":"Monatsabo CHF 350. Keine Live-Belegung veröffentlicht.",
+"Privately run. Cheap for quick stops, expensive for long stays: check the sign at the entrance for longer stays.":"Privat betrieben. Günstig für kurze Stopps, teuer für lange Aufenthalte: für längere Aufenthalte die Preise am Eingang beachten.",
+"Day tickets only in the SBB P+Rail app. Meant for people taking the train.":"Tageskarten nur in der SBB P+Rail App. Gedacht für Bahnreisende.",
+"Garages marked “No live data” do not publish their occupancy, so check the sign at the entrance.":"Parkhäuser mit „Keine Live-Daten“ veröffentlichen ihre Belegung nicht, also die Anzeige am Eingang beachten.",
 "Shopping":"Einkaufen","Via Nassa 6 min walk":"Via Nassa 6 min zu Fuss","Closest to Via Nassa":"Am nächsten zur Via Nassa","Often full":"Oft voll","Lakefront":"Am See","Lido & Cassarate":"Lido und Cassarate","Open-air":"Im Freien","Near the station":"Nahe Bahnhof","Bus 3 and 8 to centre":"Bus 3 und 8 ins Zentrum","Bus 1 every 10 min":"Bus 1 alle 10 min",
 "Back to list":"Zurück zur Liste","Free now":"Jetzt frei","Status":"Status","Occupancy not published":"Belegung nicht veröffentlicht","Updated {t}":"Aktualisiert {t}",
 "Navigate":"Navigieren","Open in Maps":"In Maps öffnen","Parked here since {t} · clear":"Seit {t} hier parkiert · löschen","I parked here":"Ich habe hier parkiert","Good to know":"Gut zu wissen",
@@ -1566,12 +1578,19 @@ const GARAGES=[
  {id:"campomarzio",name:"Parcheggio Campo Marzio",area:"Centro est",addr:"Via Pietro Capelli, 6900 Lugano",lat:46.00655,lng:8.96106,cap:161,free:152,tariff:"A",feedName:"Campo Marzio",tags:["Lido & Cassarate","Open-air"]},
  {id:"bettydo",name:"Autosilo Bettydo",area:"Centro",addr:"Via Cantonale, 6900 Lugano",lat:46.00862,lng:8.95037,cap:96,free:88,tariff:"private",feedName:"Bettydo",tags:["Near the station"]},
  {id:"resega",name:"P+R Resega",area:"Cornaredo",addr:"Via Sonvico, 6900 Lugano",lat:46.02728,lng:8.96475,cap:400,free:384,tariff:"PR",feedName:"Resega",tags:["Park & Ride","Bus 3 and 8 to centre"]},
+ {id:"centralpark",name:"Autosilo Central Park",area:"Loreto",addr:"Via Adamini / Riva Antonio Caccia, 6900 Lugano",lat:45.99854,lng:8.94742,cap:285,free:null,tariff:"CP",feedName:null,tags:["Lakefront","Near LAC"]},
+ {id:"sangiuseppe",name:"Autosilo San Giuseppe",area:"Centro",addr:"Via Ferruccio Pelli, 6900 Lugano",lat:46.0069,lng:8.95074,cap:null,free:null,tariff:"SG",feedName:null,tags:["15 min free","Best for short stops"]},
+ {id:"ospedale",name:"Autosilo Ospedale Civico",area:"Molino Nuovo",addr:"Via Tesserete, 6900 Lugano",lat:46.0174,lng:8.9522,cap:93,free:null,tariff:"private",feedName:null,tags:["Hospital"]},
+ {id:"prailsud",name:"P+Rail Lugano Sud",area:"Stazione",addr:"Via Clemente Maraini, 6900 Lugano",lat:46.00366,lng:8.94739,cap:87,free:null,tariff:"RAIL",feedName:null,tags:["SBB P+Rail","South of the station"]},
  {id:"fornaci",name:"P+R Fornaci",area:"Lugano Sud",addr:"Via Pian Scairolo, Pazzallo",lat:45.9805,lng:8.9440,cap:400,free:null,tariff:"PR",feedName:null,tags:["Park & Ride","Bus 1 every 10 min"]},
 ];
 const TARIFFS={
  A:{label:"City tariff A",rows:[["30 min","free"],["1 h","CHF 2"],["2 h","CHF 4"],["3 h","CHF 6"],["4 h","CHF 10"],["8 h","CHF 26"],["24 h","CHF 43"]],night:"Night 19:00–07:00: CHF 1 per hour",hours:"Open 24 h",extra:"Lost ticket CHF 43. Pay at the machine or with Parkingpay / TWINT."},
  LAC:{label:"City tariff A",rows:[["30 min","free"],["1 h","CHF 2"],["2 h","CHF 4"],["3 h","CHF 6"],["4 h","CHF 10"],["8 h","CHF 26"],["24 h","CHF 43"]],night:"Night 23:00–07:00: CHF 1 per hour (day tariff runs until 23:00 here)",hours:"Open 24 h",extra:"Lost ticket CHF 43."},
  private:{label:"Operator tariff",rows:[],night:"",hours:"",extra:"Privately run garage. Prices are posted at the entrance and differ from the city tariff."},
+ CP:{label:"Operator tariff",rows:[["30 min","CHF 1"],["1 h","CHF 2"],["2 h","CHF 4"],["4 h","CHF 8"],["6 h","CHF 12"],["12 h","CHF 23"]],night:"Night 19:00–07:00: CHF 0.50 per hour",hours:"Open 24 h",extra:"Monthly pass CHF 350. No live occupancy published."},
+ SG:{label:"Operator tariff",rows:[["15 min","free"],["1 h","CHF 1"],["2 h","CHF 3"],["3 h","CHF 6"],["4 h","CHF 10"]],night:"Night 20:00–07:00: CHF 1 per hour",hours:"Open 24 h",extra:"Privately run. Cheap for quick stops, expensive for long stays: check the sign at the entrance for longer stays."},
+ RAIL:{label:"SBB P+Rail",rows:[["Day","CHF 16"]],night:"",hours:"Open 24 h",extra:"Day tickets only in the SBB P+Rail app. Meant for people taking the train."},
  PR:{label:"Park & Ride",rows:[["Day ticket","CHF 5.20"],["+ per hour","CHF 1"],["Evening 18–06","CHF 0.50/h"],["Sunday","CHF 0.50/h"]],night:"",hours:"Open 24 h",extra:"The CHF 5.20 day ticket (Mon–Fri 06:00–16:00) is also a day pass for TPL buses in zone 100. Annual pass CHF 650 (CHF 500 for Lugano residents)."},
 };
 const ZONES=[
@@ -1782,6 +1801,9 @@ function tripTo(g,dest){
 }
 function costFor(g,h){
   if(g.tariff==="A"||g.tariff==="LAC"){ const tbl=[[0.5,0],[1,2],[2,4],[3,6],[4,10],[8,26],[24,43]]; const row=tbl.find(([k])=>h<=k)||tbl[tbl.length-1]; return {chf:row[1],approx:row[0]!==h,note:row[1]===0?t("first 30 min free"):""}; }
+  if(g.tariff==="CP"){ const tbl=[[0.5,1],[1,2],[2,4],[3,6],[4,8],[5,10],[6,12],[8,16],[12,23]]; const row=tbl.find(([k])=>h<=k)||tbl[tbl.length-1]; return {chf:row[1],approx:row[0]!==h||h===8,note:""}; }
+  if(g.tariff==="SG"){ if(h>4) return {chf:null,approx:false,note:t("price at the entrance")}; const tbl=[[0.25,0],[1,1],[2,3],[3,6],[4,10]]; const row=tbl.find(([k])=>h<=k); return {chf:row[1],approx:row[0]!==h,note:""}; }
+  if(g.tariff==="RAIL"){ return {chf:16,approx:false,note:t("SBB P+Rail day ticket")}; }
   if(g.tariff==="PR"){ const hourly=h*1; const day=5.20; return hourly<day?{chf:hourly,approx:false,note:""}:{chf:day,approx:false,note:t("day ticket incl. TPL bus")}; }
   return {chf:null,approx:false,note:t("price at the entrance")};
 }
@@ -1944,7 +1966,7 @@ window.addEventListener("online",()=>{ if(gl){ glSet(true); try{ gl.getMaplibreM
 window.addEventListener("offline",()=>glSet(false));
 function swapGLStyle(){ if(gl){ try{ gl.getMaplibreMap().setStyle(glStyle()); }catch(e){} } }
 // Start with every central garage in view, with room for the header and the sheet.
-(function fitStart(){ const b=L.latLngBounds(GARAGES.filter(g=>g.id!=="fornaci"&&g.id!=="resega").map(g=>[g.lat,g.lng])); map.fitBounds(b,{paddingTopLeft:[36,100],paddingBottomRight:[36,170],maxZoom:15.5,animate:false}); })();
+(function fitStart(){ const b=L.latLngBounds(GARAGES.filter(g=>!["fornaci","resega","ospedale"].includes(g.id)).map(g=>[g.lat,g.lng])); map.fitBounds(b,{paddingTopLeft:[36,100],paddingBottomRight:[36,170],maxZoom:15.5,animate:false}); })();
 
 // "Where am I" button under the zoom control
 const Locate=L.Control.extend({
@@ -1964,7 +1986,7 @@ const markers={};
 function garageIcon(g){
   const lv=levelOf(g); const f=state.counts[g.id];
   return L.divIcon({className:"gmark"+(lv.k==="nodata"?" nodata":"")+(state.selected===g.id?" active":""),iconSize:[0,0],iconAnchor:[0,0],
-    html:`<div class="pill" style="--c:${lv.c}"><span class="p">P</span>${f==null?"P+R":f}</div>`});
+    html:`<div class="pill" style="--c:${lv.c}"><span class="p">P</span>${f==null?(g.tariff==="PR"?"P+R":g.tariff==="RAIL"?"P+Rail":"–"):f}</div>`});
 }
 function buildMarkers(){
   garageLayer.clearLayers();
@@ -2048,10 +2070,10 @@ function renderGarages(){
   $("#body").innerHTML=`<div class="list">${sortedGarages().map(g=>{ const lv=levelOf(g); const f=state.counts[g.id]; const pct=f==null?0:Math.round(f/g.cap*100); const d=garageDist(g);
     return `<button class="card ${lv.k==="nodata"?"nodata":""}" data-g="${g.id}" style="--c:${lv.c};--pct:${pct}" aria-label="${g.name}, ${f==null?t("no live data"):t("{n} free of {m}",{n:f,m:g.cap})}${d!=null?", "+t("{d} away",{d:fmtDist(d)}):""}">
       <span class="ring"><i>${f==null?"—":pct+"%"}</i></span>
-      <span class="t"><h3>${g.name}</h3><p>${d!=null?`<b class="dist">${fmtDist(d)}</b> · `:""}${g.area} · ${lv.t}${(()=>{ const th=typicalHint(g); return th?" · "+th:(g.tags[0]&&d==null?" · "+t(g.tags[0]):""); })()}</p></span>
-      <span class="n">${f==null?`<b>${t("No live data")}</b><small>${t("{n} spaces",{n:g.cap})}</small>`:`<b class="num">${f}</b><small>${t("of {n} free",{n:g.cap})}</small>`}</span>
+      <span class="t"><h3>${g.name}</h3><p>${d!=null?`<b class="dist">${fmtDist(d)}</b> · `:""}${g.area}${lv.k==="nodata"?"":" · "+lv.t}${(()=>{ const th=typicalHint(g); return th?" · "+th:(g.tags[0]&&d==null?" · "+t(g.tags[0]):""); })()}</p></span>
+      <span class="n">${f==null?`<b>${t("No live data")}</b><small>${g.cap?t("{n} spaces",{n:g.cap}):""}</small>`:`<b class="num">${f}</b><small>${t("of {n} free",{n:g.cap})}</small>`}</span>
     </button>`;}).join("")}</div>
-    <p class="note">${t("Garage counts come from the Città di Lugano real-time feed. Colours: green means plenty of space, amber means it is filling up, red means full or nearly full.")}</p>`;
+    <p class="note">${t("Garage counts come from the Città di Lugano real-time feed. Colours: green means plenty of space, amber means it is filling up, red means full or nearly full.")} ${t("Garages marked “No live data” do not publish their occupancy, so check the sign at the entrance.")}</p>`;
   fitPeek();
 }
 function renderStreet(){
@@ -2097,7 +2119,7 @@ function openGarage(id,fly){
   $("#dhead").innerHTML=`<div class="dhead"><button class="back" id="back" aria-label="${t("Back to list")}">${svgIcon("back")}</button><div><h2>${g.name}</h2><p>${g.addr}</p></div></div>`;
   $("#dbody").innerHTML=`
     <div class="hero" style="--c:${lv.c};--pct:${pct}">
-      <div class="box"><div class="k">${t("Free now")}</div><div class="v num" style="color:${lv.c}">${f==null?"—":f}<small> / ${g.cap}</small></div><div class="bar"><i></i></div></div>
+      <div class="box"><div class="k">${t("Free now")}</div><div class="v num" style="color:${lv.c}">${f==null?"—":f}${g.cap?`<small> / ${g.cap}</small>`:""}</div><div class="bar"><i></i></div></div>
       <div class="box"><div class="k">${t("Status")}</div><div class="v" style="font-size:20px">${lv.t}</div><div class="k" style="margin-top:6px">${f==null?t("Occupancy not published"):t("Updated {t}",{t:fmtStamp(state.ts)})}</div></div>
     </div>
     <div class="actions"><a class="btn primary" href="${maps}" target="_blank" rel="noopener">${svgIcon("nav")} ${t("Navigate")}</a><a class="btn" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(g.name+", Lugano")}" target="_blank" rel="noopener">${t("Open in Maps")}</a></div>
@@ -2107,7 +2129,7 @@ function openGarage(id,fly){
     ${T.rows.length?`<div class="tariff">${T.rows.map(([k,v])=>`<div><b>${t(v)}</b><small>${t(k)}</small></div>`).join("")}</div>`:""}
     <p class="note">${T.night?t(T.night)+". ":""}${t(T.extra)}</p>
     <div class="sec">${t("Good to know")}</div>
-    <div class="rows">${state.dest?(()=>{ const tr=tripTo(g,[state.dest.lat,state.dest.lng]); const c=costFor(g,state.hours); return `<div class="row"><span>${t("To {name}",{name:esc(state.dest.name)})}</span><b>${tr.mode==="bus"?t("~{m} min · {sub}",{m:tr.min,sub:tr.sub}):t("~{m} min walk · {d}",{m:tr.min,d:tr.dist})}</b></div><div class="row"><span>${t("Cost for {d}",{d:durLabel(state.hours).toLowerCase()})}</span><b>${c.chf==null?t("See entrance"):(c.approx?t("about {c}",{c:fmtChf(c.chf)}):fmtChf(c.chf))}${c.note?` <small style="color:var(--muted);font-weight:500">· ${c.note}</small>`:""}</b></div>`; })():""}${state.pos?`<div class="row"><span>${t("From you")}</span><b>${fmtDist(garageDist(g))}</b></div>`:""}${g.tags.map((tg,i)=>`<div class="row"><span>${i?"":t("Tip")}</span><b>${t(tg)}</b></div>`).join("")}<div class="row"><span>${t("Area")}</span><b>${g.area}</b></div>${T.hours?`<div class="row"><span>${t("Hours")}</span><b>${t(T.hours)}</b></div>`:""}<div class="row"><span>${t("Capacity")}</span><b>${t("{n} spaces",{n:g.cap})}</b></div></div>`;
+    <div class="rows">${state.dest?(()=>{ const tr=tripTo(g,[state.dest.lat,state.dest.lng]); const c=costFor(g,state.hours); return `<div class="row"><span>${t("To {name}",{name:esc(state.dest.name)})}</span><b>${tr.mode==="bus"?t("~{m} min · {sub}",{m:tr.min,sub:tr.sub}):t("~{m} min walk · {d}",{m:tr.min,d:tr.dist})}</b></div><div class="row"><span>${t("Cost for {d}",{d:durLabel(state.hours).toLowerCase()})}</span><b>${c.chf==null?t("See entrance"):(c.approx?t("about {c}",{c:fmtChf(c.chf)}):fmtChf(c.chf))}${c.note?` <small style="color:var(--muted);font-weight:500">· ${c.note}</small>`:""}</b></div>`; })():""}${state.pos?`<div class="row"><span>${t("From you")}</span><b>${fmtDist(garageDist(g))}</b></div>`:""}${g.tags.map((tg,i)=>`<div class="row"><span>${i?"":t("Tip")}</span><b>${t(tg)}</b></div>`).join("")}<div class="row"><span>${t("Area")}</span><b>${g.area}</b></div>${T.hours?`<div class="row"><span>${t("Hours")}</span><b>${t(T.hours)}</b></div>`:""}<div class="row"><span>${t("Capacity")}</span><b>${(g.cap?t("{n} spaces",{n:g.cap}):t("Capacity not published"))}</b></div></div>`;
   sheet.classList.add("detail-mode"); if(sheetPos==="peek") setSheet("half");
   $("#back").addEventListener("click",closeDetail);
   if(fly) map.flyTo([g.lat+0.0018,g.lng],16.5,{duration:.6});
