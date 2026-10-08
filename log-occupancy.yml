@@ -1,0 +1,61 @@
+# Reads the Città di Lugano garage feed every 10 minutes and keeps the history on a separate "data" branch
+# (so the website on "main" is not rebuilt each time). The app reads from that branch:
+#   log/YYYY-MM-DD.csv  recent readings, used for the "filling / emptying" trend
+#   typical.json        typical occupancy per weekday and hour
+#   chargers.json       public EV charging sites around Lugano, refreshed once a night
+# GitHub pauses scheduled workflows after 60 days without a commit to the repo: push something or press "Run workflow".
+name: Log garage occupancy
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: log-occupancy
+  cancel-in-progress: false
+
+jobs:
+  log:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Get the scripts
+        uses: actions/checkout@v4
+        with:
+          path: app
+
+      - name: Get the data branch (created on the first run)
+        env:
+          REPO_URL: https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+        run: |
+          if git clone --quiet --depth 1 --branch data "$REPO_URL" data; then
+            echo "data branch found"
+          else
+            mkdir -p data && cd data && git init --quiet -b data && git remote add origin "$REPO_URL"
+            echo "data branch will be created"
+          fi
+
+      - name: Log the current free spots
+        run: python3 app/log_feed.py data
+
+      - name: Update typical occupancy
+        run: python3 app/aggregate.py data
+
+      - name: Refresh charging sites (nightly, or when missing)
+        run: |
+          if [ ! -f data/chargers.json ] || [ "$(TZ=Europe/Zurich date +%H)" = "03" ]; then
+            python3 app/chargers.py data/chargers.json || echo "charger refresh failed, keeping the old list"
+          fi
+
+      - name: Save
+        run: |
+          cd data
+          git add -A
+          if git diff --cached --quiet; then echo "nothing new"; exit 0; fi
+          git -c user.name="lugano-parking-bot" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit --quiet -m "log $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push --quiet origin data

@@ -1,5 +1,5 @@
 /* Lugano Parking service worker: instant reopen and offline map. Bump VERSION when files change. */
-const VERSION = "lp-2026-10-08a";
+const VERSION = "lp-2026-10-08b";
 const MAPCACHE = "lp-map-v1"; // vector tiles, fonts and sprites from OpenFreeMap, kept across app versions
 const MAPCACHE_MAX = 800;
 const CORE = ["./", "index.html", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png", "logo.svg",
