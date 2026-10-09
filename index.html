@@ -14,10 +14,16 @@
 <link rel="icon" href="logo.svg" type="image/svg+xml">
 <link rel="icon" href="icon-192.png" sizes="192x192">
 <link rel="apple-touch-icon" href="icon-180.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.7.1/maplibre-gl.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.7.1/maplibre-gl.css" integrity="sha384-MinO0mNliZ3vwppuPOUnGa+iq619pfMhLVUXfC4LHwSCvF9H+6P/KO4Q7qBOYV5V" crossorigin="anonymous">
+<!-- Fonts are served from this site (fonts/, SIL Open Font License, see fonts/OFL.txt), so no visitor data goes to Google. -->
+<style>
+@font-face{font-family:'Instrument Sans';font-style:italic;font-weight:400 400;font-display:swap;src:url(fonts/instrument-sans-italic-latin-ext.woff2) format('woff2'),url(instrument-sans-italic-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:'Instrument Sans';font-style:italic;font-weight:400 400;font-display:swap;src:url(fonts/instrument-sans-italic-latin.woff2) format('woff2'),url(instrument-sans-italic-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Instrument Sans';font-style:normal;font-weight:400 600;font-display:swap;src:url(fonts/instrument-sans-latin-ext.woff2) format('woff2'),url(instrument-sans-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:'Instrument Sans';font-style:normal;font-weight:400 600;font-display:swap;src:url(fonts/instrument-sans-latin.woff2) format('woff2'),url(instrument-sans-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Sora';font-style:normal;font-weight:500 700;font-display:swap;src:url(fonts/sora-latin-ext.woff2) format('woff2'),url(sora-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:'Sora';font-style:normal;font-weight:500 700;font-display:swap;src:url(fonts/sora-latin.woff2) format('woff2'),url(sora-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+</style>
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui;background:#f3f5f4}img{max-width:100%}[hidden]{display:none!important}</style>
 <style>
 
@@ -688,8 +694,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
 :root{
   --bg:#f3f5f4; --surface:#ffffff; --surface-2:#eef1f0; --fg:#15201e; --muted:#5f6b68; --line:#dde3e1;
   --accent:#0f6f78; --accent-ink:#ffffff; --accent-soft:#dff0f1;
-  --ok:#1f8a4c; --ok-soft:#dcf3e4; --warn:#c7791a; --warn-soft:#fbeed9; --bad:#c8362f; --bad-soft:#f9e1df;
-  --blue:#2a62c9; --blue-soft:#dbe6fa; --white-zone:#6b5bd2; --white-soft:#e7e3f8; --yellow:#b58a00; --yellow-soft:#f6edc6;
+  --ok:#17703d; --ok-soft:#dcf3e4; --warn:#9a5b0c; --warn-soft:#fbeed9; --bad:#b42f28; --bad-soft:#f9e1df;
+  --blue:#2a62c9; --blue-soft:#dbe6fa; --white-zone:#5b4ac4; --white-soft:#e7e3f8; --yellow:#806000; --yellow-soft:#f6edc6;
   --shadow:0 8px 28px rgba(16,32,30,.16), 0 1px 3px rgba(16,32,30,.08);
   --font-display:"Sora","Instrument Sans",system-ui,sans-serif;
   --font-body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
@@ -717,7 +723,10 @@ html,body{height:100%;margin:0}
 body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:15px;line-height:1.4;overflow:hidden;-webkit-text-size-adjust:100%}
 *{box-sizing:border-box}
 button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
-button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button:focus-visible,[tabindex]:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.search:focus-within{outline:2px solid var(--accent);outline-offset:1px}
+.vsel:focus-within{outline:2px solid var(--accent);outline-offset:2px}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 h1,h2,h3{margin:0;font-family:var(--font-display);text-wrap:balance}
 .num{font-family:var(--font-display);font-variant-numeric:tabular-nums}
 
@@ -812,7 +821,7 @@ h1,h2,h3{margin:0;font-family:var(--font-display);text-wrap:balance}
 .gcard .walk b{font-family:var(--font-display);font-size:18px;line-height:1;font-weight:700}
 .gcard .walk small{font-size:10.5px;color:var(--muted);margin-top:2px}
 .gcard.full .walk b{font-size:13px}
-.gcard.full{opacity:.75}
+.gcard.full .walk{opacity:.8}
 .gcard .t h3{white-space:normal;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .gcard .t h3 .chip{font-size:10.5px;padding:2px 7px}
 .card.gcard .n b{font-size:17px;color:var(--fg)}
@@ -823,7 +832,7 @@ h1,h2,h3{margin:0;font-family:var(--font-display);text-wrap:balance}
 .gmark{position:relative}
 .gmark .pill{position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);background:var(--surface);color:var(--fg);border-radius:999px;padding:4px 9px 4px 6px;font-family:var(--font-display);font-weight:700;font-size:14px;box-shadow:var(--shadow);display:flex;align-items:center;gap:5px;white-space:nowrap;border:2px solid var(--c)}
 .gmark .pill::after{content:"";position:absolute;left:50%;bottom:-7px;width:10px;height:10px;background:var(--c);transform:translateX(-50%) rotate(45deg);border-radius:2px}
-.gmark .pill .p{width:18px;height:18px;border-radius:6px;background:var(--c);color:#fff;font-size:11px;display:grid;place-items:center;font-weight:700}
+.gmark .pill .p{width:18px;height:18px;border-radius:6px;background:var(--c);color:var(--accent-ink);font-size:11px;display:grid;place-items:center;font-weight:700}
 .gmark.active .pill{transform:translate(-50%,-100%) scale(1.12)}
 .gmark.nodata .pill{color:var(--muted);border-style:dashed}
 .zlabel{background:transparent;border:0;box-shadow:none}
@@ -836,7 +845,7 @@ h1,h2,h3{margin:0;font-family:var(--font-display);text-wrap:balance}
 .sheet.full{transform:translateY(0)}
 .sheet{overflow:hidden}
 .sheet .listview,.sheet.detail-mode .detail{display:flex;flex-direction:column;flex:1;min-height:0}
-.sheet .grip{padding:10px 0 4px;display:grid;place-items:center;flex:none}
+.sheet .grip{padding:10px 0 4px;display:grid;place-items:center;flex:none;width:100%;cursor:grab}
 .sheet .grip i{width:40px;height:5px;border-radius:3px;background:var(--line);display:block}
 .sheet .head{padding:4px 18px 10px;flex:none}
 .sheet .body{overflow:auto;flex:1;min-height:0;padding:0 14px 24px;touch-action:pan-y;overscroll-behavior:contain}
@@ -944,7 +953,7 @@ h1,h2,h3{margin:0;font-family:var(--font-display);text-wrap:balance}
 .card .t p .tr{font-weight:600}
 .gmark .pill .ar{font-size:12px;margin-left:-1px;color:var(--ac)}
 .trend{display:flex;gap:10px;align-items:flex-start;margin-top:8px;padding:10px 12px;border-radius:14px;background:var(--surface-2);font-size:13px;line-height:1.4}
-.trend .ar{flex:none;width:22px;height:22px;border-radius:7px;display:grid;place-items:center;background:var(--c);color:#fff;font-weight:700;font-size:13px}
+.trend .ar{flex:none;width:22px;height:22px;border-radius:7px;display:grid;place-items:center;background:var(--c);color:var(--accent-ink);font-weight:700;font-size:13px}
 .trend b{color:var(--c)}
 .cmark{position:relative}
 .cmark .pill{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--surface);color:var(--fg);border-radius:999px;padding:3px 7px 3px 4px;font-family:var(--font-display);font-weight:700;font-size:12px;box-shadow:var(--shadow);display:flex;align-items:center;gap:3px;white-space:nowrap;border:2px solid var(--c)}
@@ -977,12 +986,12 @@ h1,h2,h3{margin:0;font-family:var(--font-display);text-wrap:balance}
 .vsel svg{width:15px;height:15px;flex:none}
 .vsel select{font:inherit;color:inherit;background:transparent;border:0;padding:6px 8px 6px 4px;appearance:none;-webkit-appearance:none;cursor:pointer;max-width:150px}
 .vsel select option{color:#111;background:#fff}
-.card.toolow{opacity:.55}
-.gmark.toolow .pill{opacity:.5;filter:grayscale(1)}
-.star{color:#d99a00}
+.card.toolow .ring,.card.toolow .walk{filter:grayscale(1);opacity:.6}.card.toolow{background:repeating-linear-gradient(135deg,var(--surface-2) 0 10px,var(--surface) 10px 12px)}
+.gmark.toolow .pill{opacity:.8;filter:grayscale(1)}
+.star{color:var(--yellow)}
 .dhead > div{flex:1;min-width:0}
 .dhead .fav{width:36px;height:36px;border-radius:10px;background:var(--surface-2);display:grid;place-items:center;flex:none;color:var(--muted)}
-.dhead .fav[aria-pressed="true"]{color:#d99a00}
+.dhead .fav[aria-pressed="true"]{color:var(--yellow)}
 .dhead .fav[aria-pressed="true"] svg{fill:currentColor}
 .dhead .fav svg{width:20px;height:20px}
 .warnstrip svg{width:18px;height:18px;flex:none}
@@ -1044,6 +1053,10 @@ h1,h2,h3{margin:0;font-family:var(--font-display);text-wrap:balance}
 .modal-body{overflow:auto;padding:0 18px calc(20px + var(--safe-b))}
 .modal-body .sec:first-child{margin-top:6px}
 .modal-body .btn{margin-top:4px}
+.legal-links{display:flex;flex-wrap:wrap;gap:6px 14px;margin:0;padding:0;list-style:none;font-size:14px}
+.legal-links a{color:var(--accent);font-weight:600}
+.search-note{font-size:12px;color:var(--muted);margin:6px 2px 0}
+.search-note a{color:var(--accent)}
 body.modal-open .sheet,body.modal-open .tabbar{pointer-events:none}
 @media (min-width:720px){.modal{align-items:center}.modal-card{border-radius:22px;max-height:80%}}
 
@@ -1053,7 +1066,7 @@ body.modal-open .sheet,body.modal-open .tabbar{pointer-events:none}
 .banner .ico svg{width:16px;height:16px}
 .banner .txt{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.25}
 .banner .txt b{font-size:13.5px;font-weight:600}
-.banner .txt small{font-size:12px;opacity:.75}
+.banner .txt small{font-size:12px;opacity:.9}
 .banner .pbtn{flex:none;display:flex;align-items:center;gap:5px;font-size:12.5px;font-weight:600;padding:8px 10px;border-radius:10px;background:rgba(255,255,255,.14);color:inherit}
 .banner .pbtn svg{width:15px;height:15px}
 @media (min-width:720px){.banner{left:16px;right:auto;width:400px;bottom:calc(16px + var(--tab) + 12px)}}
@@ -1062,27 +1075,27 @@ body.modal-open .sheet,body.modal-open .tabbar{pointer-events:none}
 </head>
 <body>
 <div id="app">
-  <div id="map" role="application" aria-label="Map of Lugano parking"></div>
+  <div id="map" role="region" aria-label="Map of Lugano parking"></div>
 
   <div class="top">
     <div class="brand">
-      <div class="mark" aria-hidden="true"><svg viewBox="0 0 512 512" width="36" height="36"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b5f68"/><stop offset="1" stop-color="#17909a"/></linearGradient><clipPath id="lc"><rect width="512" height="512" rx="116"/></clipPath></defs><rect width="512" height="512" rx="116" fill="url(#lg)"/><g clip-path="url(#lc)" fill="#fff" opacity=".1"><path d="M0 392C90 352 170 352 256 392S422 432 512 392V512H0Z"/></g><path d="M176 392V138H290A78 78 0 0 1 290 294H176" fill="none" stroke="#fff" stroke-width="58" stroke-linecap="round" stroke-linejoin="round"/><circle cx="386" cy="126" r="46" fill="#0d6b74"/><circle cx="386" cy="126" r="34" fill="#4fd07f"/></svg></div>
+      <div class="mark" aria-hidden="true"><svg aria-hidden="true" focusable="false" viewBox="0 0 512 512" width="36" height="36"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b5f68"/><stop offset="1" stop-color="#17909a"/></linearGradient><clipPath id="lc"><rect width="512" height="512" rx="116"/></clipPath></defs><rect width="512" height="512" rx="116" fill="url(#lg)"/><g clip-path="url(#lc)" fill="#fff" opacity=".1"><path d="M0 392C90 352 170 352 256 392S422 432 512 392V512H0Z"/></g><path d="M176 392V138H290A78 78 0 0 1 290 294H176" fill="none" stroke="#fff" stroke-width="58" stroke-linecap="round" stroke-linejoin="round"/><circle cx="386" cy="126" r="46" fill="#0d6b74"/><circle cx="386" cy="126" r="34" fill="#4fd07f"/></svg></div>
       <div class="grow">
         <h1>Lugano Parking</h1>
         <div class="sub"><span class="dot" id="dot"></span><span id="status">Loading availability…</span></div>
       </div>
       <button class="iconbtn" id="refresh" aria-label="Refresh availability" title="Refresh">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
+        <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
       </button>
       <button class="iconbtn" id="about-btn" aria-label="About" title="About">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.5"/></svg>
+        <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.5"/></svg>
       </button>
     </div>
     <div class="parked" id="parked" hidden></div>
   </div>
 
-  <div class="sheet" id="sheet">
-    <div class="grip" id="grip"><i></i></div>
+  <div class="sheet" id="sheet" role="tabpanel" aria-labelledby="tab-garages">
+    <button type="button" class="grip" id="grip" aria-label="Show more of the list" aria-controls="sheet" aria-expanded="false"><i></i></button>
     <div class="listview">
       <div class="head" id="head"></div>
       <div class="body" id="body"></div>
@@ -1092,33 +1105,33 @@ body.modal-open .sheet,body.modal-open .tabbar{pointer-events:none}
       <div class="body" id="dbody"></div>
     </div>
   </div>
-  <div class="toast" id="toast"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <div class="banner" id="install-banner" hidden></div>
   <div class="modal" id="about" hidden role="dialog" aria-modal="true" aria-labelledby="about-title">
     <div class="modal-card">
-      <div class="modal-head"><h2 id="about-title">Lugano Parking</h2><button class="iconbtn" id="about-close" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+      <div class="modal-head"><h2 id="about-title">Lugano Parking</h2><button class="iconbtn" id="about-close" aria-label="Close"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
       <div class="modal-body" id="about-body"></div>
     </div>
   </div>
 
   <nav class="tabbar" role="tablist" aria-label="View">
-    <button role="tab" id="tab-garages" aria-selected="true" data-view="garages">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-7h6v7"/></svg>
+    <button role="tab" id="tab-garages" aria-selected="true" aria-controls="sheet" tabindex="0" data-view="garages">
+      <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-7h6v7"/></svg>
       <span>Garages</span>
     </button>
-    <button role="tab" id="tab-going" aria-selected="false" data-view="going">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4"/><path d="M5 4h12l-2.5 4L17 12H5"/></svg>
+    <button role="tab" id="tab-going" aria-selected="false" aria-controls="sheet" tabindex="-1" data-view="going">
+      <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4"/><path d="M5 4h12l-2.5 4L17 12H5"/></svg>
       <span>Going to</span>
     </button>
-    <button role="tab" id="tab-street" aria-selected="false" data-view="street">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20 8 4h8l4 16"/><path d="M12 6v3M12 12v3M12 18v2"/></svg>
+    <button role="tab" id="tab-street" aria-selected="false" aria-controls="sheet" tabindex="-1" data-view="street">
+      <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20 8 4h8l4 16"/><path d="M12 6v3M12 12v3M12 18v2"/></svg>
       <span>Street</span>
     </button>
   </nav>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.7.1/maplibre-gl.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js" integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.7.1/maplibre-gl.js" integrity="sha384-SYKAG6cglRMN0RVvhNeBY0r3FYKNOJtznwA0v7B5Vp9tr31xAHsZC0DqkQ/pZDmj" crossorigin="anonymous"></script>
 <script>/* @maplibre/maplibre-gl-leaflet 0.0.22 (BSD-3-Clause, MapLibre contributors / Mapbox) */
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
@@ -1491,7 +1504,7 @@ it:{
 "Privately run garage. Prices are posted at the entrance and differ from the city tariff.":"Autosilo a gestione privata. I prezzi sono esposti all'entrata e differiscono dalla tariffa comunale.",
 "The CHF 5.20 day ticket (Mon–Fri 06:00–16:00) is also a day pass for TPL buses in zone 100. Annual pass CHF 650 (CHF 500 for Lugano residents).":"Il giornaliero da CHF 5.20 (lun–ven 06:00–16:00) vale anche come biglietto giornaliero per i bus TPL nella zona 100. Abbonamento annuale CHF 650 (CHF 500 per i residenti di Lugano).",
 "Busy":"Molto occupato","Full in ~{m} min":"Pieno tra ~{m} min","Filling fast":"Si riempie in fretta","Filling":"Si sta riempiendo","Emptying fast":"Si svuota in fretta","Emptying":"Si sta svuotando","The trend appears after a few minutes of readings.":"La tendenza appare dopo qualche minuto di letture.","Steady over the last {m} min":"Stabile negli ultimi {m} min","{n} fewer free spots than {m} min ago":"{n} posti liberi in meno di {m} min fa","{n} more free spots than {m} min ago":"{n} posti liberi in più di {m} min fa","full in about {m} min at this pace":"a questo ritmo pieno tra circa {m} min","Available":"Libero","In use":"In uso","Out of service":"Fuori servizio","Status unknown":"Stato sconosciuto","Fast":"Rapida","Power not listed":"Potenza non indicata","Charging nearby":"Ricarica nelle vicinanze","No public charger within 800 m is listed in the federal register.":"Nel registro federale non c'è nessuna colonnina pubblica entro 800 m.","Nearest: {name}, {d}.":"La più vicina: {name}, {d}.","Customers only":"Solo clienti","charge points free of {m}":"punti di ricarica liberi su {m}","Loading charger status…":"Carico lo stato delle colonnine…","sites":"luoghi","1 point":"1 punto","{n} points":"{n} punti","Public chargers from the federal register ich-tanke-strom.ch, with live status. Not every operator reports to it, so chargers inside some garages may be missing.":"Colonnine pubbliche dal registro federale ich-tanke-strom.ch, con stato in tempo reale. Non tutti i gestori vi partecipano, quindi le colonnine in alcuni autosili possono mancare.","Power":"Potenza","Live status":"Stato in tempo reale","Charge points":"Punti di ricarica","Operator":"Gestore","Access":"Accesso","Customers or members only":"Solo clienti o abbonati","Public":"Pubblico","Prices depend on the operator and on your charging card or app.":"I prezzi dipendono dal gestore e dalla tua carta o app di ricarica.","Garages nearby":"Autosili nelle vicinanze","Charging":"Ricarica","EV charging: ich-tanke-strom.ch, Swiss Federal Office of Energy.":"Ricarica: ich-tanke-strom.ch, Ufficio federale dell'energia.",
-"Any vehicle":"Qualsiasi veicolo","Up to 1.90 m":"Fino a 1.90 m","Up to 2.00 m":"Fino a 2.00 m","Up to 2.10 m":"Fino a 2.10 m","Taller than 2.10 m":"Più alto di 2.10 m","Vehicle height":"Altezza del veicolo","No limit (open-air)":"Nessun limite (all'aperto)","Not listed":"Non indicata","{h} m":"{h} m","Too low · max {h} m":"Troppo basso · max {h} m","Height not listed":"Altezza non indicata","Max height":"Altezza massima","Your vehicle will not fit: the entrance is {h} m high.":"Il tuo veicolo non passa: l'entrata è alta {h} m.","{n} garages are too low for this vehicle":"{n} autosili sono troppo bassi per questo veicolo","All garages with a listed height fit":"Tutti gli autosili con altezza indicata vanno bene","Pinned to the top of the list":"Fissato in cima alla lista","Removed from favourites":"Rimosso dai preferiti","Favourite":"Preferito","Add to favourites":"Aggiungi ai preferiti","Remove from favourites":"Rimuovi dai preferiti","{name}: {n} free right now":"{name}: {n} posti liberi adesso","on now":"in corso","today {t}":"oggi {t}","{names} fills up early":"{names} si riempie presto","Expect {names} to fill up before the start. Better:":"{names} sarà pieno prima dell'inizio. Meglio:","Your match ticket is valid on public transport in Ticino all day.":"Il biglietto della partita vale tutto il giorno sui mezzi pubblici in Ticino.","Bus lines 3, 4, 6, 7 and 19 run to the stadium area.":"Le linee bus 3, 4, 6, 7 e 19 portano alla zona dello stadio.","Presented by {name}":"Offerto da {name}","Event: fills up early":"Evento: si riempie presto","{event} {when}: this car park fills up before the start.":"{event} {when}: questo parcheggio si riempie prima dell'inizio.",
+"Any vehicle":"Qualsiasi veicolo","Up to 1.90 m":"Fino a 1.90 m","Up to 2.00 m":"Fino a 2.00 m","Up to 2.10 m":"Fino a 2.10 m","Taller than 2.10 m":"Più alto di 2.10 m","Vehicle height":"Altezza del veicolo","No limit (open-air)":"Nessun limite (all'aperto)","Not listed":"Non indicata","{h} m":"{h} m","Too low · max {h} m":"Troppo basso · max {h} m","Height not listed":"Altezza non indicata","Max height":"Altezza massima","Your vehicle will not fit: the entrance is {h} m high.":"Il tuo veicolo non passa: l'entrata è alta {h} m.","{n} garages are too low for this vehicle":"{n} autosili sono troppo bassi per questo veicolo","All garages with a listed height fit":"Tutti gli autosili con altezza indicata vanno bene","Pinned to the top of the list":"Fissato in cima alla lista","Removed from favourites":"Rimosso dai preferiti","Favourite":"Preferito","Add to favourites":"Aggiungi ai preferiti","Remove from favourites":"Rimuovi dai preferiti","{name}: {n} free right now":"{name}: {n} posti liberi adesso","on now":"in corso","today {t}":"oggi {t}","{names} fills up early":"{names} si riempie presto","Expect {names} to fill up before the start. Better:":"{names} sarà pieno prima dell'inizio. Meglio:","Your match ticket is valid on public transport in Ticino all day.":"Il biglietto della partita vale tutto il giorno sui mezzi pubblici in Ticino.","Bus lines 3, 4, 6 and 7 (and 19 on weekdays) stop at the stadium.":"Le linee bus 3, 4, 6 e 7 (e la 19 nei giorni feriali) fermano allo stadio.","Presented by {name}":"Offerto da {name}","Event: fills up early":"Evento: si riempie presto","{event} {when}: this car park fills up before the start.":"{event} {when}: questo parcheggio si riempie prima dell'inizio.",
 "Filters":"Filtri","Show charging stations":"Mostra colonnine di ricarica","Show garages":"Mostra autosili","Space reported just now":"Posto segnalato adesso","Space reported {m} min ago":"Posto segnalato {m} min fa","Thanks, you already reported this garage":"Grazie, hai già segnalato questo autosilo","Thanks! Others now see that {name} had space.":"Grazie! Ora gli altri vedono che {name} aveva posto.","I parked here, there was space":"Ho parcheggiato qui, c'era posto","Space reports store only the garage and the time: no account, no location.":"Le segnalazioni salvano solo l'autosilo e l'ora: nessun account, nessuna posizione.","Done":"Fatto",
 "Near LAC":"Vicino al LAC","15 min free":"15 min gratis","Best for short stops":"Ideale per soste brevi","Hospital":"Ospedale","SBB P+Rail":"P+Rail FFS","South of the station":"A sud della stazione","Capacity not published":"Capienza non pubblicata","SBB P+Rail day ticket":"giornaliero P+Rail FFS",
 "Night 19:00–07:00: CHF 0.50 per hour":"Notte 19:00–07:00: CHF 0.50 all'ora","Night 20:00–07:00: CHF 1 per hour":"Notte 20:00–07:00: CHF 1 all'ora","Monthly pass CHF 350. No live occupancy published.":"Abbonamento mensile CHF 350. Occupazione non pubblicata.",
@@ -1513,11 +1526,17 @@ it:{
 "On iPhone: tap Share, then “Add to Home Screen”. The app then opens full screen like a normal app.":"Su iPhone: tocca Condividi, poi “Aggiungi alla schermata Home”. L'app si apre poi a schermo intero come un'app normale.",
 "On Android: open the browser menu and choose “Install app” or “Add to Home screen”.":"Su Android: apri il menu del browser e scegli “Installa app” o “Aggiungi a schermata Home”.",
 "Feedback":"Feedback","Something wrong or missing? Tell me.":"Qualcosa non va o manca? Scrivimi.","Send feedback":"Invia feedback",
-"Data":"Dati","Garage counts: Città di Lugano real-time feed. Street rules: city ordinance 2.2.1. Map: OpenFreeMap and OpenStreetMap contributors. Place search: Photon.":"Conteggi autosili: dati in tempo reale della Città di Lugano. Regole su strada: ordinanza comunale 2.2.1. Mappa: OpenFreeMap e contributori OpenStreetMap. Ricerca luoghi: Photon.",
-"Free, no ads, no account, no tracking. Built in Lugano by Julian Bigler.":"Gratis, senza pubblicità, senza account, senza tracciamento. Fatta a Lugano da Julian Bigler.",
-"Add Lugano Parking to your home screen":"Aggiungi Lugano Parking alla schermata Home","It opens full screen and works offline.":"Si apre a schermo intero e funziona anche offline.","Show me how":"Come fare","Not now":"Non ora","Close":"Chiudi",
+"Data":"Dati","Garage counts: © Città di Lugano real-time feed. Street rules: city ordinance 2.2.1. Map: OpenFreeMap, © OpenMapTiles, data © OpenStreetMap contributors. Place search: Photon by komoot.":"Conteggi autosili: dati in tempo reale © Città di Lugano. Regole su strada: ordinanza comunale 2.2.1. Mappa: OpenFreeMap, © OpenMapTiles, dati © contributori OpenStreetMap. Ricerca luoghi: Photon di komoot.",
+"Free, no ads, no account, no cookies. An independent project by Julian Bigler, not an official service of the City of Lugano.":"Gratis, senza pubblicità, senza account, senza cookie. Un progetto indipendente di Julian Bigler, non un servizio ufficiale della Città di Lugano.",
+"Add Lugano Parking to your home screen":"Aggiungi Lugano Parking alla schermata Home","It opens full screen and shows the last saved data when you are offline.":"Si apre a schermo intero e mostra gli ultimi dati salvati quando sei offline.","Show me how":"Come fare","Not now":"Non ora","Close":"Chiudi",
 "Garages & live data":"Autosili e dati live","Where to park for a destination":"Dove parcheggiare per una destinazione","Street parking rules":"Regole della sosta su strada",
-"Version":"Versione"
+"Version":"Versione",
+"Legal":"Note legali","Privacy policy":"Informativa sulla privacy","Cookies & storage":"Cookie e memoria locale","Terms of use":"Condizioni d'uso","Legal notice":"Impressum","Privacy":"Privacy",
+"Search by Photon (komoot, Germany): what you type is sent there to find places.":"Ricerca tramite Photon (komoot, Germania): ciò che scrivi viene inviato lì per trovare i luoghi.",
+"Drop a pin on the map":"Metti uno spillo sulla mappa","Expand the list":"Espandi la lista","Collapse the list":"Riduci la lista",
+"Anonymous visit count":"Conteggio anonimo delle visite","Count my visits (GoatCounter, no cookies, no personal profile)":"Conta le mie visite (GoatCounter, senza cookie, senza profilo personale)",
+"Your browser asks sites not to track you, so your visits are not counted.":"Il tuo browser chiede ai siti di non tracciarti, quindi le tue visite non vengono contate.",
+"Information without guarantee. Prices, hours and rules can change: the signs at the garage and at the bay always apply.":"Informazioni senza garanzia. Prezzi, orari e regole possono cambiare: valgono sempre i cartelli all'autosilo e sul posto."
 },
 de:{
 "Loading availability…":"Belegung wird geladen…",
@@ -1597,7 +1616,7 @@ de:{
 "Privately run garage. Prices are posted at the entrance and differ from the city tariff.":"Privat betriebenes Parkhaus. Die Preise hängen am Eingang aus und weichen vom Stadttarif ab.",
 "The CHF 5.20 day ticket (Mon–Fri 06:00–16:00) is also a day pass for TPL buses in zone 100. Annual pass CHF 650 (CHF 500 for Lugano residents).":"Die Tageskarte für CHF 5.20 (Mo–Fr 06:00–16:00) gilt auch als Tageskarte für die TPL-Busse in Zone 100. Jahresabo CHF 650 (CHF 500 für Einwohner von Lugano).",
 "Busy":"Stark belegt","Full in ~{m} min":"Voll in ~{m} min","Filling fast":"Füllt sich schnell","Filling":"Füllt sich","Emptying fast":"Leert sich schnell","Emptying":"Leert sich","The trend appears after a few minutes of readings.":"Der Trend erscheint nach ein paar Minuten Messwerten.","Steady over the last {m} min":"Stabil in den letzten {m} min","{n} fewer free spots than {m} min ago":"{n} freie Plätze weniger als vor {m} min","{n} more free spots than {m} min ago":"{n} freie Plätze mehr als vor {m} min","full in about {m} min at this pace":"bei diesem Tempo in etwa {m} min voll","Available":"Frei","In use":"Belegt","Out of service":"Ausser Betrieb","Status unknown":"Status unbekannt","Fast":"Schnell","Power not listed":"Leistung nicht angegeben","Charging nearby":"Laden in der Nähe","No public charger within 800 m is listed in the federal register.":"Im Bundesregister ist keine öffentliche Ladestation im Umkreis von 800 m eingetragen.","Nearest: {name}, {d}.":"Nächste: {name}, {d}.","Customers only":"Nur für Kunden","charge points free of {m}":"Ladepunkte frei von {m}","Loading charger status…":"Lade Status der Ladestationen…","sites":"Standorte","1 point":"1 Ladepunkt","{n} points":"{n} Ladepunkte","Public chargers from the federal register ich-tanke-strom.ch, with live status. Not every operator reports to it, so chargers inside some garages may be missing.":"Öffentliche Ladestationen aus dem Bundesregister ich-tanke-strom.ch, mit Live-Status. Nicht alle Betreiber melden dorthin, Ladestationen in manchen Parkhäusern können also fehlen.","Power":"Leistung","Live status":"Live-Status","Charge points":"Ladepunkte","Operator":"Betreiber","Access":"Zugang","Customers or members only":"Nur für Kunden oder Mitglieder","Public":"Öffentlich","Prices depend on the operator and on your charging card or app.":"Die Preise hängen vom Betreiber und von deiner Ladekarte oder App ab.","Garages nearby":"Parkhäuser in der Nähe","Charging":"Laden","EV charging: ich-tanke-strom.ch, Swiss Federal Office of Energy.":"E-Laden: ich-tanke-strom.ch, Bundesamt für Energie.",
-"Any vehicle":"Jedes Fahrzeug","Up to 1.90 m":"Bis 1.90 m","Up to 2.00 m":"Bis 2.00 m","Up to 2.10 m":"Bis 2.10 m","Taller than 2.10 m":"Höher als 2.10 m","Vehicle height":"Fahrzeughöhe","No limit (open-air)":"Keine Begrenzung (im Freien)","Not listed":"Nicht angegeben","{h} m":"{h} m","Too low · max {h} m":"Zu niedrig · max {h} m","Height not listed":"Höhe nicht angegeben","Max height":"Max. Höhe","Your vehicle will not fit: the entrance is {h} m high.":"Dein Fahrzeug passt nicht: die Einfahrt ist {h} m hoch.","{n} garages are too low for this vehicle":"{n} Parkhäuser sind zu niedrig für dieses Fahrzeug","All garages with a listed height fit":"Alle Parkhäuser mit angegebener Höhe passen","Pinned to the top of the list":"Oben in der Liste angeheftet","Removed from favourites":"Aus den Favoriten entfernt","Favourite":"Favorit","Add to favourites":"Zu Favoriten hinzufügen","Remove from favourites":"Aus Favoriten entfernen","{name}: {n} free right now":"{name}: jetzt {n} frei","on now":"läuft gerade","today {t}":"heute {t}","{names} fills up early":"{names} ist früh voll","Expect {names} to fill up before the start. Better:":"{names} ist vor Beginn voll. Besser:","Your match ticket is valid on public transport in Ticino all day.":"Dein Matchticket gilt den ganzen Tag im öffentlichen Verkehr im Tessin.","Bus lines 3, 4, 6, 7 and 19 run to the stadium area.":"Die Buslinien 3, 4, 6, 7 und 19 fahren zum Stadion.","Presented by {name}":"Präsentiert von {name}","Event: fills up early":"Event: früh voll","{event} {when}: this car park fills up before the start.":"{event} {when}: dieser Parkplatz ist vor Beginn voll.",
+"Any vehicle":"Jedes Fahrzeug","Up to 1.90 m":"Bis 1.90 m","Up to 2.00 m":"Bis 2.00 m","Up to 2.10 m":"Bis 2.10 m","Taller than 2.10 m":"Höher als 2.10 m","Vehicle height":"Fahrzeughöhe","No limit (open-air)":"Keine Begrenzung (im Freien)","Not listed":"Nicht angegeben","{h} m":"{h} m","Too low · max {h} m":"Zu niedrig · max {h} m","Height not listed":"Höhe nicht angegeben","Max height":"Max. Höhe","Your vehicle will not fit: the entrance is {h} m high.":"Dein Fahrzeug passt nicht: die Einfahrt ist {h} m hoch.","{n} garages are too low for this vehicle":"{n} Parkhäuser sind zu niedrig für dieses Fahrzeug","All garages with a listed height fit":"Alle Parkhäuser mit angegebener Höhe passen","Pinned to the top of the list":"Oben in der Liste angeheftet","Removed from favourites":"Aus den Favoriten entfernt","Favourite":"Favorit","Add to favourites":"Zu Favoriten hinzufügen","Remove from favourites":"Aus Favoriten entfernen","{name}: {n} free right now":"{name}: jetzt {n} frei","on now":"läuft gerade","today {t}":"heute {t}","{names} fills up early":"{names} ist früh voll","Expect {names} to fill up before the start. Better:":"{names} ist vor Beginn voll. Besser:","Your match ticket is valid on public transport in Ticino all day.":"Dein Matchticket gilt den ganzen Tag im öffentlichen Verkehr im Tessin.","Bus lines 3, 4, 6 and 7 (and 19 on weekdays) stop at the stadium.":"Die Buslinien 3, 4, 6 und 7 (werktags auch 19) halten beim Stadion.","Presented by {name}":"Präsentiert von {name}","Event: fills up early":"Event: früh voll","{event} {when}: this car park fills up before the start.":"{event} {when}: dieser Parkplatz ist vor Beginn voll.",
 "Filters":"Filter","Show charging stations":"Ladestationen anzeigen","Show garages":"Parkhäuser zeigen","Space reported just now":"Gerade Platz gemeldet","Space reported {m} min ago":"Vor {m} min Platz gemeldet","Thanks, you already reported this garage":"Danke, du hast dieses Parkhaus schon gemeldet","Thanks! Others now see that {name} had space.":"Danke! Andere sehen jetzt, dass {name} Platz hatte.","I parked here, there was space":"Hier parkiert, es hatte Platz","Space reports store only the garage and the time: no account, no location.":"Platzmeldungen speichern nur das Parkhaus und die Zeit: kein Konto, kein Standort.","Done":"Fertig",
 "Near LAC":"Nahe LAC","15 min free":"15 min gratis","Best for short stops":"Ideal für kurze Stopps","Hospital":"Spital","SBB P+Rail":"SBB P+Rail","South of the station":"Südlich vom Bahnhof","Capacity not published":"Kapazität nicht veröffentlicht","SBB P+Rail day ticket":"SBB P+Rail Tageskarte",
 "Night 19:00–07:00: CHF 0.50 per hour":"Nacht 19:00–07:00: CHF 0.50 pro Stunde","Night 20:00–07:00: CHF 1 per hour":"Nacht 20:00–07:00: CHF 1 pro Stunde","Monthly pass CHF 350. No live occupancy published.":"Monatsabo CHF 350. Keine Live-Belegung veröffentlicht.",
@@ -1619,11 +1638,17 @@ de:{
 "On iPhone: tap Share, then “Add to Home Screen”. The app then opens full screen like a normal app.":"Auf dem iPhone: Teilen antippen, dann «Zum Home-Bildschirm». Die App öffnet sich danach im Vollbild wie eine normale App.",
 "On Android: open the browser menu and choose “Install app” or “Add to Home screen”.":"Auf Android: Browser-Menü öffnen und «App installieren» oder «Zum Startbildschirm hinzufügen» wählen.",
 "Feedback":"Feedback","Something wrong or missing? Tell me.":"Stimmt etwas nicht oder fehlt etwas? Sag es mir.","Send feedback":"Feedback senden",
-"Data":"Daten","Garage counts: Città di Lugano real-time feed. Street rules: city ordinance 2.2.1. Map: OpenFreeMap and OpenStreetMap contributors. Place search: Photon.":"Parkhaus-Zahlen: Echtzeitdaten der Stadt Lugano. Strassenregeln: städtische Verordnung 2.2.1. Karte: OpenFreeMap und OpenStreetMap-Mitwirkende. Ortssuche: Photon.",
-"Free, no ads, no account, no tracking. Built in Lugano by Julian Bigler.":"Gratis, ohne Werbung, ohne Konto, ohne Tracking. In Lugano gebaut von Julian Bigler.",
-"Add Lugano Parking to your home screen":"Lugano Parking zum Home-Bildschirm hinzufügen","It opens full screen and works offline.":"Öffnet sich im Vollbild und funktioniert auch offline.","Show me how":"So geht's","Not now":"Nicht jetzt","Close":"Schliessen",
+"Data":"Daten","Garage counts: © Città di Lugano real-time feed. Street rules: city ordinance 2.2.1. Map: OpenFreeMap, © OpenMapTiles, data © OpenStreetMap contributors. Place search: Photon by komoot.":"Parkhaus-Zahlen: Echtzeitdaten © Città di Lugano. Strassenregeln: städtische Verordnung 2.2.1. Karte: OpenFreeMap, © OpenMapTiles, Daten © OpenStreetMap-Mitwirkende. Ortssuche: Photon von komoot.",
+"Free, no ads, no account, no cookies. An independent project by Julian Bigler, not an official service of the City of Lugano.":"Gratis, ohne Werbung, ohne Konto, ohne Cookies. Ein unabhängiges Projekt von Julian Bigler, kein offizieller Dienst der Stadt Lugano.",
+"Add Lugano Parking to your home screen":"Lugano Parking zum Home-Bildschirm hinzufügen","It opens full screen and shows the last saved data when you are offline.":"Öffnet sich im Vollbild und zeigt offline die zuletzt gespeicherten Daten.","Show me how":"So geht's","Not now":"Nicht jetzt","Close":"Schliessen",
 "Garages & live data":"Parkhäuser und Live-Daten","Where to park for a destination":"Wo parkieren für ein Ziel","Street parking rules":"Regeln auf der Strasse",
-"Version":"Version"
+"Version":"Version",
+"Legal":"Rechtliches","Privacy policy":"Datenschutzerklärung","Cookies & storage":"Cookies und Speicher","Terms of use":"Nutzungsbedingungen","Legal notice":"Impressum","Privacy":"Datenschutz",
+"Search by Photon (komoot, Germany): what you type is sent there to find places.":"Suche über Photon (komoot, Deutschland): Was du eintippst, wird dorthin gesendet, um Orte zu finden.",
+"Drop a pin on the map":"Pin auf der Karte setzen","Expand the list":"Liste aufklappen","Collapse the list":"Liste einklappen",
+"Anonymous visit count":"Anonyme Besuchszählung","Count my visits (GoatCounter, no cookies, no personal profile)":"Meine Besuche zählen (GoatCounter, ohne Cookies, ohne persönliches Profil)",
+"Your browser asks sites not to track you, so your visits are not counted.":"Dein Browser bittet Websites, dich nicht zu verfolgen, deshalb werden deine Besuche nicht gezählt.",
+"Information without guarantee. Prices, hours and rules can change: the signs at the garage and at the bay always apply.":"Angaben ohne Gewähr. Preise, Zeiten und Regeln können sich ändern: Es gelten immer die Schilder am Parkhaus und am Parkfeld."
 }};
 const LANGS=[["en","English"],["it","Italiano"],["de","Deutsch"]];
 function detectLang(){ try{ const s=localStorage.getItem("lp.lang"); if(s&&I18N[s]||s==="en") return s; }catch(e){} const l=(navigator.languages||[navigator.language||"en"]).map(x=>String(x).toLowerCase()); for(const x of l){ if(x.startsWith("it")) return "it"; if(x.startsWith("de")) return "de"; if(x.startsWith("en")) return "en"; } return "en"; }
@@ -1636,7 +1661,7 @@ document.documentElement.lang=LANG;
 (function(){
 'use strict';
 const $=s=>document.querySelector(s);
-const VERSION="6.0";
+const VERSION="6.1";
 const FEEDBACK_MAIL="juliancedric.bigler@student.unisg.ch";
 const COUNTER_SITE="luganoparking"; // GoatCounter site code (cookieless, privacy-friendly). Create the site at goatcounter.com with this name, or change it.
 
@@ -1811,7 +1836,7 @@ function typicalSection(g){
   const bars=ty.day.map((s,i)=>{ const occ=s?1-s[0]/ty.cap:null; const lvl=occ==null?"none":occ>0.9?"bad":occ>0.75?"warn":"ok"; return `<i class="${lvl}${i===ty.h?" now":""}" style="--h:${occ==null?4:Math.max(6,Math.round(occ*100))}%" title="${hh(i)}${s?": "+t("about {n} free",{n:s[0]}):""}"></i>`; }).join("");
   const now=ty.slot?`${t("Usually about <b>{n} free</b> at this hour",{n:ty.slot[0]})}${f!=null?" "+t("(now {f})",{f}):""}.`:t("No readings for this hour yet.");
   const extra=ty.fullFrom!=null?` ${t("Typically full from {h}",{h:hh(ty.fullFrom)})}${ty.freesFrom!=null&&ty.freesFrom>ty.fullFrom?" "+t("until about {h}",{h:hh(ty.freesFrom)}):""}.`:" "+t("Rarely full on this weekday.");
-  return `<div class="sec">${t("Typical {day}",{day:ty.dayName})}</div><div class="typ"><div class="bars">${bars}</div><div class="axis"><span>0</span><span>6</span><span>12</span><span>18</span><span>24</span></div><p>${now}${extra}</p></div>`;
+  return `<div class="sec">${t("Typical {day}",{day:ty.dayName})}</div><div class="typ"><div class="bars" aria-hidden="true">${bars}</div><div class="axis"><span>0</span><span>6</span><span>12</span><span>18</span><span>24</span></div><p>${now}${extra}</p></div>`;
 }
 
 /* ---------- Trend: is a garage filling or emptying? ---------- */
@@ -1962,7 +1987,7 @@ function sortedChargers(){
 function renderChargers(sortbar){
   const sts=chargers.map(siteStatus).filter(s=>s.free!=null);
   const free=sts.reduce((n,s)=>n+s.free,0), total=sts.reduce((n,s)=>n+s.total,0);
-  $("#head").innerHTML=`<div class="summary"><span class="big num">${evStatus?free:"—"}</span><span class="lbl">${evStatus?t("charge points free of {m}",{m:total}):t("Loading charger status…")}</span><span class="chips"><button class="chip blue" data-ev>${t("Show garages")} ✕</button></span></div>${sortbar}`;
+  $("#head").innerHTML=`<div class="summary"><span class="big num">${evStatus?free:"—"}</span><span class="lbl">${evStatus?t("charge points free of {m}",{m:total}):t("Loading charger status…")}</span><span class="chips"><button class="chip blue" data-ev>${t("Show garages")} <span aria-hidden="true">✕</span></button></span></div>${sortbar}`;
   $("#body").innerHTML=`<div class="list">${sortedChargers().map(s=>{ const st=siteStatus(s); const col=stColor(st); const pct=st.free==null?0:Math.round(st.free/st.total*100); const d=state.pos?distKm(state.pos,[s.lat,s.lng]):null;
     return `<button class="card ${st.free==null?"nodata":""}" data-c="${s.id}" style="--c:${col};--pct:${pct}" aria-label="${esc(s.n)}, ${stText(st)}${d!=null?", "+t("{d} away",{d:fmtDist(d)}):""}">
       <span class="ring"><i>${svgIcon("bolt")}</i></span>
@@ -2017,7 +2042,7 @@ function toggleFav(id){
 }
 // Favourites first, garages the vehicle does not fit into last; otherwise keep the chosen order.
 function pinSort(a){ const low=g=>fitsVeh(g)===false?1:0; return a.map((g,i)=>({g,i})).sort((x,y)=>(isFav(y.g.id)-isFav(x.g.id))||(low(x.g)-low(y.g))||(x.i-y.i)).map(x=>x.g); }
-const favMark=g=>isFav(g.id)?`<span class="star" aria-label="${t("Favourite")}">★</span> `:"";
+const favMark=g=>isFav(g.id)?`<span class="star" aria-hidden="true">★</span><span class="sr-only">${t("Favourite")}: </span> `:"";
 
 /* ---------- Shareable garage links: luganoparking.ch/#lac ---------- */
 const garageUrl=g=>location.origin+location.pathname+"#"+g.id;
@@ -2073,7 +2098,7 @@ const EVENTS_SNAPSHOT=[
 let events=EVENTS_SNAPSHOT;
 const EVENT_SPONSOR=null; // e.g. {name:"Your Brand",url:"https://example.ch"}: shown on every event banner; an event's own "sponsor" wins.
 const VENUES={
-  cornaredo:{full:"Cornèr Arena · AIL Arena, Cornaredo",avoid:["resega"],use:["balestra","campomarzio"],tip:"Bus lines 3, 4, 6, 7 and 19 run to the stadium area."},
+  cornaredo:{full:"Cornèr Arena · AIL Arena, Cornaredo",avoid:["resega"],use:["balestra","campomarzio"],tip:"Bus lines 3, 4, 6 and 7 (and 19 on weekdays) stop at the stadium."},
   lac:{full:"LAC Lugano Arte e Cultura",avoid:["lac","motta"],use:["centralpark","castello","balestra"],tip:""}
 };
 async function loadEvents(){ try{ const r=await fetch("events.json",{cache:"no-store"}); if(!r.ok) return; const d=await r.json(); if(d&&Array.isArray(d.events)){ events=d.events; renderAll(); } }catch(e){} }
@@ -2082,7 +2107,7 @@ function activeEvent(){
   return events.filter(e=>VENUES[e.v]&&e.at).map(e=>({e,s:Date.parse(e.at)})).filter(x=>now>=x.s-4*3600e3&&now<=x.s+((x.e.dur||150)+30)*60e3).sort((a,b)=>a.s-b.s).map(x=>x.e)[0]||null;
 }
 function eventAvoids(g){ const e=activeEvent(); return !!(e&&VENUES[e.v].avoid.includes(g.id)); }
-const evIcon=k=>k==="hockey"?"🏒":k==="football"?"⚽":"🎭";
+const evIcon=k=>`<span aria-hidden="true">${k==="hockey"?"🏒":k==="football"?"⚽":"🎭"}</span>`;
 function eventWhen(e){ const s=new Date(e.at); return Date.now()>=s.getTime()?t("on now"):t("today {t}",{t:fmtTime(s)}); }
 function eventLine(){
   const e=activeEvent(); if(!e) return ""; const V=VENUES[e.v];
@@ -2285,8 +2310,9 @@ function renderGoing(){
   const head=$("#head"), body=$("#body");
   if(!state.dest){
     head.innerHTML=`<div class="summary"><span class="big" style="font-size:20px">${t("Where are you going?")}</span></div>
-      <div class="search"><span class="ico">${svgIcon("search")}</span><input id="q" type="search" autocomplete="off" autocorrect="off" spellcheck="false" placeholder="${t("Restaurant, shop or address")}" aria-label="${t("Search a place")}"><button id="pick" class="pickbtn ${state.picking?"on":""}" type="button">${svgIcon("pin")} ${t("Pin")}</button></div>
-      <div id="results" class="results"></div>`;
+      <div class="search"><span class="ico">${svgIcon("search")}</span><input id="q" type="search" autocomplete="off" autocorrect="off" spellcheck="false" placeholder="${t("Restaurant, shop or address")}" aria-label="${t("Search a place")}"><button id="pick" class="pickbtn ${state.picking?"on":""}" type="button" aria-label="${t("Drop a pin on the map")}" aria-pressed="${state.picking}">${svgIcon("pin")} ${t("Pin")}</button></div>
+      <div id="results" class="results" aria-live="polite"></div>
+      <p class="search-note">${t("Search by Photon (komoot, Germany): what you type is sent there to find places.")} <a href="privacy.html#search">${t("Privacy")}</a></p>`;
     body.innerHTML=`<div class="sec">${t("Popular spots")}</div><div class="spots">${SPOTS.map(s=>`<button class="spot" data-spot="${s.id}"><b>${s.name}</b><small>${t(s.sub)}</small></button>`).join("")}</div>
       <p class="note">${t("Pick where you are headed and how long you stay. The app ranks the garages by walking time, free spots right now and what the stay will cost.")}${state.picking?" "+t("Tap the map to set your destination."):""}</p>`;
     const q=$("#q"); q.addEventListener("input",()=>{ clearTimeout(searchTimer); searchTimer=setTimeout(()=>searchPlaces(q.value),280); });
@@ -2335,7 +2361,11 @@ function discLeaveBy(hhmm){
 /* ---------- Map ---------- */
 const map=L.map("map",{zoomControl:true,attributionControl:true,minZoom:11,maxZoom:19,zoomSnap:0.5,inertia:true}).setView([46.0055,8.953],15);
 map.attributionControl.setPrefix("");
-map.attributionControl.addAttribution('<a href="https://openfreemap.org" target="_blank" rel="noopener">OpenFreeMap</a> · © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> · Città di Lugano');
+if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+  map.flyTo=function(c,z){ return this.setView(c,z,{animate:false}); };
+  map.flyToBounds=function(b,o){ return this.fitBounds(b,Object.assign({},o,{animate:false})); };
+}
+map.attributionControl.addAttribution('<a href="https://openfreemap.org" target="_blank" rel="noopener">OpenFreeMap</a> · © <a href="https://www.openmaptiles.org/" target="_blank" rel="noopener">OpenMapTiles</a> · © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a> · Data © Città di Lugano · <a href="imprint.html">Legal</a> · <a href="privacy.html">Privacy</a>');
 // Offline basemap: one pre-rendered mosaic per zoom level (tiles/z*.jpg), sliced into tiles on a canvas.
 const MOSAICS={14:{x0:8598,y0:5826,nx:3,ny:4},15:{x0:17196,y0:11653,nx:6,ny:7},16:{x0:34392,y0:23306,nx:12,ny:14},17:{x0:68789,y0:46623,nx:14,ny:11}};
 const Mosaic=L.GridLayer.extend({
@@ -2385,7 +2415,7 @@ const Locate=L.Control.extend({
   onAdd:function(){
     const d=L.DomUtil.create("div","leaflet-bar leaflet-control leaflet-control-locate");
     locBtn=L.DomUtil.create("button","locate",d); locBtn.type="button"; locBtn.setAttribute("aria-label",t("Show my location")); locBtn.title=t("My location");
-    locBtn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg>';
+    locBtn.innerHTML='<svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg>';
     L.DomEvent.disableClickPropagation(d); L.DomEvent.on(locBtn,"click",locate);
     return d;
   }
@@ -2424,7 +2454,7 @@ new MutationObserver(()=>{ recolorZones(); swapGLStyle(); }).observe(document.do
 const sheet=$("#sheet"); const app=$("#app"); let sheetPos="peek";
 function peekPx(){ return parseFloat(getComputedStyle(app).getPropertyValue("--peek"))||124; }
 function fitPeek(){ const head=sheet.classList.contains("detail-mode")?$("#dhead"):$("#head"); app.style.setProperty("--peek",(head.offsetHeight+26)+"px"); }
-function setSheet(p){ sheetPos=p; sheet.classList.remove("half","full"); if(p!=="peek") sheet.classList.add(p); }
+function setSheet(p){ sheetPos=p; sheet.classList.remove("half","full"); if(p!=="peek") sheet.classList.add(p); const gr=$("#grip"); if(gr){ gr.setAttribute("aria-expanded",String(p==="full")); gr.setAttribute("aria-label",t(p==="full"?"Collapse the list":"Expand the list")); } }
 (function drag(){
   let y0=0,start=0,moved=false,active=false; const h=()=>sheet.getBoundingClientRect().height;
   const posY=()=>({peek:h()-peekPx(),half:h()*0.46,full:0});
@@ -2437,7 +2467,7 @@ function setSheet(p){ sheetPos=p; sheet.classList.remove("half","full"); if(p!==
 
 /* ---------- Rendering ---------- */
 function svgIcon(n){
-  const S='fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"';
+  const S='aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"';
   if(n==="back") return `<svg viewBox="0 0 24 24" ${S}><path d="M15 18l-6-6 6-6"/></svg>`;
   if(n==="nav") return `<svg viewBox="0 0 24 24" ${S}><path d="M3 11l18-8-8 18-2-8-8-2z"/></svg>`;
   if(n==="disc") return `<svg viewBox="0 0 24 24" ${S}><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>`;
@@ -2491,7 +2521,7 @@ function renderGarages(){
       <span class="t"><h3>${favMark(g)}${g.name}</h3><p>${d!=null?`<b class="dist">${fmtDist(d)}</b> · `:""}${g.area}${(()=>{ const fv=fitsVeh(g); if(fv===false) return " · "+heightInline(g); if(eventAvoids(g)) return ` · <b class="tr" style="color:var(--bad)">${t("Event: fills up early")}</b>`; if(fv===null) return " · "+heightInline(g); if(lv.k==="nodata"){ const ri=reportInline(g); return ri?" · "+ri:""; } return " · "+(trendInline(g)||lv.t); })()}${(()=>{ const th=typicalHint(g); return th?" · "+th:(g.tags[0]&&d==null?" · "+t(g.tags[0]):""); })()}</p></span>
       <span class="n">${f==null?`<b>${t("No live data")}</b><small>${g.cap?t("{n} spaces",{n:g.cap}):""}</small>`:`<b class="num">${f}</b><small>${t("of {n} free",{n:g.cap})}</small>`}</span>
     </button>`;}).join("")}</div>
-    <p class="note">${t("Garage counts come from the Città di Lugano real-time feed. Colours: green means plenty of space, amber means it is filling up, red means full or nearly full.")} ${t("Garages marked “No live data” do not publish their occupancy, so check the sign at the entrance.")}</p>`;
+    <p class="note">${t("Garage counts come from the Città di Lugano real-time feed. Colours: green means plenty of space, amber means it is filling up, red means full or nearly full.")} ${t("Garages marked “No live data” do not publish their occupancy, so check the sign at the entrance.")} ${t("Information without guarantee. Prices, hours and rules can change: the signs at the garage and at the bay always apply.")}</p>`;
   fitPeek();
 }
 function renderStreet(){
@@ -2527,6 +2557,8 @@ function renderChrome(){
   document.querySelectorAll("[role=tab]").forEach(b=>{ const l=b.querySelector("span"); if(l) l.textContent=t(b.dataset.view==="garages"?"Garages":b.dataset.view==="going"?"Going to":"Street"); });
   const rf=$("#refresh"); rf.setAttribute("aria-label",t("Refresh availability")); rf.title=t("Refresh");
   const ab=$("#about-btn"); ab.setAttribute("aria-label",t("About")); ab.title=t("About");
+  const gr=$("#grip"); if(gr) gr.setAttribute("aria-label",t(sheetPos==="full"?"Collapse the list":"Expand the list"));
+  $("#about-close").setAttribute("aria-label",t("Close"));
   if(locBtn){ locBtn.setAttribute("aria-label",t("Show my location")); locBtn.title=t("My location"); }
 }
 
@@ -2579,7 +2611,7 @@ function openZone(id,areaName){
 function closeDetail(){ if(location.hash){ try{ history.replaceState(null,"",location.pathname+location.search); }catch(e){} } sheet.classList.remove("detail-mode"); state.selected=null; const hadC=state.selCharger; state.selCharger=null; refreshMarkers(); if(hadC) refreshChargerMarkers(); fitPeek(); }
 function setView(v){
   state.view=v; closeDetail();
-  document.querySelectorAll("[role=tab]").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.view===v)));
+  document.querySelectorAll("[role=tab]").forEach(b=>{ const on=b.dataset.view===v; b.setAttribute("aria-selected",String(on)); b.tabIndex=on?0:-1; }); sheet.setAttribute("aria-labelledby","tab-"+v);
   if(state.picking){ state.picking=false; $("#map").classList.remove("picking"); }
   if(v==="garages"){ map.removeLayer(zoneLayer); map.removeLayer(destLayer); garageLayer.addTo(map); renderGarages(); }
   else if(v==="going"){ map.removeLayer(zoneLayer); garageLayer.addTo(map); destLayer.addTo(map); renderGoing(); if(state.dest) fitDest(); }
@@ -2609,36 +2641,44 @@ function renderAbout(){
   const install=isStandalone()?"":deferredInstall?`<button class="btn primary" id="install-btn">${svgIcon("plus")} ${t("Install app")}</button>`:`<p class="note" style="margin:0">${t(isIOS()?"On iPhone: tap Share, then “Add to Home Screen”. The app then opens full screen like a normal app.":"On Android: open the browser menu and choose “Install app” or “Add to Home screen”.")}</p>`;
   el.innerHTML=`
     <div class="sec">${t("Language")}</div>
-    <div class="sortbar" style="margin:0 0 4px">${LANGS.map(([k,l])=>`<button data-lang="${k}" aria-pressed="${LANG===k}">${l}</button>`).join("")}</div>
+    <div class="sortbar" style="margin:0 0 4px" role="group" aria-label="${t("Language")}">${LANGS.map(([k,l])=>`<button data-lang="${k}" lang="${k}" aria-pressed="${LANG===k}">${l}</button>`).join("")}</div>
     ${install?`<div class="sec">${t("Add to home screen")}</div>${install}`:""}
     <div class="sec">${t("Feedback")}</div>
     <p class="note" style="margin:0 0 8px">${t("Something wrong or missing? Tell me.")}</p>
     <a class="btn" href="${feedbackHref()}">${svgIcon("mail")} ${t("Send feedback")}</a>
     <div class="sec">${t("Data")}</div>
-    <p class="note" style="margin:0">${t("Garage counts: Città di Lugano real-time feed. Street rules: city ordinance 2.2.1. Map: OpenFreeMap and OpenStreetMap contributors. Place search: Photon.")} ${t("EV charging: ich-tanke-strom.ch, Swiss Federal Office of Energy.")}${reportsOn()?" "+t("Space reports store only the garage and the time: no account, no location."):""}</p>
-    <p class="note">${t("Free, no ads, no account, no tracking. Built in Lugano by Julian Bigler.")} · ${t("Version")} ${VERSION}</p>`;
+    <p class="note" style="margin:0">${t("Garage counts: © Città di Lugano real-time feed. Street rules: city ordinance 2.2.1. Map: OpenFreeMap, © OpenMapTiles, data © OpenStreetMap contributors. Place search: Photon by komoot.")} ${t("EV charging: ich-tanke-strom.ch, Swiss Federal Office of Energy.")}${reportsOn()?" "+t("Space reports store only the garage and the time: no account, no location."):""} ${t("Information without guarantee. Prices, hours and rules can change: the signs at the garage and at the bay always apply.")}</p>
+    ${COUNTER_SITE?`<div class="sec">${t("Anonymous visit count")}</div>${counterBlocked()?`<p class="note" style="margin:0">${t("Your browser asks sites not to track you, so your visits are not counted.")}</p>`:`<div class="fpanel" style="margin:0"><button class="frow" id="count-toggle" role="switch" aria-checked="${!countOptOut()}"><span>${t("Count my visits (GoatCounter, no cookies, no personal profile)")}</span><i class="sw"></i></button></div>`}`:""}
+    <div class="sec">${t("Legal")}</div>
+    <ul class="legal-links"><li><a href="privacy.html">${t("Privacy policy")}</a></li><li><a href="cookies.html">${t("Cookies & storage")}</a></li><li><a href="terms.html">${t("Terms of use")}</a></li><li><a href="imprint.html">${t("Legal notice")}</a></li></ul>
+    <p class="note">${t("Free, no ads, no account, no cookies. An independent project by Julian Bigler, not an official service of the City of Lugano.")} · ${t("Version")} ${VERSION}</p>`;
 }
-function openAbout(){ renderAbout(); $("#about").hidden=false; document.body.classList.add("modal-open"); }
-function closeAbout(){ $("#about").hidden=true; document.body.classList.remove("modal-open"); }
+let aboutReturn=null;
+const bgParts=()=>[...app.children].filter(el=>el.id!=="about"&&el.id!=="toast");
+function openAbout(){ aboutReturn=document.activeElement; renderAbout(); $("#about").hidden=false; document.body.classList.add("modal-open"); bgParts().forEach(el=>el.inert=true); $("#about-close").focus(); }
+function closeAbout(){ $("#about").hidden=true; document.body.classList.remove("modal-open"); bgParts().forEach(el=>el.inert=false); if(aboutReturn&&aboutReturn.focus) aboutReturn.focus(); aboutReturn=null; }
 function applyLang(l){ setLang(l); renderChrome(); recolorZones(); renderAbout(); renderParked(); renderAll(); }
 // One-time install banner, shown on the second visit when not installed.
 function maybeInstallBanner(){
   try{
     if(isStandalone()) return; const n=(parseInt(localStorage.getItem("lp.visits")||"0",10)||0)+1; localStorage.setItem("lp.visits",String(n));
     if(localStorage.getItem("lp.installhint")||n<2) return;
-    const b=$("#install-banner"); b.innerHTML=`<span class="ico">${svgIcon("plus")}</span><span class="txt"><b>${t("Add Lugano Parking to your home screen")}</b><small>${t("It opens full screen and works offline.")}</small></span><button class="pbtn" id="banner-how">${deferredInstall?t("Install app"):t("Show me how")}</button><button class="pbtn" id="banner-no" aria-label="${t("Not now")}">${svgIcon("x")}</button>`;
+    const b=$("#install-banner"); b.innerHTML=`<span class="ico">${svgIcon("plus")}</span><span class="txt"><b>${t("Add Lugano Parking to your home screen")}</b><small>${t("It opens full screen and shows the last saved data when you are offline.")}</small></span><button class="pbtn" id="banner-how">${deferredInstall?t("Install app"):t("Show me how")}</button><button class="pbtn" id="banner-no" aria-label="${t("Not now")}">${svgIcon("x")}</button>`;
     b.hidden=false;
   }catch(e){}
 }
 function dismissBanner(){ $("#install-banner").hidden=true; try{ localStorage.setItem("lp.installhint","1"); }catch(e){} }
 // Privacy-friendly visitor counter (GoatCounter, no cookies). Only loads when a site code is set and we're not on localhost.
-function countView(v){ try{ if(window.goatcounter&&window.goatcounter.count) window.goatcounter.count({path:"/"+v,title:"Lugano Parking · "+v}); }catch(e){} }
+const counterBlocked=()=>navigator.globalPrivacyControl===true||navigator.doNotTrack==="1"||window.doNotTrack==="1";
+const countOptOut=()=>{ try{ return localStorage.getItem("lp.nocount")==="1"; }catch(e){ return false; } };
+function countView(v){ try{ if(counterBlocked()||countOptOut()) return; if(window.goatcounter&&window.goatcounter.count) window.goatcounter.count({path:"/"+v,title:"Lugano Parking · "+v}); }catch(e){} }
 function initCounter(){
-  if(!COUNTER_SITE||/localhost|127\.0\.0\.1/.test(location.hostname)) return;
+  if(!COUNTER_SITE||/localhost|127\.0\.0\.1/.test(location.hostname)||counterBlocked()||countOptOut()||window.goatcounter) return;
   window.goatcounter={no_onload:true,no_events:true};
-  const s=document.createElement("script"); s.async=true; s.src="https://gc.zgo.at/count.js"; s.dataset.goatcounter=`https://${COUNTER_SITE}.goatcounter.com/count`;
+  const s=document.createElement("script"); s.async=true; s.src="https://gc.zgo.at/count.v4.js"; s.integrity="sha384-nRw6qfbWyJha9LhsOtSb2YJDyZdKvvCFh0fJYlkquSFjUxp9FVNugbfy8q1jdxI+"; s.crossOrigin="anonymous"; s.dataset.goatcounter=`https://${COUNTER_SITE}.goatcounter.com/count`;
   s.onload=()=>countView(state.view); document.head.appendChild(s);
 }
+function toggleCount(){ const off=!countOptOut(); try{ localStorage.setItem("lp.nocount",off?"1":""); }catch(e){} if(!off) initCounter(); renderAbout(); const b=$("#count-toggle"); if(b) b.focus(); }
 
 /* ---------- Events ---------- */
 // The app container must never scroll (focus or scrollIntoView can nudge it); the sheet body is the only scroller.
@@ -2671,6 +2711,7 @@ document.addEventListener("click",e=>{
   if(e.target.closest("#about-close")||e.target.id==="about"){ closeAbout(); return; }
   if(e.target.closest("#install-btn")||e.target.closest("#banner-how")){ if(deferredInstall){ deferredInstall.prompt(); deferredInstall.userChoice.then(()=>{ deferredInstall=null; renderAbout(); }); dismissBanner(); } else { dismissBanner(); openAbout(); } return; }
   if(e.target.closest("#banner-no")){ dismissBanner(); return; }
+  if(e.target.closest("#count-toggle")){ toggleCount(); return; }
 });
 map.on("click",e=>{ if(state.view==="going"&&state.picking){ setDest({name:t("Pinned spot"),sub:e.latlng.lat.toFixed(4)+", "+e.latlng.lng.toFixed(4),lat:e.latlng.lat,lng:e.latlng.lng}); if(sheetPos==="peek") setSheet("half"); } });
 $("#refresh").addEventListener("click",()=>refresh(true));
@@ -2680,7 +2721,16 @@ document.addEventListener("change",e=>{
   if(state.veh){ const n=GARAGES.filter(g=>fitsVeh(g)===false).length; toast(n?t("{n} garages are too low for this vehicle",{n}):t("All garages with a listed height fit")); }
   renderAll();
 });
-document.addEventListener("keydown",e=>{ if(e.key==="Escape"&&!$("#about").hidden) closeAbout(); });
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape"){ if(!$("#about").hidden){ closeAbout(); return; } if(sheet.classList.contains("detail-mode")){ closeDetail(); const l=$("#body [data-g],#body [data-c],#body [data-z]"); if(l) l.focus(); } }
+});
+$(".tabbar").addEventListener("keydown",e=>{
+  const tabs=[...document.querySelectorAll("[role=tab]")]; const i=tabs.indexOf(document.activeElement); if(i<0) return;
+  let j=null; if(e.key==="ArrowRight") j=(i+1)%tabs.length; else if(e.key==="ArrowLeft") j=(i-1+tabs.length)%tabs.length; else if(e.key==="Home") j=0; else if(e.key==="End") j=tabs.length-1;
+  if(j==null) return; e.preventDefault(); tabs[j].focus(); setView(tabs[j].dataset.view);
+});
+// Keyboard users tabbing into the list: open the sheet so the focused item is on screen.
+sheet.addEventListener("focusin",e=>{ if(e.target.closest(".body")&&sheetPos!=="full") setSheet("full"); });
 document.addEventListener("visibilitychange",()=>{ if(document.hidden) pauseWatch(); else { refresh(false); if(state.geo&&watchId==null) locate(); } });
 setInterval(()=>{ if(!document.hidden) refresh(false); },3*60*1000);
 setInterval(()=>{ if(state.view==="street"&&!sheet.classList.contains("detail-mode")) renderStreet(); statusLine(); },60*1000);

@@ -1,5 +1,5 @@
 /* Lugano Parking service worker: instant reopen and offline map. Bump VERSION when files change. */
-const VERSION = "lp-2026-10-08d";
+const VERSION = "lp-2026-10-09a";
 const MAPCACHE = "lp-map-v1"; // vector tiles, fonts and sprites from OpenFreeMap, kept across app versions
 const MAPCACHE_MAX = 800;
 const CORE = ["./", "index.html", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png", "logo.svg",
@@ -7,13 +7,15 @@ const CORE = ["./", "index.html", "manifest.webmanifest", "icon-180.png", "icon-
   "https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.7.1/maplibre-gl.js",
   "https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.7.1/maplibre-gl.css"];
 const TILES = ["tiles/z15.jpg", "tiles/z14.jpg", "tiles/z16.jpg", "tiles/z17.jpg"]; // or zNN.jpg at the root, cached on first use
+const LEGAL = ["privacy.html", "cookies.html", "terms.html", "imprint.html", "legal.css"]; // readable offline too
+const FONTS = ["sora-latin", "instrument-sans-latin", "instrument-sans-italic-latin"].map(f => "fonts/" + f + ".woff2"); // self-hosted, no Google
 
 self.addEventListener("install", e => {
   e.waitUntil((async () => {
     const c = await caches.open(VERSION);
     await c.addAll(CORE);
     // Map tiles are large: fetch them one by one and never let a failure block the install.
-    for (const t of TILES) { try { await c.add(t); } catch (_) {} }
+    for (const t of TILES.concat(FONTS, LEGAL)) { try { await c.add(t); } catch (_) {} }
     await self.skipWaiting();
   })());
 });
@@ -31,23 +33,22 @@ self.addEventListener("fetch", e => {
   // Live feed from the city: always straight to the network.
   if (url.hostname.endsWith("lugano.ch")) return;
   const sameOrigin = url.origin === self.location.origin;
-  const isFont = url.hostname === "fonts.googleapis.com" || url.hostname === "fonts.gstatic.com";
   const isLib = url.hostname === "cdnjs.cloudflare.com";
   const isMap = url.hostname === "tiles.openfreemap.org";
-  if (!sameOrigin && !isFont && !isLib && !isMap) return;
+  if (!sameOrigin && !isLib && !isMap) return;
 
   // OpenFreeMap: cache what has been seen so the last viewed area still draws offline (style JSON stays fresh).
   if (isMap) { e.respondWith(url.pathname.startsWith("/styles/") ? staleWhileRevalidate(req, MAPCACHE) : cacheFirst(req, MAPCACHE, true)); return; }
 
   // Map tiles, icons, Leaflet: cache first (immutable).
-  if (/\/(tiles\/)?z1[4-7]\.jpg$/.test(url.pathname) || isLib || /\.(png|svg|webmanifest)$/.test(url.pathname)) {
+  if (/\/(tiles\/)?z1[4-7]\.jpg$/.test(url.pathname) || isLib || /\.(png|svg|webmanifest|woff2)$/.test(url.pathname)) {
     e.respondWith(cacheFirst(req)); return;
   }
   // The app itself: try the network first (so a new upload shows up on the next open), fall back to the cached copy offline.
   if (sameOrigin && (req.mode === "navigate" || /\/(index\.html)?$/.test(url.pathname))) { e.respondWith(networkFirst(req)); return; }
   // events.json is edited on GitHub: always try the network first so new events show up right away.
   if (sameOrigin && url.pathname.endsWith("events.json")) { e.respondWith(networkFirst(req)); return; }
-  // Fonts: serve the cached copy instantly, refresh it in the background.
+  // Everything else from this site (legal pages, styles): cached copy instantly, refreshed in the background.
   e.respondWith(staleWhileRevalidate(req));
 });
 

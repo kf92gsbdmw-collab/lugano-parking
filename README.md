@@ -23,8 +23,13 @@ On a real website the app reads the Città di Lugano live feed directly, so the 
 - `manifest.webmanifest` and the icons: home screen install.
 - `scripts/` and `.github/workflows/log-occupancy.yml`: a GitHub Action that reads the city feed every 10 minutes and keeps the history on a separate `data` branch (so the website is not rebuilt each time). It also writes `typical.json` there, which the app reads to show typical occupancy per weekday and hints like "usually full from 10:00". Nothing to configure: once the workflow file is on `main`, GitHub runs it. First patterns appear after about two weeks of readings. GitHub pauses scheduled workflows after 60 days without any commit to the repo; a push (or pressing "Run workflow" under Actions) wakes it up again.
 
+## Legal pages and privacy
+`privacy.html`, `cookies.html`, `terms.html` and `imprint.html` (legal notice) are linked from the Info panel and from the map's attribution line, in English, Italian and German. They share `legal.css`. If you change what the app does with data (switch on space reports, add a new service, change the contact email), update the pages: the texts are generated from one source, but you can also edit the HTML directly.
+Fonts are served from this site (`fonts/`, licence in `fonts/OFL.txt`), not from Google, so no visitor IP goes to Google. The map libraries come from cdnjs with integrity hashes.
+The offline fallback map (`z14.jpg` to `z17.jpg`) is rendered from OpenFreeMap (© OpenMapTiles, © OpenStreetMap contributors). Do not replace it with images downloaded from openstreetmap.org's tile server: its usage policy forbids bulk downloads and offline use.
+
 ## Visitor counter and feedback
-The app has a privacy-friendly, cookieless counter (GoatCounter) so you can report usage. It only works once you create the free site: go to goatcounter.com, sign up, choose the site code `luganoparking` (or change `COUNTER_SITE` at the top of the script in index.html to whatever you picked). Nothing is counted on localhost. Page views per tab (garages, going, street) show up in the GoatCounter dashboard.
+The app has a privacy-friendly, cookieless counter (GoatCounter). It respects Do Not Track / Global Privacy Control and can be switched off by each visitor in the Info panel. Use it to report usage to sponsors. It only works once you create the free site: go to goatcounter.com, sign up, choose the site code `luganoparking` (or change `COUNTER_SITE` at the top of the script in index.html to whatever you picked). Nothing is counted on localhost. Page views per tab (garages, going, street) show up in the GoatCounter dashboard.
 The Info panel (i button in the header) has the language switch, install instructions, a feedback button that opens an email to the address in `FEEDBACK_MAIL`, and the data credits.
 
 ## Events (game nights, big shows)
